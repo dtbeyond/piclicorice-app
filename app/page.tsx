@@ -4,25 +4,29 @@ import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import BottomNav from "@/components/BottomNav"
 import SiteHeader from "@/components/SiteHeader"
+import { buildRhythmResult, isCompleteRhythm, RHYTHM_STORAGE_KEY, type SavedRhythm } from "@/lib/rhythm"
 import { useSiteContent } from "@/lib/useSiteContent"
 
 export default function PicLicoriceHome() {
   const { content } = useSiteContent()
   const [videoPlaying, setVideoPlaying] = useState(false)
-  const [savedRoutine, setSavedRoutine] = useState<any>(null)
+  const [savedRhythm, setSavedRhythm] = useState<SavedRhythm | null>(null)
 
   useEffect(() => {
-    const saved = localStorage.getItem("pl_routine")
+    const saved = localStorage.getItem(RHYTHM_STORAGE_KEY)
     if (!saved) return
 
     try {
-      setSavedRoutine(JSON.parse(saved))
+      const parsed = JSON.parse(saved) as SavedRhythm
+      if (parsed.answers && isCompleteRhythm(parsed.answers)) setSavedRhythm(parsed)
     } catch {}
   }, [])
 
+  const savedResult = savedRhythm ? buildRhythmResult(savedRhythm.answers) : null
+
   const concernCards = [
     {
-      label: "My routine feels random",
+      label: "My rhythm feels random",
       body: "Get the order, rhythm, and missing basics cleaned up first.",
       param: "product-not-working",
       tone: "from-[#7C9C9B]/28 via-white to-[#faf8f4]",
@@ -60,7 +64,7 @@ export default function PicLicoriceHome() {
     {
       src: "/assets/piclicorice/piclicorice_shop_routine_basics_v2_16x9.png",
       mobileSrc: "",
-      alt: "Skincare routine products",
+      alt: "Skincare rhythm products",
       position: "center center",
     },
     {
@@ -87,7 +91,7 @@ export default function PicLicoriceHome() {
 
   return (
     <div className="editorial-shell min-h-screen pb-24">
-      <SiteHeader actionLabel="SHOP NOW" actionHref="/shop" actionVariant="shop" />
+      <SiteHeader actionLabel="Start Your Rhythm" actionHref="/routine" actionVariant="shop" />
 
       <main className="mx-auto w-full max-w-[1040px] px-4 sm:px-6">
         <section className="grid gap-8 pt-6 sm:pt-10 xl:grid-cols-[1.05fr_0.95fr] xl:items-center">
@@ -135,25 +139,27 @@ export default function PicLicoriceHome() {
           <div className="xl:order-1">
             <div className="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-[#7C9C9B]">Warm skincare coaching</div>
             <h1 className="max-w-[680px] text-[42px] font-semibold leading-[0.96] tracking-tighter sm:text-6xl">
-              Stop guessing what works. Let&apos;s fix your routine step by step.
+              Stop guessing what works. Let&apos;s find your rhythm step by step.
             </h1>
             <p className="mt-5 max-w-[560px] text-base leading-relaxed text-black/58 sm:text-lg">
               Informed shopping, gentle education, and routines that help you feel seen before you buy.
             </p>
 
             <div className="mt-7 grid gap-3 sm:grid-cols-[1.05fr_0.95fr]">
-              <Link href="/shop" className="group relative min-h-24 overflow-hidden rounded-[24px] border border-[#111111] bg-linear-to-br from-white via-[#fff7fc] to-[#B01F85]/10 p-5 shadow-[0_12px_26px_rgba(176,31,133,0.10)] active:scale-[0.99]">
-                <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-black/42">Conversion first</span>
-                <span className="mt-2 block text-[18px] font-bold tracking-[0.08em] text-[#B01F85]">SHOP NOW</span>
-                <span className="absolute bottom-4 right-4 rounded-full bg-white/80 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-black/38 group-hover:text-[#B01F85]">
-                  Open
+              <Link href="/routine" className="group relative min-h-24 overflow-hidden rounded-[24px] border border-[#111111] bg-linear-to-br from-white via-[#fff7fc] to-[#B01F85]/10 p-5 shadow-[0_12px_26px_rgba(176,31,133,0.10)] active:scale-[0.99]">
+                <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-black/42">Guidance first</span>
+                <span className="mt-2 block text-[18px] font-bold tracking-[0.08em] text-[#B01F85]">
+                  {savedResult ? "OPEN MY RHYTHM" : "START YOUR RHYTHM"}
                 </span>
-              </Link>
-              <Link href="/routine" className="group relative min-h-24 overflow-hidden rounded-[24px] border border-black/10 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/18 p-5 active:scale-[0.99]">
-                <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-[#7C9C9B]">Start with skin</span>
-                <span className="mt-2 block text-[18px] font-semibold tracking-tight text-black">Fix My Routine</span>
                 <span className="absolute bottom-4 right-4 rounded-full bg-white/80 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-black/38 group-hover:text-[#B01F85]">
                   Begin
+                </span>
+              </Link>
+              <Link href="/shop" className="group relative min-h-24 overflow-hidden rounded-[24px] border border-black/10 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/18 p-5 active:scale-[0.99]">
+                <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-[#7C9C9B]">When you are ready</span>
+                <span className="mt-2 block text-[18px] font-semibold tracking-tight text-black">Explore Aime&apos;s Picks</span>
+                <span className="absolute bottom-4 right-4 rounded-full bg-white/80 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-black/38 group-hover:text-[#B01F85]">
+                  Open
                 </span>
               </Link>
             </div>
@@ -170,7 +176,7 @@ export default function PicLicoriceHome() {
             </div>
 
             <div className="mt-4 text-xs tracking-wide text-black/45">
-              Browse freely. Sign up only when you want downloads, saved routines, or files.
+              Browse freely. Sign up only when you want downloads, saved rhythms, or files.
             </div>
           </div>
         </section>
@@ -206,7 +212,7 @@ export default function PicLicoriceHome() {
             <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#7C9C9B]">Not sure where to start?</div>
             <div className="mb-3 text-2xl font-semibold tracking-tight">Choose what feels familiar.</div>
             <p className="mb-5 text-sm leading-relaxed text-black/55">
-              Pick the doorway that sounds most like you. Aime&apos;s routine builder will narrow it from there.
+              Pick the doorway that sounds most like you. Aime&apos;s rhythm builder will narrow it from there.
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
               {concernCards.map((chip, index) => (
@@ -229,25 +235,22 @@ export default function PicLicoriceHome() {
           </div>
         </section>
 
-        {savedRoutine && (
+        {savedRhythm && savedResult && (
           <section className="mt-8 rounded-[2rem] border border-black/10 bg-white p-6">
             <div className="mb-2 font-mono text-sm tracking-widest text-[#B01F85]">WELCOME BACK</div>
-            <div className="mb-4 text-lg font-medium">Last time you were focusing on:</div>
-            <div className="mb-5 flex flex-wrap gap-2">
-              {savedRoutine.input.concerns.slice(0, 3).map((concern: string) => (
-                <div key={concern} className="rounded-full bg-[#f3efea] px-3 py-1 text-xs text-black/70">
-                  {concern.replace(/-/g, " ")}
-                </div>
-              ))}
-            </div>
+            <div className="mb-2 text-xl font-semibold tracking-tight">Your current rhythm is {savedResult.summaryTags}.</div>
+            <p className="mb-5 max-w-[560px] text-sm leading-relaxed text-black/58">
+              Aime would keep this calm and repeatable before adding more products.
+            </p>
             <div className="flex gap-3">
               <Link href="/routine" className="flex-1 rounded-2xl bg-[#111111] py-3 text-center text-sm font-semibold text-white">
-                View My Routine
+                Open My Rhythm
               </Link>
               <button
                 onClick={() => {
-                  localStorage.removeItem("pl_routine")
-                  setSavedRoutine(null)
+                  localStorage.removeItem(RHYTHM_STORAGE_KEY)
+                  window.dispatchEvent(new Event("piclicorice-rhythm-updated"))
+                  setSavedRhythm(null)
                 }}
                 className="flex-1 rounded-2xl border border-black/15 py-3 text-center text-sm"
               >
@@ -295,17 +298,17 @@ export default function PicLicoriceHome() {
           <div className="grid gap-4 bg-white/72 p-7 sm:p-8 lg:grid-cols-[1fr_auto] lg:items-center">
             <div>
               <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#7C9C9B]">Ready when you are</div>
-              <h2 className="text-3xl font-semibold leading-none tracking-tighter">Leave with a routine, not another tab.</h2>
+              <h2 className="text-3xl font-semibold leading-none tracking-tighter">Leave with a rhythm, not another tab.</h2>
               <p className="mt-3 max-w-[560px] text-sm leading-relaxed text-black/58">
-                Start with Aime&apos;s routine builder, then shop only what fits the plan.
+                Start with Aime&apos;s rhythm builder, then explore picks only when they fit the plan.
               </p>
             </div>
             <div className="grid gap-3 sm:grid-cols-2 lg:w-[360px]">
               <Link href="/routine" className="flex h-14 items-center justify-center rounded-full border border-black/15 bg-white px-6 text-sm font-semibold">
-                Fix My Routine
+                Start Your Rhythm
               </Link>
               <Link href="/shop" className="shop-now-button flex h-14 items-center justify-center rounded-full px-6 text-sm font-bold tracking-[0.08em]">
-                SHOP NOW
+                Aime&apos;s Picks
               </Link>
             </div>
           </div>
@@ -322,7 +325,7 @@ export default function PicLicoriceHome() {
                 <>
                   <div className="mb-4 font-mono text-sm tracking-[2px] text-[#B01F85]">AIME / FOUNDER</div>
                   <div className="mb-7 text-2xl leading-tight tracking-tight">
-                    If your products are not working, it is usually the routine.
+                    If your products are not working, it is usually the rhythm.
                   </div>
                   <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full border border-[#7C9C9B]/40 bg-[#faf8f4] text-3xl">
                     PL

@@ -8,7 +8,7 @@ export type Product = {
   approvedByAime: boolean
 }
 
-const TIKTOK_SHOP_URL = "https://shop.tiktok.com/us/store/aimebeautyllc/7495982003914443668"
+const TIKTOK_SHOP_URL = "https://vt.tiktok.com/ZTkWcTM1M/?page=TikTokShop"
 
 export const products: Product[] = [
   {

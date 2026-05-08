@@ -1,18 +1,42 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { RHYTHM_STORAGE_KEY } from "@/lib/rhythm"
 
-const navItems = [
+const baseNavItems = [
   { label: "Home", href: "/" },
-  { label: "Routine", href: "/routine" },
+  { label: "Start", href: "/routine" },
   { label: "Finest", href: "/formula" },
-  { label: "Shop", href: "/shop" },
+  { label: "Picks", href: "/shop" },
   { label: "Contact", href: "/contact" },
 ]
 
 export default function BottomNav() {
   const pathname = usePathname()
+  const [hasRhythm, setHasRhythm] = useState(false)
+
+  useEffect(() => {
+    const checkSavedRhythm = () => {
+      setHasRhythm(Boolean(localStorage.getItem(RHYTHM_STORAGE_KEY)))
+    }
+
+    checkSavedRhythm()
+    window.addEventListener("storage", checkSavedRhythm)
+    window.addEventListener("focus", checkSavedRhythm)
+    window.addEventListener("piclicorice-rhythm-updated", checkSavedRhythm)
+
+    return () => {
+      window.removeEventListener("storage", checkSavedRhythm)
+      window.removeEventListener("focus", checkSavedRhythm)
+      window.removeEventListener("piclicorice-rhythm-updated", checkSavedRhythm)
+    }
+  }, [])
+
+  const navItems = baseNavItems.map((item) =>
+    item.href === "/routine" ? { ...item, label: hasRhythm ? "Rhythm" : "Start" } : item
+  )
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-black/10 bg-[#faf8f4]/96 px-3 py-2 shadow-[0_-12px_30px_rgba(17,17,17,0.06)] backdrop-blur">

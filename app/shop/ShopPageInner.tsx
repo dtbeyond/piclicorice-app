@@ -23,12 +23,12 @@ export default function ShopPageInner() {
               style={{ objectPosition: content.shopImagePosition }}
             />
             <div className="p-7">
-              <div className="mb-4 font-mono text-xs uppercase tracking-[0.18em] text-[#7C9C9B]">Aime&apos;s Shop</div>
+              <div className="mb-4 font-mono text-xs uppercase tracking-[0.18em] text-[#7C9C9B]">Aime&apos;s Picks</div>
               <h1 className="mb-4 max-w-[560px] text-5xl font-semibold leading-none tracking-tighter">
-                Shop the routine basics.
+                Explore picks that fit the rhythm.
               </h1>
               <p className="mb-7 max-w-[540px] text-[15px] leading-relaxed text-black/60">
-                Start with simple, vetted skincare picks through Aime&apos;s TikTok Shop. This page keeps shopping internal first, so users understand what they are opening.
+                Start with simple, vetted skincare picks through Aime&apos;s TikTok Shop. This page keeps guidance first, so shopping supports the rhythm instead of replacing it.
               </p>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <a
@@ -37,13 +37,13 @@ export default function ShopPageInner() {
                   rel="noopener noreferrer"
                   className="shop-now-button inline-flex h-16 items-center justify-center rounded-full px-9 font-bold tracking-[0.08em]"
                 >
-                  OPEN SHOP
+                  EXPLORE PICKS
                 </a>
                 <Link
                   href="/routine"
                   className="inline-flex h-16 items-center justify-center rounded-full border border-black/15 bg-white/60 px-8 font-semibold text-black"
                 >
-                  Fix My Routine First
+                  Start Your Rhythm First
                 </Link>
               </div>
               <div className="mt-5 font-mono text-[10px] tracking-widest text-black/35">OPENS TIKTOK SHOP</div>
