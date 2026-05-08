@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import Link from "next/link"
+import { FaTiktok } from "react-icons/fa"
 import BottomNav from "@/components/BottomNav"
 import SiteHeader from "@/components/SiteHeader"
 import { buildRhythmResult, isCompleteRhythm, RHYTHM_STORAGE_KEY, type SavedRhythm } from "@/lib/rhythm"
@@ -23,6 +24,33 @@ export default function PicLicoriceHome() {
   }, [])
 
   const savedResult = savedRhythm ? buildRhythmResult(savedRhythm.answers) : null
+
+  const primaryCards = [
+    {
+      label: savedResult ? "Open My Rhythm" : "Start Your Rhythm",
+      body: savedResult ? "Return to the rhythm Aime shaped from your answers." : "Build a calm skincare rhythm before adding more products.",
+      href: "/routine",
+      tone: "from-[#B01F85]/10 via-white to-[#faf8f4]",
+    },
+    {
+      label: "Explore Aime's Picks",
+      body: "Browse vetted picks when they support the plan.",
+      href: "/shop",
+      tone: "from-[#7C9C9B]/16 via-white to-[#faf8f4]",
+    },
+    {
+      label: "Finest at 50",
+      body: "Read the method behind Aime's calmer approach.",
+      href: "/formula",
+      tone: "from-[#f5eee8] via-white to-[#7C9C9B]/18",
+    },
+    {
+      label: "Follow Aime",
+      body: "Find socials, updates, and ways to reach her.",
+      href: "/contact",
+      tone: "from-[#fff7fc] via-white to-[#B01F85]/8",
+    },
+  ]
 
   const concernCards = [
     {
@@ -145,31 +173,23 @@ export default function PicLicoriceHome() {
               Informed shopping, gentle education, and routines that help you feel seen before you buy.
             </p>
 
-            <div className="mt-7 grid grid-cols-2 gap-3">
-              <Link
-                href="/routine"
-                className="shop-now-button flex aspect-square min-h-[132px] items-center justify-center rounded-[24px] p-4 text-center text-sm font-bold uppercase tracking-[0.12em] transition-transform active:scale-[0.99] sm:min-h-[148px]"
-              >
-                {savedResult ? "Open My Rhythm" : "Start Your Rhythm"}
-              </Link>
-              <Link
-                href="/shop"
-                className="flex aspect-square min-h-[132px] items-center justify-center rounded-[24px] border border-black/12 bg-white/72 p-4 text-center text-sm font-semibold text-black shadow-[0_10px_24px_rgba(17,17,17,0.04)] transition-all hover:border-[#7C9C9B]/55 hover:bg-white active:scale-[0.99] sm:min-h-[148px]"
-              >
-                Explore Aime&apos;s Picks
-              </Link>
-              <Link
-                href="/formula"
-                className="flex aspect-square min-h-[132px] items-center justify-center rounded-[24px] border border-[#7C9C9B]/35 bg-white/52 p-4 text-center text-sm font-semibold text-black transition-all hover:border-[#7C9C9B] hover:bg-white active:scale-[0.99] sm:min-h-[148px]"
-              >
-                Finest at 50
-              </Link>
-              <Link
-                href="/contact"
-                className="flex aspect-square min-h-[132px] items-center justify-center rounded-[24px] border border-[#7C9C9B]/35 bg-white/52 p-4 text-center text-sm font-semibold text-black transition-all hover:border-[#7C9C9B] hover:bg-white active:scale-[0.99] sm:min-h-[148px]"
-              >
-                Follow Aime
-              </Link>
+            <div className="mt-7 grid gap-3 sm:grid-cols-2">
+              {primaryCards.map((card, index) => (
+                <Link
+                  key={card.href}
+                  href={card.href}
+                  className={`group relative min-h-[138px] overflow-hidden rounded-[22px] border border-black/10 bg-linear-to-br ${card.tone} p-4 transition-all hover:border-[#B01F85]/45 hover:bg-white active:scale-[0.99]`}
+                >
+                  <span className="mb-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/78 font-mono text-[11px] text-[#B01F85]">
+                    0{index + 1}
+                  </span>
+                  <span className="block text-[15px] font-semibold leading-tight">{card.label}</span>
+                  <span className="mt-2 block max-w-[230px] text-xs leading-relaxed text-black/55">{card.body}</span>
+                  <span className="absolute bottom-4 right-4 font-mono text-[10px] uppercase tracking-widest text-black/32 group-hover:text-[#B01F85]">
+                    {index === 0 ? "Start" : "Open"}
+                  </span>
+                </Link>
+              ))}
             </div>
 
             <div className="mt-4 text-xs tracking-wide text-black/45">
@@ -272,10 +292,10 @@ export default function PicLicoriceHome() {
                   rel="noopener noreferrer"
                   className="group flex min-h-28 items-center gap-4 rounded-[24px] border border-black/10 bg-linear-to-br from-white via-[#faf8f4] to-[#B01F85]/8 p-4 transition-all hover:border-[#B01F85]/35 active:border-[#B01F85]/50"
                 >
-                  <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-[18px] bg-[#111111] text-2xl font-black text-white shadow-[0_12px_24px_rgba(17,17,17,0.14)]">
-                    <span className="absolute -left-0.5 top-3 text-[#25F4EE] opacity-90">♪</span>
-                    <span className="absolute left-1 top-2 text-[#FE2C55] opacity-90">♪</span>
-                    <span className="relative">♪</span>
+                  <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-[18px] bg-[#111111] text-2xl text-white shadow-[0_12px_24px_rgba(17,17,17,0.14)]">
+                    <FaTiktok className="relative z-10" aria-hidden="true" />
+                    <FaTiktok className="absolute -translate-x-0.5 translate-y-0.5 text-[#25F4EE] opacity-85" aria-hidden="true" />
+                    <FaTiktok className="absolute translate-x-0.5 -translate-y-0.5 text-[#FE2C55] opacity-85" aria-hidden="true" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="font-mono text-[10px] uppercase tracking-[0.18em] text-[#7C9C9B]">TikTok</div>

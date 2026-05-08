@@ -7,10 +7,10 @@ import { ingredients, type Ingredient } from "@/data/ingredients"
 import { useSiteContent } from "@/lib/useSiteContent"
 
 const methodThemes = [
-  ["Hydration", "Keep the rhythm soft, steady, and water-supportive before chasing stronger actives."],
-  ["Maturity", "Work with the skin you have now instead of forcing a routine built for someone else."],
-  ["Internal Balance", "Rest, stress, nutrition, and consistency all show up on the surface."],
-  ["Consistency", "Small steps repeated calmly beat a shelf full of products used chaotically."],
+  ["Hydration", "Keep the rhythm soft, steady, and water-supportive before chasing stronger actives.", "from-[#7C9C9B]/20 via-white to-[#faf8f4]"],
+  ["Maturity", "Work with the skin you have now instead of forcing a routine built for someone else.", "from-[#f5eee8] via-white to-[#B01F85]/8"],
+  ["Internal Balance", "Rest, stress, nutrition, and consistency all show up on the surface.", "from-white via-[#faf8f4] to-[#7C9C9B]/16"],
+  ["Consistency", "Small steps repeated calmly beat a shelf full of products used chaotically.", "from-[#fff7fc] via-white to-[#7C9C9B]/12"],
 ]
 
 const categoryFilters = [
@@ -109,8 +109,8 @@ export default function FinestAt50MethodPage() {
         </section>
 
         <section className="mb-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {methodThemes.map(([title, body]) => (
-            <div key={title} className="rounded-[24px] border border-black/10 bg-white p-5">
+          {methodThemes.map(([title, body, tone]) => (
+            <div key={title} className={`rounded-[24px] border border-black/10 bg-linear-to-br ${tone} p-5`}>
               <div className="mb-2 text-lg font-semibold tracking-tight">{title}</div>
               <p className="text-xs leading-relaxed text-black/60">{body}</p>
             </div>
@@ -124,7 +124,7 @@ export default function FinestAt50MethodPage() {
             Search by ingredient or filter by need. Open each card for pairing notes, caution notes, and Aime&apos;s plain-English read.
           </p>
 
-          <div className="mb-4 grid gap-3 rounded-[24px] border border-black/10 bg-white p-4">
+          <div className="mb-4 grid gap-3 rounded-[24px] border border-[#7C9C9B]/28 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/12 p-4">
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
@@ -140,7 +140,7 @@ export default function FinestAt50MethodPage() {
                   className={`h-10 shrink-0 rounded-full border px-4 text-sm font-semibold transition-all ${
                     activeCategory === filter.value
                       ? "border-[#111111] bg-white text-[#B01F85] shadow-[0_8px_16px_rgba(176,31,133,0.10)]"
-                      : "border-black/10 bg-[#faf8f4] text-black/62 hover:bg-white"
+                      : "border-black/10 bg-white/70 text-black/62 hover:bg-white"
                   }`}
                 >
                   {filter.label}
@@ -159,7 +159,10 @@ export default function FinestAt50MethodPage() {
               const expanded = expandedIds.includes(ingredient.id)
 
               return (
-                <article key={ingredient.id} className="rounded-[24px] border border-black/10 bg-white p-5">
+                <article
+                  key={ingredient.id}
+                  className="rounded-[24px] border border-black/10 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/10 p-5 shadow-[0_10px_24px_rgba(17,17,17,0.03)]"
+                >
                   <button
                     type="button"
                     onClick={() => toggleExpanded(ingredient.id)}
@@ -185,12 +188,12 @@ export default function FinestAt50MethodPage() {
                         ["Avoid mixing with", avoidMixingWith(ingredient)],
                         ["Go slow if", ingredient.avoidIf || "Your skin feels hot, tight, itchy, or newly irritated."],
                       ].map(([label, value]) => (
-                        <div key={label} className="rounded-[18px] bg-[#faf8f4]/80 p-4">
+                        <div key={label} className="rounded-[18px] border border-white/70 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/10 p-4">
                           <div className="mb-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#7C9C9B]">{label}</div>
                           <div className="text-sm leading-relaxed text-black/64">{value}</div>
                         </div>
                       ))}
-                      <div className="rounded-[18px] bg-[#fff7fc] p-4 sm:col-span-2">
+                      <div className="rounded-[18px] border border-[#B01F85]/10 bg-linear-to-br from-[#fff7fc] via-white to-[#B01F85]/8 p-4 sm:col-span-2">
                         <div className="mb-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#B01F85]">Aime&apos;s note</div>
                         <div className="text-sm leading-relaxed text-black/68">{ingredient.whyItMatters}</div>
                       </div>
