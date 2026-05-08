@@ -145,33 +145,33 @@ export default function PicLicoriceHome() {
               Informed shopping, gentle education, and routines that help you feel seen before you buy.
             </p>
 
-            <div className="mt-7 grid gap-3 sm:grid-cols-[1.05fr_0.95fr]">
-              <Link href="/routine" className="group relative min-h-24 overflow-hidden rounded-[24px] border border-[#111111] bg-linear-to-br from-white via-[#fff7fc] to-[#B01F85]/10 p-5 shadow-[0_12px_26px_rgba(176,31,133,0.10)] active:scale-[0.99]">
-                <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-black/42">Guidance first</span>
-                <span className="mt-2 block text-[18px] font-bold tracking-[0.08em] text-[#B01F85]">
-                  {savedResult ? "OPEN MY RHYTHM" : "START YOUR RHYTHM"}
-                </span>
-                <span className="absolute bottom-4 right-4 rounded-full bg-white/80 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-black/38 group-hover:text-[#B01F85]">
-                  Begin
-                </span>
+            <div className="mt-7 grid gap-3 sm:grid-cols-[1.08fr_0.92fr]">
+              <Link
+                href="/routine"
+                className="shop-now-button inline-flex h-16 items-center justify-center rounded-full px-7 text-center text-sm font-bold uppercase tracking-[0.12em] transition-transform active:scale-[0.99]"
+              >
+                {savedResult ? "Open My Rhythm" : "Start Your Rhythm"}
               </Link>
-              <Link href="/shop" className="group relative min-h-24 overflow-hidden rounded-[24px] border border-black/10 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/18 p-5 active:scale-[0.99]">
-                <span className="block font-mono text-[10px] uppercase tracking-[0.18em] text-[#7C9C9B]">When you are ready</span>
-                <span className="mt-2 block text-[18px] font-semibold tracking-tight text-black">Explore Aime&apos;s Picks</span>
-                <span className="absolute bottom-4 right-4 rounded-full bg-white/80 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-black/38 group-hover:text-[#B01F85]">
-                  Open
-                </span>
+              <Link
+                href="/shop"
+                className="inline-flex h-16 items-center justify-center rounded-full border border-black/12 bg-white/72 px-7 text-center text-sm font-semibold text-black shadow-[0_10px_24px_rgba(17,17,17,0.04)] transition-all hover:border-[#7C9C9B]/55 hover:bg-white active:scale-[0.99]"
+              >
+                Explore Aime&apos;s Picks
               </Link>
             </div>
 
             <div className="mt-3 grid grid-cols-2 gap-3">
-              <Link href="/formula" className="rounded-[22px] border border-[#7C9C9B]/35 bg-linear-to-br from-white to-[#7C9C9B]/12 px-5 py-4 text-sm font-semibold transition-all hover:bg-white">
-                <span className="block text-black">Finest at 50</span>
-                <span className="mt-1 block text-[11px] font-normal text-black/42">Method</span>
+              <Link
+                href="/formula"
+                className="inline-flex h-14 items-center justify-center rounded-full border border-[#7C9C9B]/35 bg-white/52 px-5 text-center text-sm font-semibold text-black transition-all hover:border-[#7C9C9B] hover:bg-white"
+              >
+                Finest at 50
               </Link>
-              <Link href="/contact" className="rounded-[22px] border border-[#7C9C9B]/35 bg-linear-to-br from-white to-[#B01F85]/8 px-5 py-4 text-sm font-semibold transition-all hover:bg-white">
-                <span className="block text-black">Follow Aime</span>
-                <span className="mt-1 block text-[11px] font-normal text-black/42">Socials</span>
+              <Link
+                href="/contact"
+                className="inline-flex h-14 items-center justify-center rounded-full border border-[#7C9C9B]/35 bg-white/52 px-5 text-center text-sm font-semibold text-black transition-all hover:border-[#7C9C9B] hover:bg-white"
+              >
+                Follow Aime
               </Link>
             </div>
 
