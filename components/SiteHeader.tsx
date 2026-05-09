@@ -32,8 +32,12 @@ export default function SiteHeader({
     <header className="sticky top-0 z-50 border-b border-black/10 bg-[#faf8f4]/92 px-4 py-3.5 backdrop-blur sm:px-6">
       <div className="mx-auto flex w-full max-w-[980px] items-center justify-between gap-4">
         <Link href="/" className="flex min-w-0 items-center gap-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#111111] text-sm font-bold text-white">
-            PL
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#111111] ring-1 ring-black/10">
+            <img
+              src="/assets/piclicorice/piclicorice-pl-logo.jpeg"
+              alt="PicLicorice logo"
+              className="h-full w-full object-cover"
+            />
           </div>
           <div className="min-w-0">
             <div className="truncate text-lg font-semibold tracking-tight">PicLicorice</div>
