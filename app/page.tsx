@@ -137,15 +137,9 @@ export default function PicLicoriceHome() {
             )}
             <div className="absolute inset-0 bg-linear-to-t from-[#faf8f4]/82 via-white/28 to-black/5" />
             <div className="relative z-10 flex flex-col items-center px-8 text-center text-black">
-              <div className="play-glow mb-5 flex h-20 w-20 items-center justify-center rounded-full border border-[#111111] bg-white transition-transform group-active:scale-95">
+              <div className="play-glow flex h-16 w-16 items-center justify-center rounded-full border border-black/20 bg-white/58 backdrop-blur transition-transform group-active:scale-95 sm:h-[72px] sm:w-[72px]">
                 <div className="ml-1 h-0 w-0 border-y-[13px] border-l-[20px] border-y-transparent border-l-[#B01F85]" />
               </div>
-              <div className="rounded-full bg-white/82 px-5 py-2 text-sm font-semibold tracking-tight shadow-[0_12px_24px_rgba(17,17,17,0.08)]">
-                Watch Aime first
-              </div>
-            </div>
-            <div className="absolute bottom-4 right-4 rounded-full bg-white/80 px-3 py-1 font-mono text-[10px] tracking-widest text-black/55">
-              {content.homepageVideoUrl ? "PLAY INTRO" : "ART ROTATION"}
             </div>
           </button>
 
@@ -170,7 +164,7 @@ export default function PicLicoriceHome() {
           <Link href="/formula" className="flush-card border border-[#7C9C9B]/35 bg-white text-black transition-transform active:scale-[0.99]">
             <div className="bg-linear-to-br from-white via-[#f7f4ef] to-[#7C9C9B]/20 p-7">
               <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#B01F85]">The Journey</div>
-              <div className="mb-3 text-3xl font-semibold leading-none tracking-tighter">Finest at 50 Method</div>
+              <div className="mb-3 text-3xl font-semibold leading-none tracking-tighter">Finest at 50</div>
               <p className="text-sm leading-relaxed text-black/62">Your skin reflects how you live, not just what you apply.</p>
             </div>
             <div className="relative aspect-video overflow-hidden">
@@ -197,15 +191,12 @@ export default function PicLicoriceHome() {
               Pick the doorway that sounds most like you. Aime&apos;s rhythm builder will narrow it from there.
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
-              {concernCards.map((chip, index) => (
+                {concernCards.map((chip) => (
                 <Link
                   key={chip.param}
                   href={`/routine?concern=${chip.param}`}
-                  className={`group relative min-h-[138px] overflow-hidden rounded-[22px] border border-black/10 bg-linear-to-br ${chip.tone} p-4 transition-all hover:border-[#B01F85]/45 hover:bg-white`}
+                  className={`group relative min-h-[112px] overflow-hidden rounded-[22px] border border-black/10 bg-linear-to-br ${chip.tone} p-4 transition-all hover:border-[#B01F85]/45 hover:bg-white`}
                 >
-                  <span className="mb-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/78 font-mono text-[11px] text-[#B01F85]">
-                    0{index + 1}
-                  </span>
                   <span className="block text-[15px] font-semibold leading-tight">{chip.label}</span>
                   <span className="mt-2 block text-xs leading-relaxed text-black/55">{chip.body}</span>
                   <span className="absolute bottom-4 right-4 font-mono text-[10px] uppercase tracking-widest text-black/32 group-hover:text-[#B01F85]">

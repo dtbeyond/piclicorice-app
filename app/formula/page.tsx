@@ -6,7 +6,7 @@ import SiteHeader from "@/components/SiteHeader"
 import { ingredients, type Ingredient } from "@/data/ingredients"
 import { useSiteContent } from "@/lib/useSiteContent"
 
-const methodThemes = [
+const finestThemes = [
   ["Hydration", "Keep the rhythm soft, steady, and water-supportive before chasing stronger actives.", "from-[#7C9C9B]/20 via-white to-[#faf8f4]"],
   ["Maturity", "Work with the skin you have now instead of forcing a routine built for someone else.", "from-[#f5eee8] via-white to-[#B01F85]/8"],
   ["Internal Balance", "Rest, stress, nutrition, and consistency all show up on the surface.", "from-white via-[#faf8f4] to-[#7C9C9B]/16"],
@@ -46,7 +46,7 @@ function bestFor(ingredient: Ingredient) {
     .join(" / ")
 }
 
-export default function FinestAt50MethodPage() {
+export default function FinestAt50Page() {
   const { content } = useSiteContent()
   const [query, setQuery] = useState("")
   const [activeCategory, setActiveCategory] = useState("all")
@@ -99,7 +99,7 @@ export default function FinestAt50MethodPage() {
         </section>
 
         <section className="mb-8 rounded-[24px] border border-black/10 bg-white p-7 text-black sm:p-9">
-          <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#B01F85]">Finest at 50 Method</div>
+          <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#B01F85]">Finest at 50</div>
           <h1 className="mb-4 max-w-[720px] text-4xl font-semibold leading-[0.98] tracking-tighter sm:text-6xl">
             Your skin reflects how you live, not just what you apply.
           </h1>
@@ -109,7 +109,7 @@ export default function FinestAt50MethodPage() {
         </section>
 
         <section className="mb-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {methodThemes.map(([title, body, tone]) => (
+          {finestThemes.map(([title, body, tone]) => (
             <div key={title} className={`rounded-[24px] border border-black/10 bg-linear-to-br ${tone} p-5`}>
               <div className="mb-2 text-lg font-semibold tracking-tight">{title}</div>
               <p className="text-xs leading-relaxed text-black/60">{body}</p>
