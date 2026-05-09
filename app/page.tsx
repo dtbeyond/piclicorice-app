@@ -25,33 +25,6 @@ export default function PicLicoriceHome() {
 
   const savedResult = savedRhythm ? buildRhythmResult(savedRhythm.answers) : null
 
-  const primaryCards = [
-    {
-      label: savedResult ? "Open My Rhythm" : "Start Your Rhythm",
-      body: savedResult ? "Return to the rhythm Aime shaped from your answers." : "Build a calm skincare rhythm before adding more products.",
-      href: "/routine",
-      tone: "from-[#B01F85]/10 via-white to-[#faf8f4]",
-    },
-    {
-      label: "Explore Aime's Picks",
-      body: "Browse vetted picks when they support the plan.",
-      href: "/shop",
-      tone: "from-[#7C9C9B]/16 via-white to-[#faf8f4]",
-    },
-    {
-      label: "Finest at 50",
-      body: "Read the method behind Aime's calmer approach.",
-      href: "/formula",
-      tone: "from-[#f5eee8] via-white to-[#7C9C9B]/18",
-    },
-    {
-      label: "Follow Aime",
-      body: "Find socials, updates, and ways to reach her.",
-      href: "/contact",
-      tone: "from-[#fff7fc] via-white to-[#B01F85]/8",
-    },
-  ]
-
   const concernCards = [
     {
       label: "My rhythm feels random",
@@ -81,25 +54,31 @@ export default function PicLicoriceHome() {
 
   const homeMediaImages = [
     {
-      src: content.homepageImageUrl,
+      src: content.homepageImageUrl || "/assets/piclicorice/home-hero-mobile-4x5.png",
       mobileSrc:
         content.homepageImageUrl === "/assets/piclicorice/piclicorice_home_hero_watch_aime_first_v2_16x10.png"
-          ? "/assets/piclicorice/piclicorice_home_hero_mobile_backup_v2_4x5.png"
+          ? "/assets/piclicorice/home-hero-mobile-4x5.png"
           : "",
-      alt: "PicLicorice skincare coaching",
+      alt: "PicLicorice skincare edit",
       position: content.homepageImagePosition,
-    },
-    {
-      src: "/assets/piclicorice/piclicorice_shop_routine_basics_v2_16x9.png",
-      mobileSrc: "",
-      alt: "Skincare rhythm products",
-      position: "center center",
     },
     {
       src: "/assets/piclicorice/piclicorice_home_finest_at_50_v2_16x9.png",
       mobileSrc: "",
-      alt: "Finest at 50 skincare coaching",
+      alt: "Skincare guidance for mature skin",
       position: content.finestImagePosition,
+    },
+    {
+      src: "/assets/piclicorice/home-hero-watch-aime-16x10.png",
+      mobileSrc: "",
+      alt: "Warm skincare editorial",
+      position: "center center",
+    },
+    {
+      src: "/assets/piclicorice/piclicorice_shop_routine_basics_v2_16x9.png",
+      mobileSrc: "",
+      alt: "Glow-forward skincare formulas",
+      position: "center center",
     },
     {
       src: "/assets/piclicorice/home-hero-watch-aime-16x10.png",
@@ -119,12 +98,14 @@ export default function PicLicoriceHome() {
 
   return (
     <div className="editorial-shell min-h-screen pb-24">
-      <SiteHeader actionLabel="Start Your Rhythm" actionHref="/routine" actionVariant="shop" />
+      <SiteHeader actionLabel="Explore Picks" actionHref="/shop" actionVariant="shop" />
 
       <main className="mx-auto w-full max-w-[1040px] px-4 sm:px-6">
         <section className="grid gap-8 pt-6 sm:pt-10 xl:grid-cols-[1.05fr_0.95fr] xl:items-center">
           <button
-            onClick={() => setVideoPlaying(true)}
+            onClick={() => {
+              if (content.homepageVideoUrl) setVideoPlaying(true)
+            }}
             className="media-card group relative flex aspect-[4/5] w-full items-center justify-center text-left sm:aspect-[16/10] xl:order-2"
           >
             <div className="absolute inset-0 bg-[#f7f4ef]/92" />
@@ -139,7 +120,11 @@ export default function PicLicoriceHome() {
               />
             ) : (
               homeMediaImages.map((image, index) => (
-                <picture key={`${image.src}-${index}`} className="home-media-slide absolute inset-0">
+                <picture
+                  key={`${image.src}-${index}`}
+                  className="home-media-slide absolute inset-0"
+                  style={{ animationDelay: `${index * 6}s` }}
+                >
                   {image.mobileSrc && <source media="(max-width: 640px)" srcSet={image.mobileSrc} />}
                   <img
                     src={image.src}
@@ -165,36 +150,13 @@ export default function PicLicoriceHome() {
           </button>
 
           <div className="xl:order-1">
-            <div className="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-[#7C9C9B]">Warm skincare coaching</div>
+            <div className="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-[#7C9C9B]">The Skincare Edit</div>
             <h1 className="max-w-[680px] text-[42px] font-semibold leading-[0.96] tracking-tighter sm:text-6xl">
               Stop guessing what works. Let&apos;s find your rhythm step by step.
             </h1>
             <p className="mt-5 max-w-[560px] text-base leading-relaxed text-black/58 sm:text-lg">
-              Informed shopping, gentle education, and routines that help you feel seen before you buy.
+              Simple routines, glow-forward formulas, and products worth keeping in rotation.
             </p>
-
-            <div className="mt-7 grid gap-3 sm:grid-cols-2">
-              {primaryCards.map((card, index) => (
-                <Link
-                  key={card.href}
-                  href={card.href}
-                  className={`group relative min-h-[138px] overflow-hidden rounded-[22px] border border-black/10 bg-linear-to-br ${card.tone} p-4 transition-all hover:border-[#B01F85]/45 hover:bg-white active:scale-[0.99]`}
-                >
-                  <span className="mb-4 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/78 font-mono text-[11px] text-[#B01F85]">
-                    0{index + 1}
-                  </span>
-                  <span className="block text-[15px] font-semibold leading-tight">{card.label}</span>
-                  <span className="mt-2 block max-w-[230px] text-xs leading-relaxed text-black/55">{card.body}</span>
-                  <span className="absolute bottom-4 right-4 font-mono text-[10px] uppercase tracking-widest text-black/32 group-hover:text-[#B01F85]">
-                    {index === 0 ? "Start" : "Open"}
-                  </span>
-                </Link>
-              ))}
-            </div>
-
-            <div className="mt-4 text-xs tracking-wide text-black/45">
-              Browse freely. Sign up only when you want downloads, saved rhythms, or files.
-            </div>
           </div>
         </section>
 
@@ -207,7 +169,7 @@ export default function PicLicoriceHome() {
         <section className="mt-12 grid gap-4 lg:grid-cols-[1fr_1fr]">
           <Link href="/formula" className="flush-card border border-[#7C9C9B]/35 bg-white text-black transition-transform active:scale-[0.99]">
             <div className="bg-linear-to-br from-white via-[#f7f4ef] to-[#7C9C9B]/20 p-7">
-              <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#B01F85]">New from Aime</div>
+              <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#B01F85]">The Journey</div>
               <div className="mb-3 text-3xl font-semibold leading-none tracking-tighter">Finest at 50 Method</div>
               <p className="text-sm leading-relaxed text-black/62">Your skin reflects how you live, not just what you apply.</p>
             </div>
@@ -218,7 +180,10 @@ export default function PicLicoriceHome() {
                   src={src}
                   alt="PicLicorice editorial skincare"
                   className="home-media-slide absolute inset-0 h-full w-full object-cover"
-                  style={{ objectPosition: index === 1 ? content.finestImagePosition : "center center" }}
+                  style={{
+                    objectPosition: index === 1 ? content.finestImagePosition : "center center",
+                    animationDelay: `${index * 6}s`,
+                  }}
                 />
               ))}
               <div className="absolute inset-0 bg-linear-to-t from-black/10 to-transparent" />

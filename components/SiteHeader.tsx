@@ -33,11 +33,11 @@ export default function SiteHeader({
       <div className="mx-auto flex w-full max-w-[980px] items-center justify-between gap-4">
         <Link href="/" className="flex min-w-0 items-center gap-3">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#111111] text-sm font-bold text-white">
-            A
+            PL
           </div>
           <div className="min-w-0">
             <div className="truncate text-lg font-semibold tracking-tight">PicLicorice</div>
-            <div className="-mt-1 text-[10px] text-black/45">by Aime</div>
+            <div className="-mt-1 text-[10px] text-black/45">Skincare | Wellness</div>
           </div>
         </Link>
 
