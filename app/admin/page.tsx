@@ -1,6 +1,6 @@
 "use client"
 
-import React, { ChangeEvent, useEffect, useMemo, useState } from "react"
+import React, { ChangeEvent, DragEvent, useEffect, useMemo, useState } from "react"
 import Link from "next/link"
 import { supabase } from "@/lib/supabaseClient"
 import { SocialLink, TikTokLink } from "@/lib/siteContent"
@@ -108,6 +108,7 @@ export default function AdminPage() {
   const [message, setMessage] = useState("")
   const [isSaving, setIsSaving] = useState(false)
   const [uploadingField, setUploadingField] = useState("")
+  const [draggingField, setDraggingField] = useState("")
   const [isAuthorizedAdmin, setIsAuthorizedAdmin] = useState(false)
 
   const isSupabaseReady = Boolean(supabase)
@@ -231,10 +232,7 @@ export default function AdminPage() {
     setIsSaving(false)
   }
 
-  const uploadFile = async (event: ChangeEvent<HTMLInputElement>, target: UploadTarget) => {
-    const file = event.target.files?.[0]
-    if (!file) return
-
+  const uploadFileForTarget = async (file: File, target: UploadTarget) => {
     setUploadingField(target)
     setMessage("")
 
@@ -272,6 +270,46 @@ export default function AdminPage() {
     updateField(target, data.publicUrl)
     setMessage("Upload ready. Save changes to publish it.")
     setUploadingField("")
+  }
+
+  const uploadFile = async (event: ChangeEvent<HTMLInputElement>, target: UploadTarget) => {
+    const file = event.target.files?.[0]
+    event.target.value = ""
+    if (!file) return
+
+    await uploadFileForTarget(file, target)
+  }
+
+  const droppedUrl = (event: DragEvent<HTMLElement>) => {
+    const uriList = event.dataTransfer.getData("text/uri-list")
+    const plainText = event.dataTransfer.getData("text/plain")
+    const html = event.dataTransfer.getData("text/html")
+    const htmlMatch = html.match(/<img[^>]+src=["']([^"']+)["']/i)
+    const value = uriList || plainText || htmlMatch?.[1] || ""
+    const firstLine = value.split("\n").find((line) => line && !line.startsWith("#")) || ""
+
+    return /^https?:\/\//i.test(firstLine) || /^data:image\//i.test(firstLine) ? firstLine : ""
+  }
+
+  const handleDrop = async (event: DragEvent<HTMLDivElement>, target: UploadTarget) => {
+    event.preventDefault()
+    event.stopPropagation()
+    setDraggingField("")
+
+    const file = event.dataTransfer.files?.[0]
+    if (file) {
+      await uploadFileForTarget(file, target)
+      return
+    }
+
+    const url = droppedUrl(event)
+    if (url) {
+      updateField(target, url)
+      setMessage("Dropped URL added. Save changes to publish it.")
+      return
+    }
+
+    setMessage("Drop a file from your computer, or drop/paste a direct image or video URL.")
   }
 
   return (
@@ -468,7 +506,30 @@ export default function AdminPage() {
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               {mediaSlots.map((slot) => (
-                <div key={slot.field} className="rounded-2xl border border-white/10 bg-[#0f0f14] p-4">
+                <div
+                  key={slot.field}
+                  onDragEnter={(event) => {
+                    event.preventDefault()
+                    setDraggingField(slot.field)
+                  }}
+                  onDragOver={(event) => {
+                    event.preventDefault()
+                    event.dataTransfer.dropEffect = "copy"
+                    setDraggingField(slot.field)
+                  }}
+                  onDragLeave={(event) => {
+                    event.preventDefault()
+                    if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
+                      setDraggingField("")
+                    }
+                  }}
+                  onDrop={(event) => handleDrop(event, slot.field)}
+                  className={`rounded-2xl border bg-[#0f0f14] p-4 transition-all ${
+                    draggingField === slot.field
+                      ? "border-[#ff4da6] bg-[#ff4da6]/10 shadow-[0_0_0_1px_rgba(255,77,166,0.35)]"
+                      : "border-white/10"
+                  }`}
+                >
                   <div className="text-[10px] uppercase tracking-[0.16em] font-mono text-[#ff4da6] mb-2">{slot.number}</div>
                   <label className="block text-sm font-semibold mb-2">{slot.label}</label>
                   <div className="space-y-2 mb-4 text-xs text-white/50 leading-relaxed">
@@ -488,6 +549,15 @@ export default function AdminPage() {
                     onChange={(event) => uploadFile(event, slot.field)}
                     className="block w-full text-xs text-white/55 file:mr-3 file:rounded-full file:border-0 file:bg-white/10 file:px-3 file:py-2 file:text-white"
                   />
+                  <div
+                    className={`mt-3 rounded-xl border border-dashed px-4 py-4 text-center text-xs transition-all ${
+                      draggingField === slot.field
+                        ? "border-[#ff4da6] bg-[#ff4da6]/10 text-white"
+                        : "border-white/15 bg-white/[0.03] text-white/45"
+                    }`}
+                  >
+                    Drop image/video here, or use Choose File.
+                  </div>
                   {uploadingField === slot.field && <p className="mt-2 text-xs text-[#ff4da6]">Uploading...</p>}
                 </div>
               ))}
