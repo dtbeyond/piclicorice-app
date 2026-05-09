@@ -100,6 +100,31 @@ const cropControls: Array<{
   },
 ]
 
+const supportedImageExtensions = [".png", ".jpg", ".jpeg", ".webp"]
+const supportedVideoExtensions = [".mp4", ".webm", ".mov", ".m4v"]
+
+const fileExtension = (fileName: string) => {
+  const index = fileName.lastIndexOf(".")
+  return index >= 0 ? fileName.slice(index).toLowerCase() : ""
+}
+
+const isVideoTarget = (target: UploadTarget) => target.toLowerCase().includes("video")
+
+const isSupportedUpload = (file: File, target: UploadTarget) => {
+  const extension = fileExtension(file.name)
+
+  if (isVideoTarget(target)) {
+    return file.type.startsWith("video/") || supportedVideoExtensions.includes(extension)
+  }
+
+  return (
+    file.type === "image/png" ||
+    file.type === "image/jpeg" ||
+    file.type === "image/webp" ||
+    supportedImageExtensions.includes(extension)
+  )
+}
+
 export default function AdminPage() {
   const { content, setContent, status, error, saveContent } = useSiteContent()
   const [email, setEmail] = useState("")
@@ -236,6 +261,16 @@ export default function AdminPage() {
     setUploadingField(target)
     setMessage("")
 
+    if (!isSupportedUpload(file, target)) {
+      setMessage(
+        isVideoTarget(target)
+          ? "Could not import that video. Try an MP4, WebM, MOV, or paste a hosted video URL."
+          : "Could not import that image. Try a PNG, JPG, JPEG, or WebP file."
+      )
+      setUploadingField("")
+      return
+    }
+
     if (!supabase || !sessionEmail) {
       if (file.size > 700_000) {
         setMessage("Sign in with Supabase before uploading larger files. For now, paste a public URL.")
@@ -253,7 +288,8 @@ export default function AdminPage() {
       return
     }
 
-    const cleanName = file.name.toLowerCase().replace(/[^a-z0-9.-]/g, "-")
+    const fallbackName = isVideoTarget(target) ? "upload.mp4" : "upload.jpg"
+    const cleanName = (file.name || fallbackName).toLowerCase().replace(/[^a-z0-9.-]/g, "-")
     const path = `${target}/${Date.now()}-${cleanName}`
     const { error: uploadError } = await supabase.storage.from("site-media").upload(path, file, {
       cacheControl: "3600",
@@ -288,7 +324,9 @@ export default function AdminPage() {
     const value = uriList || plainText || htmlMatch?.[1] || ""
     const firstLine = value.split("\n").find((line) => line && !line.startsWith("#")) || ""
 
-    return /^https?:\/\//i.test(firstLine) || /^data:image\//i.test(firstLine) ? firstLine : ""
+    return /^https?:\/\//i.test(firstLine) || /^data:image\//i.test(firstLine) || /^blob:/i.test(firstLine)
+      ? firstLine
+      : ""
   }
 
   const handleDrop = async (event: DragEvent<HTMLDivElement>, target: UploadTarget) => {
@@ -303,13 +341,17 @@ export default function AdminPage() {
     }
 
     const url = droppedUrl(event)
-    if (url) {
+    if (url && !url.startsWith("blob:")) {
       updateField(target, url)
       setMessage("Dropped URL added. Save changes to publish it.")
       return
     }
 
-    setMessage("Drop a file from your computer, or drop/paste a direct image or video URL.")
+    setMessage(
+      url.startsWith("blob:")
+        ? "That drag source gave the browser a temporary blob link, not a reusable file. Save the image as PNG/JPG/WebP first, then drop the saved file here."
+        : "Drop a PNG, JPG, JPEG, WebP, or video file from your computer, or paste a direct hosted URL."
+    )
   }
 
   return (
@@ -545,7 +587,7 @@ export default function AdminPage() {
                   />
                   <input
                     type="file"
-                    accept={slot.field.toLowerCase().includes("video") ? "video/*" : "image/*"}
+                    accept={isVideoTarget(slot.field) ? "video/mp4,video/webm,video/quicktime,.mp4,.webm,.mov,.m4v" : "image/png,image/jpeg,image/webp,.png,.jpg,.jpeg,.webp"}
                     onChange={(event) => uploadFile(event, slot.field)}
                     className="block w-full text-xs text-white/55 file:mr-3 file:rounded-full file:border-0 file:bg-white/10 file:px-3 file:py-2 file:text-white"
                   />
@@ -556,7 +598,7 @@ export default function AdminPage() {
                         : "border-white/15 bg-white/[0.03] text-white/45"
                     }`}
                   >
-                    Drop image/video here, or use Choose File.
+                    Drop PNG/JPG/WebP here, or use Choose File.
                   </div>
                   {uploadingField === slot.field && <p className="mt-2 text-xs text-[#ff4da6]">Uploading...</p>}
                 </div>
