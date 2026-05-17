@@ -18,6 +18,16 @@ const tickerItems = [
 
 const founderPortraitUrl = "/assets/piclicorice/founder-portrait-CT9BX5H9.jpg"
 
+function getGlowDay(savedAt: string) {
+  const savedTime = new Date(savedAt).getTime()
+  if (Number.isNaN(savedTime)) return null
+
+  const elapsedMs = Date.now() - savedTime
+  if (elapsedMs < 0) return 1
+
+  return Math.floor(elapsedMs / 86_400_000) + 1
+}
+
 function FinestTicker() {
   const items = [...tickerItems, ...tickerItems]
 
@@ -58,6 +68,7 @@ export default function PicLicoriceHome() {
   }, [])
 
   const savedResult = savedRhythm ? buildRhythmResult(savedRhythm.answers) : null
+  const glowDay = savedRhythm ? getGlowDay(savedRhythm.savedAt) : null
   const featuredLinks = content.tiktokLinks.filter((link) => link.isFeatured && link.url)
 
   return (
@@ -123,10 +134,15 @@ export default function PicLicoriceHome() {
               style={{ objectPosition: content.homepageImagePosition || "center center" }}
             />
             <div className="absolute inset-0 bg-linear-to-t from-[#111A33]/64 via-transparent to-transparent" />
-            <div className="absolute left-5 top-8 hidden rounded-[18px] border border-white/50 bg-white/70 px-5 py-4 shadow-[0_18px_48px_rgba(17,26,51,0.16)] backdrop-blur md:block">
-              <div className="pl-kicker text-[10px]">Glow tracker</div>
-              <div className="pl-display mt-1 text-xl">Day 84 ✨</div>
-            </div>
+            {glowDay && (
+              <Link
+                href="/routine"
+                className="absolute left-5 top-8 hidden rounded-[18px] border border-white/50 bg-white/70 px-5 py-4 shadow-[0_18px_48px_rgba(17,26,51,0.16)] backdrop-blur transition-transform hover:-translate-y-0.5 md:block"
+              >
+                <div className="pl-kicker text-[10px]">Glow tracker</div>
+                <div className="pl-display mt-1 text-xl">Day {glowDay}</div>
+              </Link>
+            )}
             <div className="absolute bottom-6 left-5 right-5 rounded-[20px] border border-white/18 bg-[#111A33]/90 p-5 text-white shadow-[0_16px_48px_rgba(17,26,51,0.24)] backdrop-blur">
               <div className="font-serif text-sm font-semibold italic text-white/95">&quot;It&apos;s never too late to become your best self.&quot;</div>
               <div className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[#f7dfe2]">Founder, age 47</div>
