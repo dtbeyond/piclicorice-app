@@ -42,10 +42,10 @@ export default function SiteHeader({
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-black/10 bg-[#faf8f4]/88 px-4 py-3.5 shadow-[0_10px_34px_rgba(41,35,31,0.05)] backdrop-blur-xl sm:px-6">
+      <header className="sticky top-0 z-50 border-b border-black/10 bg-[#fbf7f2]/88 px-4 py-3.5 shadow-[0_10px_34px_rgba(41,35,31,0.05)] backdrop-blur-xl sm:px-6">
         <div className="mx-auto flex w-full max-w-[1040px] items-center justify-between gap-4">
           <Link href="/" className="flex min-w-0 items-center gap-3">
-            <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#111111] shadow-[0_10px_22px_rgba(17,17,17,0.12)] ring-1 ring-black/10">
+            <div className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#111A33] shadow-[0_10px_22px_rgba(17,17,17,0.12)] ring-1 ring-black/10">
               <img
                 src="/assets/piclicorice/piclicorice-pl-logo.jpeg"
                 alt="PicLicorice logo"
@@ -95,7 +95,7 @@ export default function SiteHeader({
       {isMenuOpen && (
         <div className="fixed inset-0 z-[240] bg-black/35 p-4 backdrop-blur-sm" onClick={() => setIsMenuOpen(false)}>
           <div
-            className="ml-auto flex h-full w-full max-w-[380px] flex-col rounded-[32px] border border-black/10 bg-[#faf8f4] p-5 text-black shadow-[0_24px_80px_rgba(17,17,17,0.22)]"
+            className="ml-auto flex h-full w-full max-w-[380px] flex-col rounded-[32px] border border-black/10 bg-[#fbf7f2] p-5 text-black shadow-[0_24px_80px_rgba(17,17,17,0.22)]"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="mb-6 flex items-center justify-between gap-4">
@@ -119,7 +119,7 @@ export default function SiteHeader({
                   key={href}
                   href={href}
                   onClick={() => setIsMenuOpen(false)}
-                  className="pl-soft-button rounded-[22px] px-5 py-4 text-sm font-semibold hover:border-[#B01F85]/30"
+                  className="pl-soft-button rounded-[22px] px-5 py-4 text-sm font-semibold hover:border-[#0F7F91]/30"
                 >
                   {label}
                 </Link>

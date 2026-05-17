@@ -7,10 +7,10 @@ import { ingredients, type Ingredient } from "@/data/ingredients"
 import { useSiteContent } from "@/lib/useSiteContent"
 
 const finestThemes = [
-  ["Hydration", "Keep the rhythm soft, steady, and water-supportive before chasing stronger actives.", "from-[#7C9C9B]/20 via-white to-[#faf8f4]"],
-  ["Maturity", "Work with the skin you have now instead of forcing a routine built for someone else.", "from-[#f5eee8] via-white to-[#B01F85]/8"],
-  ["Internal Balance", "Rest, stress, nutrition, and consistency all show up on the surface.", "from-white via-[#faf8f4] to-[#7C9C9B]/16"],
-  ["Consistency", "Small steps repeated calmly beat a shelf full of products used chaotically.", "from-[#fff7fc] via-white to-[#7C9C9B]/12"],
+  ["Hydration", "Keep the rhythm soft, steady, and water-supportive before chasing stronger actives.", "from-[#9FC8CA]/20 via-white to-[#fbf7f2]"],
+  ["Maturity", "Work with the skin you have now instead of forcing a routine built for someone else.", "from-[#f5eee8] via-white to-[#0F7F91]/8"],
+  ["Internal Balance", "Rest, stress, nutrition, and consistency all show up on the surface.", "from-white via-[#fbf7f2] to-[#9FC8CA]/16"],
+  ["Consistency", "Small steps repeated calmly beat a shelf full of products used chaotically.", "from-[#f9e4e6] via-white to-[#9FC8CA]/12"],
 ]
 
 const categoryFilters = [
@@ -182,11 +182,11 @@ export default function FinestAt50Page() {
                 key={card.title}
                 type="button"
                 onClick={() => setActiveDiscovery(card)}
-                className="pl-card pl-card-teal group min-h-36 p-5 text-left transition-all hover:border-[#B01F85]/25"
+                className="pl-card pl-card-teal group min-h-36 p-5 text-left transition-all hover:border-[#0F7F91]/25"
               >
                 <div className="mb-4 flex items-center justify-between gap-3">
-                  <span className="h-2 w-10 rounded-full bg-linear-to-r from-[#B01F85] to-[#7C9C9B]" />
-                  <span className="pl-kicker text-[10px] group-hover:text-[#B01F85]">
+                  <span className="h-2 w-10 rounded-full bg-linear-to-r from-[#0F7F91] to-[#9FC8CA]" />
+                  <span className="pl-kicker text-[10px] group-hover:text-[#0F7F91]">
                     Open
                   </span>
                 </div>
@@ -210,7 +210,7 @@ export default function FinestAt50Page() {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search ingredients, goals, or keywords"
-              className="h-12 rounded-full border border-black/10 bg-[#faf8f4] px-5 text-sm outline-none placeholder:text-black/35 focus:border-[#B01F85]"
+              className="h-12 rounded-full border border-black/10 bg-[#fbf7f2] px-5 text-sm outline-none placeholder:text-black/35 focus:border-[#0F7F91]"
             />
             <div className="flex gap-2 overflow-x-auto pb-1">
               {categoryFilters.map((filter) => (
@@ -220,7 +220,7 @@ export default function FinestAt50Page() {
                   onClick={() => setActiveCategory(filter.value)}
                   className={`h-10 shrink-0 rounded-full border px-4 text-sm font-semibold transition-all ${
                     activeCategory === filter.value
-                      ? "border-[#111111] bg-white text-[#B01F85] shadow-[0_8px_16px_rgba(176,31,133,0.10)]"
+                      ? "border-[#111A33] bg-white text-[#0F7F91] shadow-[0_8px_16px_rgba(15,127,145,0.10)]"
                       : "pl-soft-button border-black/10 text-black/62"
                   }`}
                 >
@@ -229,8 +229,8 @@ export default function FinestAt50Page() {
               ))}
             </div>
             <div className="flex flex-wrap gap-2 text-xs text-black/45">
-              <span className="rounded-full bg-[#7C9C9B]/12 px-3 py-1">AM: daytime friendly</span>
-              <span className="rounded-full bg-[#B01F85]/8 px-3 py-1">PM: evening preferred</span>
+              <span className="rounded-full bg-[#9FC8CA]/12 px-3 py-1">AM: daytime friendly</span>
+              <span className="rounded-full bg-[#0F7F91]/8 px-3 py-1">PM: evening preferred</span>
               <span className="rounded-full bg-[#f3efea] px-3 py-1">Either: flexible placement</span>
             </div>
           </div>
@@ -269,12 +269,12 @@ export default function FinestAt50Page() {
                         ["Avoid mixing with", avoidMixingWith(ingredient)],
                         ["Go slow if", ingredient.avoidIf || "Your skin feels hot, tight, itchy, or newly irritated."],
                       ].map(([label, value]) => (
-                        <div key={label} className="rounded-[18px] border border-white/70 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/10 p-4">
+                        <div key={label} className="rounded-[18px] border border-white/70 bg-linear-to-br from-white via-[#fbf7f2] to-[#9FC8CA]/10 p-4">
                           <div className="pl-kicker mb-1 text-[10px]">{label}</div>
                           <div className="text-sm leading-relaxed text-black/64">{value}</div>
                         </div>
                       ))}
-                      <div className="rounded-[18px] border border-[#B01F85]/10 bg-linear-to-br from-[#fff7fc] via-white to-[#B01F85]/8 p-4 sm:col-span-2">
+                      <div className="rounded-[18px] border border-[#0F7F91]/10 bg-linear-to-br from-[#f9e4e6] via-white to-[#0F7F91]/8 p-4 sm:col-span-2">
                         <div className="pl-kicker pl-kicker-pink mb-1 text-[10px]">Aime&apos;s note</div>
                         <div className="text-sm leading-relaxed text-black/68">{ingredient.whyItMatters}</div>
                       </div>
@@ -290,7 +290,7 @@ export default function FinestAt50Page() {
       {activeDiscovery && (
         <div className="fixed inset-0 z-[220] flex items-end bg-black/35 p-4 backdrop-blur-sm sm:items-center sm:justify-center" onClick={() => setActiveDiscovery(null)}>
           <div
-            className="pl-card w-full max-w-[560px] bg-[#faf8f4] p-6 text-black shadow-[0_24px_80px_rgba(17,17,17,0.24)]"
+            className="pl-card w-full max-w-[560px] bg-[#fbf7f2] p-6 text-black shadow-[0_24px_80px_rgba(17,17,17,0.24)]"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="mb-5 flex items-start justify-between gap-4">
@@ -315,7 +315,7 @@ export default function FinestAt50Page() {
                 </div>
               ))}
             </div>
-            <div className="mt-5 rounded-[20px] border border-[#B01F85]/12 bg-linear-to-br from-[#fff7fc] via-white to-[#B01F85]/8 p-4">
+            <div className="mt-5 rounded-[20px] border border-[#0F7F91]/12 bg-linear-to-br from-[#f9e4e6] via-white to-[#0F7F91]/8 p-4">
               <div className="pl-kicker pl-kicker-pink mb-1 text-[10px]">Aime&apos;s note</div>
               <div className="text-sm leading-relaxed text-black/66">{activeDiscovery.note}</div>
             </div>

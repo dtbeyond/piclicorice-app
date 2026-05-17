@@ -9,7 +9,7 @@ export default function SubscribePage() {
 
       <main className="mx-auto w-full max-w-[900px] px-4 pt-8 sm:px-6">
         <section className="media-card">
-          <div className="grid gap-6 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/16 p-7 sm:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div className="grid gap-6 bg-linear-to-br from-white via-[#fbf7f2] to-[#9FC8CA]/16 p-7 sm:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
               <div className="pl-kicker mb-4">Weekly Newsletter</div>
               <h1 className="max-w-[620px] text-[44px] font-semibold leading-[0.96] tracking-tighter sm:text-6xl">
@@ -22,7 +22,7 @@ export default function SubscribePage() {
                 <input
                   type="email"
                   placeholder="Email address"
-                  className="h-14 rounded-full border border-black/10 bg-white/80 px-5 text-sm outline-none placeholder:text-black/35 focus:border-[#B01F85]"
+                  className="h-14 rounded-full border border-black/10 bg-white/80 px-5 text-sm outline-none placeholder:text-black/35 focus:border-[#0F7F91]"
                 />
                 <button className="shop-now-button h-14 rounded-full px-8 text-sm font-bold tracking-[0.08em]">
                   Subscribe

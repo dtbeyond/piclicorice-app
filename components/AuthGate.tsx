@@ -81,10 +81,10 @@ export default function AuthGate({ children }: { children: ReactNode }) {
       </div>
 
       {isReady && !isAuthed && (
-        <div className="fixed inset-0 z-[500] bg-[#faf8f4]/75 backdrop-blur-md flex items-center justify-center px-5">
-          <div className="w-full max-w-[390px] rounded-3xl border border-[#7C9C9B]/30 bg-white/95 p-7 shadow-2xl text-[#111111]">
-            <div className="text-xs uppercase font-mono tracking-[0.18em] text-[#B01F85] mb-3">PicLicorice Admin</div>
-            <h1 className="text-4xl font-semibold tracking-tighter leading-none mb-3 text-[#111111]">
+        <div className="fixed inset-0 z-[500] bg-[#fbf7f2]/75 backdrop-blur-md flex items-center justify-center px-5">
+          <div className="w-full max-w-[390px] rounded-3xl border border-[#9FC8CA]/30 bg-white/95 p-7 shadow-2xl text-[#111A33]">
+            <div className="text-xs uppercase font-mono tracking-[0.18em] text-[#0F7F91] mb-3">PicLicorice Admin</div>
+            <h1 className="text-4xl font-semibold tracking-tighter leading-none mb-3 text-[#111A33]">
               {mode === "sign-in" ? "Welcome back." : "Create your routine account."}
             </h1>
             <p className="text-sm text-black/60 leading-relaxed mb-6">
@@ -97,7 +97,7 @@ export default function AuthGate({ children }: { children: ReactNode }) {
                   setMode("sign-in")
                   setMessage("")
                 }}
-                className={`h-10 rounded-xl text-sm font-medium ${mode === "sign-in" ? "bg-white text-[#111111] shadow-sm" : "text-black/55"}`}
+                className={`h-10 rounded-xl text-sm font-medium ${mode === "sign-in" ? "bg-white text-[#111A33] shadow-sm" : "text-black/55"}`}
               >
                 Sign in
               </button>
@@ -106,7 +106,7 @@ export default function AuthGate({ children }: { children: ReactNode }) {
                   setMode("sign-up")
                   setMessage("")
                 }}
-                className={`h-10 rounded-xl text-sm font-medium ${mode === "sign-up" ? "bg-white text-[#111111] shadow-sm" : "text-black/55"}`}
+                className={`h-10 rounded-xl text-sm font-medium ${mode === "sign-up" ? "bg-white text-[#111A33] shadow-sm" : "text-black/55"}`}
               >
                 Sign up
               </button>
@@ -119,7 +119,7 @@ export default function AuthGate({ children }: { children: ReactNode }) {
                 type="email"
                 placeholder="Email"
                 autoComplete="email"
-                className="w-full rounded-2xl bg-white border border-black/10 px-5 py-4 text-sm outline-none focus:border-[#B01F85]"
+                className="w-full rounded-2xl bg-white border border-black/10 px-5 py-4 text-sm outline-none focus:border-[#0F7F91]"
               />
               <input
                 value={password}
@@ -127,12 +127,12 @@ export default function AuthGate({ children }: { children: ReactNode }) {
                 type="password"
                 placeholder="Password"
                 autoComplete={mode === "sign-in" ? "current-password" : "new-password"}
-                className="w-full rounded-2xl bg-white border border-black/10 px-5 py-4 text-sm outline-none focus:border-[#B01F85]"
+                className="w-full rounded-2xl bg-white border border-black/10 px-5 py-4 text-sm outline-none focus:border-[#0F7F91]"
               />
               <button
                 onClick={submit}
                 disabled={isSubmitting || !email || password.length < 6}
-                className="w-full h-14 rounded-2xl bg-[#111111] text-white font-semibold disabled:opacity-50"
+                className="w-full h-14 rounded-2xl bg-[#111A33] text-white font-semibold disabled:opacity-50"
               >
                 {isSubmitting ? "Please wait..." : mode === "sign-in" ? "Unlock site" : "Create account"}
               </button>

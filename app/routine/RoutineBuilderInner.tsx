@@ -130,13 +130,13 @@ function ChoiceRow({
       onClick={onClick}
       className={`group flex min-h-[82px] w-full items-center gap-4 rounded-[24px] border px-5 py-4 text-left transition-all active:scale-[0.99] ${
         selected
-          ? "border-[#111111] bg-white shadow-[0_16px_28px_rgba(176,31,133,0.12)]"
-          : "border-black/10 bg-white/68 hover:border-[#7C9C9B]/55 hover:bg-white"
+          ? "border-[#111A33] bg-white shadow-[0_16px_28px_rgba(15,127,145,0.12)]"
+          : "border-black/10 bg-white/68 hover:border-[#9FC8CA]/55 hover:bg-white"
       }`}
     >
       <span
         className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-sm font-bold transition-all ${
-          selected ? "scale-105 border-[#B01F85] bg-[#B01F85] text-white" : "border-black/15 bg-white text-transparent"
+          selected ? "scale-105 border-[#0F7F91] bg-[#0F7F91] text-white" : "border-black/15 bg-white text-transparent"
         }`}
       >
         {selected ? "OK" : ""}
@@ -160,7 +160,7 @@ function SectionCard({
 }) {
   return (
     <section className="rounded-[24px] border border-black/10 bg-white p-5 sm:p-6">
-      {eyebrow && <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#B01F85]">{eyebrow}</div>}
+      {eyebrow && <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#0F7F91]">{eyebrow}</div>}
       {title && <h2 className="mb-4 text-2xl font-semibold tracking-tight">{title}</h2>}
       {children}
     </section>
@@ -171,7 +171,7 @@ function StepList({ items }: { items: string[] }) {
   return (
     <div className="space-y-3">
       {items.map((item, index) => (
-        <div key={item} className="flex items-center gap-3 rounded-[18px] border border-black/10 bg-[#faf8f4]/70 p-3">
+        <div key={item} className="flex items-center gap-3 rounded-[18px] border border-black/10 bg-[#fbf7f2]/70 p-3">
           <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white font-mono text-xs text-black/55">
             {index + 1}
           </span>
@@ -197,8 +197,8 @@ function RhythmResultScreen({
 
   return (
     <div className="space-y-5">
-      <section className="rounded-[28px] border border-[#7C9C9B]/34 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/14 p-6 sm:p-8">
-        <div className="mb-3 font-mono text-xs uppercase tracking-[0.22em] text-[#7C9C9B]">Your Current Rhythm</div>
+      <section className="rounded-[28px] border border-[#9FC8CA]/34 bg-linear-to-br from-white via-[#fbf7f2] to-[#9FC8CA]/14 p-6 sm:p-8">
+        <div className="mb-3 font-mono text-xs uppercase tracking-[0.22em] text-[#9FC8CA]">Your Current Rhythm</div>
         <h1 className="max-w-[680px] text-[38px] font-semibold leading-[0.98] tracking-tighter sm:text-6xl">
           Here&apos;s what your skin may be asking for
         </h1>
@@ -215,8 +215,8 @@ function RhythmResultScreen({
             ["Sensitivity level", rhythmLabels.sensitivity[answers.sensitivity]],
             ["Current goal", rhythmLabels.goal[answers.goal]],
           ].map(([label, value]) => (
-            <div key={label} className="rounded-[18px] border border-black/10 bg-[#faf8f4]/70 p-4">
-              <div className="mb-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#7C9C9B]">{label}</div>
+            <div key={label} className="rounded-[18px] border border-black/10 bg-[#fbf7f2]/70 p-4">
+              <div className="mb-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#9FC8CA]">{label}</div>
               <div className="text-sm font-semibold">{value}</div>
             </div>
           ))}
@@ -236,7 +236,7 @@ function RhythmResultScreen({
         <SectionCard eyebrow="Focus On" title="Ingredients to Focus On">
           <div className="flex flex-wrap gap-2">
             {result.focusIngredients.map((ingredient) => (
-              <span key={ingredient} className="rounded-full border border-[#7C9C9B]/32 bg-[#7C9C9B]/10 px-4 py-2 text-sm font-semibold">
+              <span key={ingredient} className="rounded-full border border-[#9FC8CA]/32 bg-[#9FC8CA]/10 px-4 py-2 text-sm font-semibold">
                 {ingredient}
               </span>
             ))}
@@ -268,14 +268,14 @@ function RhythmResultScreen({
               href={product.externalUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-[22px] border border-black/10 bg-[#faf8f4]/72 p-4 transition-all hover:border-[#B01F85]/36 hover:bg-white"
+              className="group rounded-[22px] border border-black/10 bg-[#fbf7f2]/72 p-4 transition-all hover:border-[#0F7F91]/36 hover:bg-white"
             >
               <div className="mb-3 aspect-[5/3] overflow-hidden rounded-[18px] bg-white">
                 <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
               </div>
               <div className="text-sm font-semibold leading-tight">{product.name}</div>
               <div className="mt-1 text-xs text-black/45">{product.price}</div>
-              <div className="mt-4 font-mono text-[10px] uppercase tracking-widest text-[#B01F85]">View Pick - Opens in TikTok Shop</div>
+              <div className="mt-4 font-mono text-[10px] uppercase tracking-widest text-[#0F7F91]">View Pick - Opens in TikTok Shop</div>
             </a>
           ))}
         </div>
@@ -284,7 +284,7 @@ function RhythmResultScreen({
       <section className="media-card">
         <div className="grid gap-4 bg-white/72 p-6 sm:grid-cols-[1fr_auto] sm:items-center">
           <div>
-            <div className="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-[#7C9C9B]">Saved Locally</div>
+            <div className="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-[#9FC8CA]">Saved Locally</div>
             <h2 className="text-2xl font-semibold tracking-tight">Your rhythm will be here when you come back.</h2>
             <p className="mt-2 text-sm leading-relaxed text-black/55">
               This proof version remembers on this device. Accounts can make it portable later.
@@ -385,20 +385,20 @@ export default function RoutineBuilderInner() {
                   {rhythmSteps.map((step, index) => (
                     <div
                       key={step.key}
-                      className={`h-1.5 flex-1 rounded-full ${index <= stepIndex ? "bg-[#B01F85]" : "bg-black/10"}`}
+                      className={`h-1.5 flex-1 rounded-full ${index <= stepIndex ? "bg-[#0F7F91]" : "bg-black/10"}`}
                     />
                   ))}
                   <span className="ml-2 w-10 text-right font-mono text-[11px] text-black/45">
                     {stepIndex + 1}/{rhythmSteps.length}
                   </span>
                 </div>
-                <div className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-[#7C9C9B]">{currentStep.eyebrow}</div>
+                <div className="mb-3 font-mono text-xs uppercase tracking-[0.2em] text-[#9FC8CA]">{currentStep.eyebrow}</div>
                 <h1 className="text-[36px] font-semibold leading-[0.98] tracking-tighter sm:text-6xl">{currentStep.question}</h1>
                 <p className="mt-4 max-w-[600px] text-base leading-relaxed text-black/60">{currentStep.helper}</p>
               </div>
             </section>
 
-            <section className="rounded-[28px] border border-black/10 bg-[#faf8f4]/72 p-3 sm:p-5">
+            <section className="rounded-[28px] border border-black/10 bg-[#fbf7f2]/72 p-3 sm:p-5">
               <div className="grid gap-3">
                 {currentStep.options.map((option) => (
                   <ChoiceRow

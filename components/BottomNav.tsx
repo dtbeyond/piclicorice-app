@@ -41,7 +41,7 @@ export default function BottomNav() {
   )
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-black/10 bg-[#faf8f4]/92 px-2 pb-2 pt-2 shadow-[0_-18px_48px_rgba(41,35,31,0.08)] backdrop-blur-xl">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-black/10 bg-[#fbf7f2]/92 px-2 pb-2 pt-2 shadow-[0_-18px_48px_rgba(41,35,31,0.08)] backdrop-blur-xl">
       <div className="mx-auto grid w-full max-w-[640px] grid-cols-5 gap-1.5">
         {navItems.map((item) => {
           const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)
@@ -53,7 +53,7 @@ export default function BottomNav() {
               href={item.href}
               className={`flex h-16 flex-col items-center justify-center gap-1 rounded-[22px] text-center text-[11px] font-semibold tracking-tight transition-all sm:h-[66px] sm:text-xs ${
                 isActive
-                  ? "bg-white text-[#B01F85] shadow-[0_12px_28px_rgba(176,31,133,0.14)] ring-1 ring-[#B01F85]/10"
+                  ? "bg-white text-[#0F7F91] shadow-[0_12px_28px_rgba(15,127,145,0.14)] ring-1 ring-[#0F7F91]/10"
                   : "text-black/56 hover:bg-white/72 hover:text-black"
               }`}
             >

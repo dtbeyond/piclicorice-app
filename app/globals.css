@@ -1,13 +1,16 @@
 @import "tailwindcss";
 :root {
-  --background: #faf8f4;
-  --foreground: #111111;
-  --accent: #b01f85;
-  --teal-gray: #7c9c9b;
+  --background: #fbf3f2;
+  --foreground: #111A33;
+  --accent: #0F7F91;
+  --teal-gray: #177f91;
+  --pale-teal: #c7ddde;
+  --blush: #f7dfe2;
+  --navy: #111A33;
   --card: #ffffff;
-  --card-soft: #f5eee8;
-  --text-muted: rgba(17, 17, 17, 0.66);
-  --border-soft: rgba(17, 17, 17, 0.12);
+  --card-soft: #f8e8e8;
+  --text-muted: rgba(17, 26, 51, 0.66);
+  --border-soft: rgba(17, 26, 51, 0.12);
   --soft-radius: 24px;
   --card-radius: 28px;
   --shadow-soft: 0 18px 60px rgba(41, 35, 31, 0.07);
@@ -29,11 +32,11 @@ body {
 }
 
 ::selection {
-  background: rgba(176, 31, 133, 0.16);
+  background: rgba(15, 127, 145, 0.16);
 }
 
 :focus-visible {
-  outline: 2px solid rgba(176, 31, 133, 0.62);
+  outline: 2px solid rgba(15, 127, 145, 0.62);
   outline-offset: 3px;
 }
 /* Custom utility classes for the design system */
@@ -46,12 +49,12 @@ body {
   background-color: #ffffff;
   color: var(--accent);
   font-weight: 600;
-  border: 1px solid #111111;
-  box-shadow: inset 0 0 0 1px rgba(176, 31, 133, 0.35);
+  border: 1px solid #111A33;
+  box-shadow: inset 0 0 0 1px rgba(15, 127, 145, 0.35);
   transition: all 0.1s ease;
 }
 .btn-primary:hover {
-  background-color: #fff7fc;
+  background-color: #f9e4e6;
   transform: translateY(-1px);
 }
 .btn-secondary {
@@ -60,27 +63,28 @@ body {
 }
 .btn-secondary:hover {
   border-color: var(--accent);
-  background-color: rgba(176, 31, 133, 0.05);
+  background-color: rgba(15, 127, 145, 0.05);
 }
 
 .editorial-shell {
   background:
-    linear-gradient(180deg, rgba(124, 156, 155, 0.18), rgba(250, 248, 244, 0) 28rem),
-    linear-gradient(115deg, rgba(255, 247, 252, 0.72), rgba(250, 248, 244, 0) 38rem),
+    radial-gradient(circle at 14% 8%, rgba(247, 223, 226, 0.82), rgba(251, 243, 242, 0) 32rem),
+    radial-gradient(circle at 88% 12%, rgba(199, 221, 222, 0.9), rgba(251, 243, 242, 0) 34rem),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(251, 243, 242, 0) 31rem),
     var(--background);
   color: var(--foreground);
 }
 
 .media-frame {
-  background: linear-gradient(135deg, rgba(124, 156, 155, 0.24), rgba(250, 248, 244, 0.96) 58%, rgba(200, 170, 106, 0.08));
-  border: 1px solid rgba(124, 156, 155, 0.38);
+  background: linear-gradient(135deg, rgba(199, 221, 222, 0.72), rgba(255, 255, 255, 0.95) 56%, rgba(247, 223, 226, 0.45));
+  border: 1px solid rgba(17, 127, 145, 0.26);
   border-radius: var(--soft-radius);
   box-shadow: var(--shadow-soft);
 }
 
 .media-card {
-  background: linear-gradient(135deg, rgba(124, 156, 155, 0.22), rgba(250, 248, 244, 0.97) 58%, rgba(176, 31, 133, 0.06));
-  border: 1px solid rgba(124, 156, 155, 0.38);
+  background: linear-gradient(135deg, rgba(199, 221, 222, 0.74), rgba(255, 255, 255, 0.96) 55%, rgba(247, 223, 226, 0.52));
+  border: 1px solid rgba(17, 127, 145, 0.28);
   border-radius: var(--card-radius);
   box-shadow: var(--shadow-soft);
   overflow: hidden;
@@ -102,9 +106,9 @@ body {
 .pl-card {
   position: relative;
   overflow: hidden;
-  border: 1px solid rgba(17, 17, 17, 0.1);
+  border: 1px solid rgba(17, 26, 51, 0.1);
   border-radius: var(--card-radius);
-  background: linear-gradient(140deg, rgba(255, 255, 255, 0.94), rgba(250, 248, 244, 0.9) 58%, rgba(124, 156, 155, 0.12));
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.95), rgba(251, 243, 242, 0.92) 58%, rgba(199, 221, 222, 0.3));
   box-shadow: var(--shadow-soft);
 }
 
@@ -121,11 +125,11 @@ body {
 }
 
 .pl-card-pink {
-  background: linear-gradient(140deg, rgba(255, 255, 255, 0.94), rgba(255, 247, 252, 0.92) 58%, rgba(176, 31, 133, 0.12));
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.95), rgba(247, 223, 226, 0.58) 58%, rgba(199, 221, 222, 0.22));
 }
 
 .pl-card-teal {
-  background: linear-gradient(140deg, rgba(255, 255, 255, 0.94), rgba(250, 248, 244, 0.92) 58%, rgba(124, 156, 155, 0.18));
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.95), rgba(251, 243, 242, 0.88) 55%, rgba(199, 221, 222, 0.42));
 }
 
 .pl-kicker {
@@ -141,7 +145,8 @@ body {
 }
 
 .pl-soft-button {
-  border: 1px solid rgba(17, 17, 17, 0.14);
+  color: var(--navy);
+  border: 1px solid rgba(17, 26, 51, 0.14);
   background: rgba(255, 255, 255, 0.72);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
   transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
@@ -149,7 +154,7 @@ body {
 
 .pl-soft-button:hover {
   background: rgba(255, 255, 255, 0.94);
-  border-color: rgba(124, 156, 155, 0.46);
+  border-color: rgba(15, 127, 145, 0.46);
 }
 
 .pl-soft-button:active,
@@ -159,21 +164,21 @@ body {
 }
 
 .shop-now-button {
-  color: var(--accent);
-  background: #ffffff;
-  border: 1px solid #111111;
-  box-shadow: inset 0 0 0 1px rgba(176, 31, 133, 0.4), 0 16px 42px rgba(176, 31, 133, 0.14);
+  color: #ffffff;
+  background: var(--navy);
+  border: 1px solid rgba(17, 26, 51, 0.92);
+  box-shadow: 0 16px 42px rgba(17, 26, 51, 0.18);
   border-radius: var(--soft-radius);
   transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
 }
 
 .shop-now-button:hover {
-  background: #fffafd;
-  box-shadow: inset 0 0 0 1px rgba(176, 31, 133, 0.48), 0 20px 52px rgba(176, 31, 133, 0.18);
+  background: #16213f;
+  box-shadow: 0 20px 52px rgba(17, 26, 51, 0.22);
 }
 
 .play-glow {
-  box-shadow: 0 0 0 8px rgba(176, 31, 133, 0.08), 0 0 36px rgba(176, 31, 133, 0.38);
+  box-shadow: 0 0 0 8px rgba(15, 127, 145, 0.08), 0 0 36px rgba(15, 127, 145, 0.38);
 }
 
 .home-media-slide {

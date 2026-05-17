@@ -86,7 +86,7 @@ export default function ShopPageInner() {
           <div className="pl-kicker mb-3">Lifestyle lens</div>
           <div className="grid gap-2 sm:grid-cols-2">
             {lifestyleBuckets.map((bucket) => (
-              <div key={bucket} className="rounded-[18px] border border-black/10 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/10 px-4 py-3 text-sm font-semibold shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
+              <div key={bucket} className="rounded-[18px] border border-black/10 bg-linear-to-br from-white via-[#fbf7f2] to-[#9FC8CA]/10 px-4 py-3 text-sm font-semibold shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
                 {bucket}
               </div>
             ))}
@@ -97,7 +97,7 @@ export default function ShopPageInner() {
           <div className="pl-kicker mb-3">Skin concern lens</div>
           <div className="grid gap-2 sm:grid-cols-2">
             {concernBuckets.map((bucket) => (
-              <div key={bucket} className="rounded-[18px] border border-black/10 bg-linear-to-br from-white via-[#fff7fc] to-[#B01F85]/8 px-4 py-3 text-sm font-semibold shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
+              <div key={bucket} className="rounded-[18px] border border-black/10 bg-linear-to-br from-white via-[#f9e4e6] to-[#0F7F91]/8 px-4 py-3 text-sm font-semibold shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
                 {bucket}
               </div>
             ))}

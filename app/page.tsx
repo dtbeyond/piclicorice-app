@@ -85,7 +85,7 @@ export default function PicLicoriceHome() {
                 }}
               />
             ))}
-            <div className="absolute inset-0 bg-linear-to-t from-[#faf8f4]/86 via-white/24 to-black/5" />
+            <div className="absolute inset-0 bg-linear-to-t from-[#fbf7f2]/86 via-white/24 to-black/5" />
             <div className="absolute bottom-5 left-5 right-5 rounded-[24px] border border-white/50 bg-white/72 p-5 shadow-[0_16px_48px_rgba(41,35,31,0.12)] backdrop-blur">
               <div className="pl-kicker text-[10px]">PicLicorice</div>
               <div className="mt-1 text-xl font-semibold tracking-tight">Honoring skin&apos;s natural beauty.</div>
@@ -124,9 +124,9 @@ export default function PicLicoriceHome() {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="pl-card pl-card-pink group flex min-h-28 items-center gap-4 p-4 hover:border-[#B01F85]/35 active:border-[#B01F85]/50"
+                  className="pl-card pl-card-pink group flex min-h-28 items-center gap-4 p-4 hover:border-[#0F7F91]/35 active:border-[#0F7F91]/50"
                 >
-                  <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-[18px] bg-[#111111] text-2xl text-white shadow-[0_12px_24px_rgba(17,17,17,0.14)]">
+                  <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-[18px] bg-[#111A33] text-2xl text-white shadow-[0_12px_24px_rgba(17,17,17,0.14)]">
                     <FaTiktok className="relative z-10" aria-hidden="true" />
                     <FaTiktok className="absolute -translate-x-0.5 translate-y-0.5 text-[#25F4EE] opacity-85" aria-hidden="true" />
                     <FaTiktok className="absolute translate-x-0.5 -translate-y-0.5 text-[#FE2C55] opacity-85" aria-hidden="true" />
@@ -136,7 +136,7 @@ export default function PicLicoriceHome() {
                     <div className="mt-1 text-sm font-semibold">{link.label}</div>
                     {link.description && <div className="mt-1 text-xs leading-relaxed text-black/55">{link.description}</div>}
                   </div>
-                  <div className="rounded-full bg-white/80 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-black/38 group-hover:text-[#B01F85]">
+                  <div className="rounded-full bg-white/80 px-3 py-1 font-mono text-[10px] uppercase tracking-widest text-black/38 group-hover:text-[#0F7F91]">
                     Open
                   </div>
                 </a>
