@@ -11,7 +11,7 @@ export default function SubscribePage() {
         <section className="media-card">
           <div className="grid gap-6 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/16 p-7 sm:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
-              <div className="mb-4 font-mono text-xs uppercase tracking-[0.22em] text-[#7C9C9B]">Weekly Newsletter</div>
+              <div className="pl-kicker mb-4">Weekly Newsletter</div>
               <h1 className="max-w-[620px] text-[44px] font-semibold leading-[0.96] tracking-tighter sm:text-6xl">
                 Join your finest era.
               </h1>
@@ -33,8 +33,8 @@ export default function SubscribePage() {
               </p>
             </div>
 
-            <div className="rounded-[24px] border border-black/10 bg-white/72 p-5">
-              <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#B01F85]">This Week&apos;s Drop</div>
+            <div className="pl-card pl-card-pink p-5">
+              <div className="pl-kicker pl-kicker-pink mb-3">This Week&apos;s Drop</div>
               <h2 className="text-2xl font-semibold tracking-tight">Simple downloadable PDF</h2>
               <p className="mt-3 text-sm leading-relaxed text-black/58">
                 The owner&apos;s reference PDF is included here as the first downloadable weekly piece.
@@ -42,7 +42,7 @@ export default function SubscribePage() {
               <a
                 href="/assets/piclicorice/newsletter-weekly-drop.pdf"
                 download
-                className="mt-5 inline-flex h-12 items-center justify-center rounded-full border border-black/15 bg-white px-6 text-sm font-semibold text-black hover:bg-[#fff7fc]"
+                className="pl-soft-button mt-5 inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold text-black"
               >
                 Download PDF
               </a>
@@ -56,15 +56,15 @@ export default function SubscribePage() {
             ["Simple PDF", "One printable or saveable reference. No clutter."],
             ["That's it", "No complicated funnel before the value is clear."],
           ].map(([title, body]) => (
-            <div key={title} className="rounded-[24px] border border-black/10 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/10 p-5">
+            <div key={title} className="pl-card pl-card-teal p-5">
               <h2 className="text-lg font-semibold tracking-tight">{title}</h2>
               <p className="mt-3 text-sm leading-relaxed text-black/58">{body}</p>
             </div>
           ))}
         </section>
 
-        <section className="mt-8 rounded-[28px] border border-black/10 bg-white p-6">
-          <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#7C9C9B]">Next step</div>
+        <section className="pl-card mt-8 p-6">
+          <div className="pl-kicker mb-3">Next step</div>
           <h2 className="text-2xl font-semibold tracking-tight">Start with your skin, then choose what belongs.</h2>
           <p className="mt-3 max-w-[620px] text-sm leading-relaxed text-black/58">
             The newsletter should feed the Start tool and Aime&apos;s Picks, not become another noisy content wall.
@@ -73,7 +73,7 @@ export default function SubscribePage() {
             <Link href="/routine" className="shop-now-button flex h-12 items-center justify-center rounded-full px-6 text-sm font-bold tracking-[0.08em]">
               Start
             </Link>
-            <Link href="/shop" className="flex h-12 items-center justify-center rounded-full border border-black/15 bg-white px-6 text-sm font-semibold">
+            <Link href="/shop" className="pl-soft-button flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold">
               Explore Picks
             </Link>
           </div>

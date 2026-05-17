@@ -151,8 +151,8 @@ export default function FinestAt50Page() {
           <div className="absolute inset-0 bg-linear-to-t from-black/18 via-transparent to-white/5" />
         </section>
 
-        <section className="mb-8 rounded-[24px] border border-black/10 bg-white p-7 text-black sm:p-9">
-          <div className="mb-3 font-mono text-[11px] uppercase tracking-[0.18em] text-[#B01F85]">Finest at 50</div>
+        <section className="pl-card mb-8 p-7 text-black sm:p-9">
+          <div className="pl-kicker pl-kicker-pink mb-3">Finest at 50</div>
           <h1 className="mb-4 max-w-[720px] text-4xl font-semibold leading-[0.98] tracking-tighter sm:text-6xl">
             Your skin reflects how you live, not just what you apply.
           </h1>
@@ -163,7 +163,7 @@ export default function FinestAt50Page() {
 
         <section className="mb-10 grid grid-cols-1 gap-3 sm:grid-cols-2">
           {finestThemes.map(([title, body, tone]) => (
-            <div key={title} className={`rounded-[24px] border border-black/10 bg-linear-to-br ${tone} p-5`}>
+            <div key={title} className={`pl-card bg-linear-to-br ${tone} p-5`}>
               <div className="mb-2 text-lg font-semibold tracking-tight">{title}</div>
               <p className="text-xs leading-relaxed text-black/60">{body}</p>
             </div>
@@ -171,7 +171,7 @@ export default function FinestAt50Page() {
         </section>
 
         <section className="mb-10">
-          <div className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-[#7C9C9B]">Join your finest era</div>
+          <div className="pl-kicker mb-3">Join your finest era</div>
           <h2 className="mb-3 text-3xl font-semibold tracking-tighter">Tap a category and let it make sense.</h2>
           <p className="mb-5 max-w-[680px] text-[15px] leading-relaxed text-black/60">
             These are the owner&apos;s content lanes: ingredient families Aime can explain without turning the page into a product wall.
@@ -182,15 +182,15 @@ export default function FinestAt50Page() {
                 key={card.title}
                 type="button"
                 onClick={() => setActiveDiscovery(card)}
-                className="group min-h-36 rounded-[24px] border border-black/10 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/12 p-5 text-left shadow-[0_10px_24px_rgba(17,17,17,0.03)] transition-all hover:border-[#B01F85]/25 hover:to-[#B01F85]/8"
+                className="pl-card pl-card-teal group min-h-36 p-5 text-left transition-all hover:border-[#B01F85]/25"
               >
                 <div className="mb-4 flex items-center justify-between gap-3">
                   <span className="h-2 w-10 rounded-full bg-linear-to-r from-[#B01F85] to-[#7C9C9B]" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#7C9C9B] group-hover:text-[#B01F85]">
+                  <span className="pl-kicker text-[10px] group-hover:text-[#B01F85]">
                     Open
                   </span>
                 </div>
-                <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#7C9C9B]">{card.eyebrow}</div>
+                <div className="pl-kicker text-[10px]">{card.eyebrow}</div>
                 <div className="mt-2 text-xl font-semibold tracking-tight">{card.title}</div>
                 <p className="mt-3 text-xs leading-relaxed text-black/58">{card.note}</p>
               </button>
@@ -199,13 +199,13 @@ export default function FinestAt50Page() {
         </section>
 
         <section className="mb-10">
-          <div className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-[#7C9C9B]">Ingredient Library</div>
+          <div className="pl-kicker mb-3">Ingredient Library</div>
           <h2 className="mb-3 text-3xl font-semibold tracking-tighter">A calm reference, not a shopping panic list.</h2>
           <p className="mb-6 text-[15px] leading-relaxed text-black/60">
             Search by ingredient or filter by need. Open each card for pairing notes, caution notes, and Aime&apos;s plain-English read.
           </p>
 
-          <div className="mb-4 grid gap-3 rounded-[24px] border border-[#7C9C9B]/28 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/12 p-4">
+          <div className="pl-card pl-card-teal mb-4 grid gap-3 p-4">
             <input
               value={query}
               onChange={(event) => setQuery(event.target.value)}
@@ -221,7 +221,7 @@ export default function FinestAt50Page() {
                   className={`h-10 shrink-0 rounded-full border px-4 text-sm font-semibold transition-all ${
                     activeCategory === filter.value
                       ? "border-[#111111] bg-white text-[#B01F85] shadow-[0_8px_16px_rgba(176,31,133,0.10)]"
-                      : "border-black/10 bg-white/70 text-black/62 hover:bg-white"
+                      : "pl-soft-button border-black/10 text-black/62"
                   }`}
                 >
                   {filter.label}
@@ -242,7 +242,7 @@ export default function FinestAt50Page() {
               return (
                 <article
                   key={ingredient.id}
-                  className="rounded-[24px] border border-black/10 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/10 p-5 shadow-[0_10px_24px_rgba(17,17,17,0.03)]"
+                  className="pl-card pl-card-teal p-5"
                 >
                   <button
                     type="button"
@@ -270,12 +270,12 @@ export default function FinestAt50Page() {
                         ["Go slow if", ingredient.avoidIf || "Your skin feels hot, tight, itchy, or newly irritated."],
                       ].map(([label, value]) => (
                         <div key={label} className="rounded-[18px] border border-white/70 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/10 p-4">
-                          <div className="mb-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#7C9C9B]">{label}</div>
+                          <div className="pl-kicker mb-1 text-[10px]">{label}</div>
                           <div className="text-sm leading-relaxed text-black/64">{value}</div>
                         </div>
                       ))}
                       <div className="rounded-[18px] border border-[#B01F85]/10 bg-linear-to-br from-[#fff7fc] via-white to-[#B01F85]/8 p-4 sm:col-span-2">
-                        <div className="mb-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#B01F85]">Aime&apos;s note</div>
+                        <div className="pl-kicker pl-kicker-pink mb-1 text-[10px]">Aime&apos;s note</div>
                         <div className="text-sm leading-relaxed text-black/68">{ingredient.whyItMatters}</div>
                       </div>
                     </div>
@@ -290,18 +290,18 @@ export default function FinestAt50Page() {
       {activeDiscovery && (
         <div className="fixed inset-0 z-[220] flex items-end bg-black/35 p-4 backdrop-blur-sm sm:items-center sm:justify-center" onClick={() => setActiveDiscovery(null)}>
           <div
-            className="w-full max-w-[560px] rounded-[28px] border border-black/10 bg-[#faf8f4] p-6 text-black shadow-[0_24px_80px_rgba(17,17,17,0.24)]"
+            className="pl-card w-full max-w-[560px] bg-[#faf8f4] p-6 text-black shadow-[0_24px_80px_rgba(17,17,17,0.24)]"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="mb-5 flex items-start justify-between gap-4">
               <div>
-                <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#7C9C9B]">{activeDiscovery.eyebrow}</div>
+                <div className="pl-kicker">{activeDiscovery.eyebrow}</div>
                 <h2 className="mt-2 text-3xl font-semibold tracking-tighter">{activeDiscovery.title}</h2>
               </div>
               <button
                 type="button"
                 onClick={() => setActiveDiscovery(null)}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white text-xl"
+                className="pl-soft-button flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xl"
                 aria-label="Close"
               >
                 x
@@ -316,7 +316,7 @@ export default function FinestAt50Page() {
               ))}
             </div>
             <div className="mt-5 rounded-[20px] border border-[#B01F85]/12 bg-linear-to-br from-[#fff7fc] via-white to-[#B01F85]/8 p-4">
-              <div className="mb-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#B01F85]">Aime&apos;s note</div>
+              <div className="pl-kicker pl-kicker-pink mb-1 text-[10px]">Aime&apos;s note</div>
               <div className="text-sm leading-relaxed text-black/66">{activeDiscovery.note}</div>
             </div>
           </div>

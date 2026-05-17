@@ -44,7 +44,7 @@ export default function ShopPageInner() {
               style={{ objectPosition: content.shopImagePosition }}
             />
             <div className="p-7">
-              <div className="mb-4 font-mono text-xs uppercase tracking-[0.18em] text-[#7C9C9B]">Aime&apos;s Picks</div>
+              <div className="pl-kicker mb-4">Aime&apos;s Picks</div>
               <h1 className="mb-4 max-w-[560px] text-5xl font-semibold leading-none tracking-tighter">
                 Explore picks after the edit.
               </h1>
@@ -62,7 +62,7 @@ export default function ShopPageInner() {
                 </a>
                 <Link
                   href="/routine"
-                  className="inline-flex h-16 items-center justify-center rounded-full border border-black/15 bg-white/60 px-8 font-semibold text-black"
+                  className="pl-soft-button inline-flex h-16 items-center justify-center rounded-full px-8 font-semibold text-black"
                 >
                   Start First
                 </Link>
@@ -74,38 +74,38 @@ export default function ShopPageInner() {
 
         <section className="mt-8 grid gap-4 md:grid-cols-3">
           {pickPaths.map((path) => (
-            <div key={path.title} className="rounded-[24px] border border-black/10 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/12 p-5">
-              <div className="mb-3 font-mono text-[10px] uppercase tracking-[0.16em] text-[#B01F85]">{path.eyebrow}</div>
+            <div key={path.title} className="pl-card pl-card-teal p-5">
+              <div className="pl-kicker pl-kicker-pink mb-3 text-[10px]">{path.eyebrow}</div>
               <h2 className="text-xl font-semibold tracking-tight">{path.title}</h2>
               <p className="mt-3 text-xs leading-relaxed text-black/58">{path.body}</p>
             </div>
           ))}
         </section>
 
-        <section className="mt-8 rounded-[28px] border border-black/10 bg-white/80 p-6">
-          <div className="mb-3 font-mono text-xs uppercase tracking-[0.16em] text-[#7C9C9B]">Lifestyle lens</div>
+        <section className="pl-card mt-8 p-6">
+          <div className="pl-kicker mb-3">Lifestyle lens</div>
           <div className="grid gap-2 sm:grid-cols-2">
             {lifestyleBuckets.map((bucket) => (
-              <div key={bucket} className="rounded-[18px] border border-black/10 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/10 px-4 py-3 text-sm font-semibold">
+              <div key={bucket} className="rounded-[18px] border border-black/10 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/10 px-4 py-3 text-sm font-semibold shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
                 {bucket}
               </div>
             ))}
           </div>
         </section>
 
-        <section className="mt-8 rounded-[28px] border border-black/10 bg-white/80 p-6">
-          <div className="mb-3 font-mono text-xs uppercase tracking-[0.16em] text-[#7C9C9B]">Skin concern lens</div>
+        <section className="pl-card pl-card-pink mt-8 p-6">
+          <div className="pl-kicker mb-3">Skin concern lens</div>
           <div className="grid gap-2 sm:grid-cols-2">
             {concernBuckets.map((bucket) => (
-              <div key={bucket} className="rounded-[18px] border border-black/10 bg-linear-to-br from-white via-[#fff7fc] to-[#B01F85]/8 px-4 py-3 text-sm font-semibold">
+              <div key={bucket} className="rounded-[18px] border border-black/10 bg-linear-to-br from-white via-[#fff7fc] to-[#B01F85]/8 px-4 py-3 text-sm font-semibold shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
                 {bucket}
               </div>
             ))}
           </div>
         </section>
 
-        <section className="mt-8 rounded-[24px] border border-[#7C9C9B]/28 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/12 p-6">
-          <div className="mb-3 font-mono text-xs uppercase tracking-[0.16em] text-[#7C9C9B]">Coming next</div>
+        <section className="pl-card pl-card-teal mt-8 p-6">
+          <div className="pl-kicker mb-3">Coming next</div>
           <p className="text-sm leading-relaxed text-black/60">
             These sections are staged for Aime to attach real picks, popups, and condition-aware notes without making the page feel like a chaotic catalog.
           </p>

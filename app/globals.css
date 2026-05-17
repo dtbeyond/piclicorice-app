@@ -9,6 +9,9 @@
   --text-muted: rgba(17, 17, 17, 0.66);
   --border-soft: rgba(17, 17, 17, 0.12);
   --soft-radius: 24px;
+  --card-radius: 28px;
+  --shadow-soft: 0 18px 60px rgba(41, 35, 31, 0.07);
+  --shadow-lift: 0 24px 70px rgba(41, 35, 31, 0.11);
 }
 @theme inline {
   --color-background: var(--background);
@@ -20,6 +23,18 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "Inter", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-synthesis-weight: none;
+}
+
+::selection {
+  background: rgba(176, 31, 133, 0.16);
+}
+
+:focus-visible {
+  outline: 2px solid rgba(176, 31, 133, 0.62);
+  outline-offset: 3px;
 }
 /* Custom utility classes for the design system */
 .card {
@@ -50,7 +65,8 @@ body {
 
 .editorial-shell {
   background:
-    linear-gradient(180deg, rgba(124, 156, 155, 0.16), rgba(250, 248, 244, 0) 36rem),
+    linear-gradient(180deg, rgba(124, 156, 155, 0.18), rgba(250, 248, 244, 0) 28rem),
+    linear-gradient(115deg, rgba(255, 247, 252, 0.72), rgba(250, 248, 244, 0) 38rem),
     var(--background);
   color: var(--foreground);
 }
@@ -59,12 +75,14 @@ body {
   background: linear-gradient(135deg, rgba(124, 156, 155, 0.24), rgba(250, 248, 244, 0.96) 58%, rgba(200, 170, 106, 0.08));
   border: 1px solid rgba(124, 156, 155, 0.38);
   border-radius: var(--soft-radius);
+  box-shadow: var(--shadow-soft);
 }
 
 .media-card {
-  background: linear-gradient(135deg, rgba(124, 156, 155, 0.24), rgba(250, 248, 244, 0.96) 58%, rgba(200, 170, 106, 0.08));
+  background: linear-gradient(135deg, rgba(124, 156, 155, 0.22), rgba(250, 248, 244, 0.97) 58%, rgba(176, 31, 133, 0.06));
   border: 1px solid rgba(124, 156, 155, 0.38);
-  border-radius: var(--soft-radius);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-soft);
   overflow: hidden;
 }
 
@@ -81,12 +99,77 @@ body {
   overflow: hidden;
 }
 
+.pl-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(17, 17, 17, 0.1);
+  border-radius: var(--card-radius);
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.94), rgba(250, 248, 244, 0.9) 58%, rgba(124, 156, 155, 0.12));
+  box-shadow: var(--shadow-soft);
+}
+
+.pl-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.58), rgba(255, 255, 255, 0));
+}
+
+.pl-card > * {
+  position: relative;
+}
+
+.pl-card-pink {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.94), rgba(255, 247, 252, 0.92) 58%, rgba(176, 31, 133, 0.12));
+}
+
+.pl-card-teal {
+  background: linear-gradient(140deg, rgba(255, 255, 255, 0.94), rgba(250, 248, 244, 0.92) 58%, rgba(124, 156, 155, 0.18));
+}
+
+.pl-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--teal-gray);
+}
+
+.pl-kicker-pink {
+  color: var(--accent);
+}
+
+.pl-soft-button {
+  border: 1px solid rgba(17, 17, 17, 0.14);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  transition: transform 140ms ease, border-color 140ms ease, background 140ms ease;
+}
+
+.pl-soft-button:hover {
+  background: rgba(255, 255, 255, 0.94);
+  border-color: rgba(124, 156, 155, 0.46);
+}
+
+.pl-soft-button:active,
+.shop-now-button:active,
+.pl-card:active {
+  transform: scale(0.99);
+}
+
 .shop-now-button {
   color: var(--accent);
   background: #ffffff;
   border: 1px solid #111111;
-  box-shadow: inset 0 0 0 1px rgba(176, 31, 133, 0.38), 0 10px 26px rgba(176, 31, 133, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(176, 31, 133, 0.4), 0 16px 42px rgba(176, 31, 133, 0.14);
   border-radius: var(--soft-radius);
+  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+.shop-now-button:hover {
+  background: #fffafd;
+  box-shadow: inset 0 0 0 1px rgba(176, 31, 133, 0.48), 0 20px 52px rgba(176, 31, 133, 0.18);
 }
 
 .play-glow {
@@ -94,7 +177,7 @@ body {
 }
 
 .home-media-slide {
-  animation: homeMediaFade 24s infinite;
+  animation: homeMediaFade 28s infinite;
   opacity: 0;
 }
 
@@ -103,7 +186,7 @@ body {
   18% {
     opacity: 1;
   }
-  25%,
+  24%,
   100% {
     opacity: 0;
   }
