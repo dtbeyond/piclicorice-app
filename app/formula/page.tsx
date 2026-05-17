@@ -23,6 +23,58 @@ const categoryFilters = [
   { value: "glow", label: "Glow" },
 ]
 
+const finestDiscoveryCards = [
+  {
+    title: "Next-gen hydrators",
+    eyebrow: "Water + bounce",
+    body: "Modern hydration is about more than one serum. Think humectants, barrier sealers, and formulas that help skin stay comfortable longer.",
+    examples: ["hyaluronic acid", "glycerin", "polyglutamic acid", "beta-glucan"],
+    note: "Start here when skin feels dry, tight, dull, or overworked.",
+  },
+  {
+    title: "Smart aging actives",
+    eyebrow: "Firmness + tone",
+    body: "A calmer way to support mature skin: steady ingredients, realistic timing, and no pressure to overdo the strongest product first.",
+    examples: ["peptides", "niacinamide", "vitamin C", "growth-factor style products"],
+    note: "Best when the base routine is already steady.",
+  },
+  {
+    title: "Retinoid evolution",
+    eyebrow: "Texture + renewal",
+    body: "Retinoids can be powerful, but the win is consistency and tolerance. Frequency matters as much as strength.",
+    examples: ["retinol", "retinal", "bakuchiol", "recovery nights"],
+    note: "Go slow if skin is reactive, dry, or newly irritated.",
+  },
+  {
+    title: "Barrier & healing support",
+    eyebrow: "Comfort first",
+    body: "When skin feels hot, tight, itchy, flaky, or easily bothered, barrier support belongs before aggressive correction.",
+    examples: ["ceramides", "panthenol", "centella", "colloidal oatmeal"],
+    note: "This is often the missing piece when nothing seems to work.",
+  },
+  {
+    title: "Antioxidants & environmental defense",
+    eyebrow: "Daily protection",
+    body: "Sun, pollution, stress, and environment all add up. Antioxidants pair best with daily SPF and a routine you actually repeat.",
+    examples: ["vitamin C", "green tea", "resveratrol", "coenzyme Q10"],
+    note: "A good daytime category for glow and prevention.",
+  },
+  {
+    title: "Microbiome + skin health",
+    eyebrow: "Balance",
+    body: "Skin does better when it is not constantly stripped. Gentle cleansing and supportive formulas help the surface stay less chaotic.",
+    examples: ["prebiotics", "postbiotics", "gentle cleansers", "barrier creams"],
+    note: "Useful when skin feels easily thrown off.",
+  },
+  {
+    title: "Specialty vision stars",
+    eyebrow: "Targeted support",
+    body: "These are the promising or condition-aware products Aime may want to explain carefully before they land in someone's routine.",
+    examples: ["hyperpigmentation support", "body skin support", "sensitive-skin tools", "integrative care"],
+    note: "Good for future content, popups, and deeper education.",
+  },
+]
+
 function pairsWellWith(ingredient: Ingredient) {
   if (ingredient.categories.includes("hydration")) return "Moisturizer, ceramides, glycerin, and SPF."
   if (ingredient.categories.includes("anti-aging")) return "Hydration, barrier support, peptides, and daily SPF."
@@ -51,6 +103,7 @@ export default function FinestAt50Page() {
   const [query, setQuery] = useState("")
   const [activeCategory, setActiveCategory] = useState("all")
   const [expandedIds, setExpandedIds] = useState<string[]>(["hyaluronic-acid"])
+  const [activeDiscovery, setActiveDiscovery] = useState<(typeof finestDiscoveryCards)[number] | null>(null)
 
   const filteredIngredients = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase()
@@ -115,6 +168,34 @@ export default function FinestAt50Page() {
               <p className="text-xs leading-relaxed text-black/60">{body}</p>
             </div>
           ))}
+        </section>
+
+        <section className="mb-10">
+          <div className="mb-3 font-mono text-xs uppercase tracking-[0.18em] text-[#7C9C9B]">Join your finest era</div>
+          <h2 className="mb-3 text-3xl font-semibold tracking-tighter">Tap a category and let it make sense.</h2>
+          <p className="mb-5 max-w-[680px] text-[15px] leading-relaxed text-black/60">
+            These are the owner&apos;s content lanes: ingredient families Aime can explain without turning the page into a product wall.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {finestDiscoveryCards.map((card) => (
+              <button
+                key={card.title}
+                type="button"
+                onClick={() => setActiveDiscovery(card)}
+                className="group min-h-36 rounded-[24px] border border-black/10 bg-linear-to-br from-white via-[#faf8f4] to-[#7C9C9B]/12 p-5 text-left shadow-[0_10px_24px_rgba(17,17,17,0.03)] transition-all hover:border-[#B01F85]/25 hover:to-[#B01F85]/8"
+              >
+                <div className="mb-4 flex items-center justify-between gap-3">
+                  <span className="h-2 w-10 rounded-full bg-linear-to-r from-[#B01F85] to-[#7C9C9B]" />
+                  <span className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#7C9C9B] group-hover:text-[#B01F85]">
+                    Open
+                  </span>
+                </div>
+                <div className="font-mono text-[10px] uppercase tracking-[0.16em] text-[#7C9C9B]">{card.eyebrow}</div>
+                <div className="mt-2 text-xl font-semibold tracking-tight">{card.title}</div>
+                <p className="mt-3 text-xs leading-relaxed text-black/58">{card.note}</p>
+              </button>
+            ))}
+          </div>
         </section>
 
         <section className="mb-10">
@@ -205,6 +286,42 @@ export default function FinestAt50Page() {
           </div>
         </section>
       </main>
+
+      {activeDiscovery && (
+        <div className="fixed inset-0 z-[220] flex items-end bg-black/35 p-4 backdrop-blur-sm sm:items-center sm:justify-center" onClick={() => setActiveDiscovery(null)}>
+          <div
+            className="w-full max-w-[560px] rounded-[28px] border border-black/10 bg-[#faf8f4] p-6 text-black shadow-[0_24px_80px_rgba(17,17,17,0.24)]"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="mb-5 flex items-start justify-between gap-4">
+              <div>
+                <div className="font-mono text-[11px] uppercase tracking-[0.18em] text-[#7C9C9B]">{activeDiscovery.eyebrow}</div>
+                <h2 className="mt-2 text-3xl font-semibold tracking-tighter">{activeDiscovery.title}</h2>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveDiscovery(null)}
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white text-xl"
+                aria-label="Close"
+              >
+                x
+              </button>
+            </div>
+            <p className="text-sm leading-relaxed text-black/64">{activeDiscovery.body}</p>
+            <div className="mt-5 grid gap-2">
+              {activeDiscovery.examples.map((example) => (
+                <div key={example} className="rounded-[18px] border border-black/10 bg-white/72 px-4 py-3 text-sm font-semibold capitalize">
+                  {example}
+                </div>
+              ))}
+            </div>
+            <div className="mt-5 rounded-[20px] border border-[#B01F85]/12 bg-linear-to-br from-[#fff7fc] via-white to-[#B01F85]/8 p-4">
+              <div className="mb-1 font-mono text-[10px] uppercase tracking-[0.16em] text-[#B01F85]">Aime&apos;s note</div>
+              <div className="text-sm leading-relaxed text-black/66">{activeDiscovery.note}</div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <BottomNav />
     </div>

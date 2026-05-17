@@ -3,8 +3,8 @@ import AuthGate from "@/components/AuthGate"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "PicLicorice | Fix Your Routine",
-  description: "Calm, clear skincare guidance from Aime. Understand what your routine is doing and fix what's missing.",
+  title: "PicLicorice | Your Finest Era",
+  description: "Calm, clear skincare guidance from Aime. Build a simple rhythm and choose what belongs.",
   icons: {
     icon: "/favicon.ico",
   },
