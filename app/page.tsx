@@ -16,6 +16,8 @@ const tickerItems = [
   "Finest at 50 - a lifestyle movement",
 ]
 
+const founderPortraitUrl = "/assets/piclicorice/founder-portrait-CT9BX5H9.jpg"
+
 function FinestTicker() {
   const items = [...tickerItems, ...tickerItems]
 
@@ -57,13 +59,6 @@ export default function PicLicoriceHome() {
 
   const savedResult = savedRhythm ? buildRhythmResult(savedRhythm.answers) : null
   const featuredLinks = content.tiktokLinks.filter((link) => link.isFeatured && link.url)
-
-  const heroImages = [
-    content.homepageImageUrl || "/assets/piclicorice/home-hero-mobile-4x5.png",
-    "/assets/piclicorice/piclicorice_home_finest_at_50_v2_16x9.png",
-    "/assets/piclicorice/home-hero-watch-aime-16x10.png",
-    "/assets/piclicorice/piclicorice_shop_routine_basics_v2_16x9.png",
-  ].filter(Boolean)
 
   return (
     <div className="editorial-shell min-h-screen pb-24">
@@ -121,18 +116,12 @@ export default function PicLicoriceHome() {
           </div>
 
           <div className="media-card relative aspect-[4/5] overflow-hidden rounded-[32px] shadow-[0_28px_90px_rgba(17,26,51,0.18)] sm:aspect-[4/5] xl:order-2">
-            {heroImages.map((src, index) => (
-              <img
-                key={`${src}-${index}`}
-                src={src}
-                alt="PicLicorice skincare editorial"
-                className="home-media-slide absolute inset-0 h-full w-full object-cover"
-                style={{
-                  objectPosition: index === 0 ? content.homepageImagePosition : "center center",
-                  animationDelay: `${index * 6}s`,
-                }}
-              />
-            ))}
+            <img
+              src={founderPortraitUrl}
+              alt="PicLicorice founder portrait"
+              className="absolute inset-0 h-full w-full object-cover"
+              style={{ objectPosition: content.homepageImagePosition || "center center" }}
+            />
             <div className="absolute inset-0 bg-linear-to-t from-[#111A33]/64 via-transparent to-transparent" />
             <div className="absolute left-5 top-8 hidden rounded-[18px] border border-white/50 bg-white/70 px-5 py-4 shadow-[0_18px_48px_rgba(17,26,51,0.16)] backdrop-blur md:block">
               <div className="pl-kicker text-[10px]">Glow tracker</div>

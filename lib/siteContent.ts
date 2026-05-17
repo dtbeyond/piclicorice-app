@@ -40,7 +40,7 @@ export const SITE_CONTENT_STORAGE_KEY = "piclicorice_site_content"
 export const defaultSiteContent: SiteContent = {
   shopUrl: "https://vt.tiktok.com/ZTkWcTM1M/?page=TikTokShop",
   homepageVideoUrl: "",
-  homepageImageUrl: "/assets/piclicorice/piclicorice_home_hero_watch_aime_first_v2_16x10.png",
+  homepageImageUrl: "/assets/piclicorice/founder-portrait-CT9BX5H9.jpg",
   homepageImagePosition: "center center",
   finestVideoUrl: "",
   finestImageUrl: "/assets/piclicorice/piclicorice_home_finest_at_50_v2_16x9.png",
