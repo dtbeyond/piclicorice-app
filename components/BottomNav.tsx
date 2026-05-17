@@ -41,7 +41,7 @@ export default function BottomNav() {
   )
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-black/10 bg-[#fbf7f2]/92 px-2 pb-2 pt-2 shadow-[0_-18px_48px_rgba(41,35,31,0.08)] backdrop-blur-xl">
+    <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-black/10 bg-[#fbf7f2]/92 px-2 pb-2 pt-2 shadow-[0_-18px_48px_rgba(41,35,31,0.08)] backdrop-blur-xl md:hidden">
       <div className="mx-auto grid w-full max-w-[640px] grid-cols-5 gap-1.5">
         {navItems.map((item) => {
           const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href)

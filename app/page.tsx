@@ -8,6 +8,39 @@ import SiteHeader from "@/components/SiteHeader"
 import { buildRhythmResult, isCompleteRhythm, RHYTHM_STORAGE_KEY, type SavedRhythm } from "@/lib/rhythm"
 import { useSiteContent } from "@/lib/useSiteContent"
 
+const tickerItems = [
+  "New rituals dropping weekly",
+  "Inside-out transformation",
+  "No more survivor mode",
+  "Tested by me, loved by us",
+  "Finest at 50 - a lifestyle movement",
+]
+
+function FinestTicker() {
+  const items = [...tickerItems, ...tickerItems]
+
+  return (
+    <section className="pl-ticker mt-12" aria-label="PicLicorice highlights">
+      <div className="pl-ticker-track">
+        {[0, 1].map((group) => (
+          <div key={group} className="pl-ticker-group" aria-hidden={group === 1}>
+            {items.map((item, index) => (
+              <span key={`${group}-${item}-${index}`} className="pl-ticker-item">
+                {index % 5 === 0 && "💌 "}
+                {index % 5 === 1 && "🌸 "}
+                {index % 5 === 2 && "💫 "}
+                {index % 5 === 3 && "💙 "}
+                {index % 5 === 4 && "✨ "}
+                {item}
+              </span>
+            ))}
+          </div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 export default function PicLicoriceHome() {
   const { content } = useSiteContent()
   const [savedRhythm, setSavedRhythm] = useState<SavedRhythm | null>(null)
@@ -36,29 +69,44 @@ export default function PicLicoriceHome() {
     <div className="editorial-shell min-h-screen pb-24">
       <SiteHeader actionLabel="Explore Picks" actionHref="/shop" />
 
-      <main className="mx-auto w-full max-w-[1040px] px-4 sm:px-6">
-        <section className="grid gap-8 pt-6 sm:pt-10 xl:grid-cols-[1fr_1fr] xl:items-center">
+      <main className="mx-auto w-full max-w-[1120px] px-4 sm:px-6">
+        <section className="grid gap-8 pt-8 pb-12 sm:pt-12 xl:grid-cols-[1fr_1fr] xl:items-center">
           <div className="xl:order-1">
-            <div className="pl-kicker mb-4">The Skincare Edit</div>
-            <h1 className="max-w-[680px] text-[44px] font-semibold leading-[0.94] tracking-tighter sm:text-6xl">
-              Join your finest era.
+            <div className="pl-pill mb-6 px-4 py-2 text-xs font-semibold">
+              <span className="h-2 w-2 rounded-full bg-[#177f91]" />
+              A lifestyle-beauty movement
+            </div>
+            <h1 className="pl-display max-w-[680px] text-[56px] leading-[0.95] text-[#111A33] sm:text-7xl">
+              Your <em>finest</em> era starts now.
             </h1>
-            <p className="mt-5 max-w-[560px] text-base leading-relaxed text-black/60 sm:text-lg">
-              Stop guessing what works. Simple routines, glow-forward formulas, and products worth keeping in rotation.
+            <p className="mt-6 max-w-[560px] text-base leading-relaxed text-[#111A33]/64 sm:text-lg">
+              Skincare, mindset, body &amp; soul rituals for women rewriting what aging looks like. No more survivor mode - only inside-out transformation.
             </p>
-            <div className="mt-7 grid gap-3 sm:grid-cols-2">
+            <div className="mt-8 grid gap-3 sm:grid-cols-[0.9fr_1fr]">
               <Link
-                href="/subscribe"
-                className="shop-now-button flex h-14 items-center justify-center rounded-full px-7 text-sm font-bold tracking-[0.08em]"
+                href="/formula"
+                className="shop-now-button flex h-14 items-center justify-center rounded-full px-7 text-sm font-bold"
               >
-                Subscribe
+                Read my story
               </Link>
               <Link
-                href="/routine"
+                href="/shop"
                 className="pl-soft-button flex h-14 items-center justify-center rounded-full px-7 text-sm font-semibold text-black"
               >
-                Start
+                ✨ Shop the rituals
               </Link>
+            </div>
+            <div className="mt-10 grid max-w-[520px] grid-cols-3 divide-x divide-[#111A33]/12 text-[#111A33]">
+              {[
+                ["47→50", "The journey"],
+                ["100%", "Tested by me"],
+                ["∞", "Soft & strong"],
+              ].map(([value, label]) => (
+                <div key={label} className="px-5 first:pl-0">
+                  <div className="pl-display text-2xl leading-none">{value}</div>
+                  <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-[#111A33]/50">{label}</div>
+                </div>
+              ))}
             </div>
             {savedResult && (
               <Link
@@ -72,7 +120,7 @@ export default function PicLicoriceHome() {
             )}
           </div>
 
-          <div className="media-card relative aspect-[4/5] overflow-hidden sm:aspect-[16/10] xl:order-2">
+          <div className="media-card relative aspect-[4/5] overflow-hidden rounded-[32px] shadow-[0_28px_90px_rgba(17,26,51,0.18)] sm:aspect-[4/5] xl:order-2">
             {heroImages.map((src, index) => (
               <img
                 key={`${src}-${index}`}
@@ -85,14 +133,26 @@ export default function PicLicoriceHome() {
                 }}
               />
             ))}
-            <div className="absolute inset-0 bg-linear-to-t from-[#fbf7f2]/86 via-white/24 to-black/5" />
-            <div className="absolute bottom-5 left-5 right-5 rounded-[24px] border border-white/50 bg-white/72 p-5 shadow-[0_16px_48px_rgba(41,35,31,0.12)] backdrop-blur">
-              <div className="pl-kicker text-[10px]">PicLicorice</div>
-              <div className="mt-1 text-xl font-semibold tracking-tight">Honoring skin&apos;s natural beauty.</div>
+            <div className="absolute inset-0 bg-linear-to-t from-[#111A33]/64 via-transparent to-transparent" />
+            <div className="absolute left-5 top-8 hidden rounded-[18px] border border-white/50 bg-white/70 px-5 py-4 shadow-[0_18px_48px_rgba(17,26,51,0.16)] backdrop-blur md:block">
+              <div className="pl-kicker text-[10px]">Glow tracker</div>
+              <div className="pl-display mt-1 text-xl">Day 84 ✨</div>
+            </div>
+            <div className="absolute bottom-6 left-5 right-5 rounded-[20px] border border-white/18 bg-[#111A33]/90 p-5 text-white shadow-[0_16px_48px_rgba(17,26,51,0.24)] backdrop-blur">
+              <div className="font-serif text-sm font-semibold italic text-white/95">&quot;It&apos;s never too late to become your best self.&quot;</div>
+              <div className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[#f7dfe2]">Founder, age 47</div>
+            </div>
+            <div className="absolute bottom-28 right-5 hidden rounded-[18px] border border-white/50 bg-white/52 px-5 py-4 shadow-[0_18px_48px_rgba(17,26,51,0.16)] backdrop-blur md:block">
+              <div className="pl-kicker pl-kicker-pink text-[10px]">Mood</div>
+              <div className="pl-display mt-1 text-xl">Soft &amp; strong</div>
             </div>
           </div>
         </section>
+      </main>
 
+      <FinestTicker />
+
+      <main className="mx-auto w-full max-w-[1040px] px-4 sm:px-6">
         <section className="mt-10 grid gap-4 lg:grid-cols-3">
           <Link href="/subscribe" className="pl-card pl-card-pink p-6">
             <div className="pl-kicker pl-kicker-pink mb-3">Weekly drop</div>

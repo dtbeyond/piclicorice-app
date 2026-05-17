@@ -144,6 +144,28 @@ body {
   color: var(--accent);
 }
 
+.pl-display {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  letter-spacing: -0.045em;
+}
+
+.pl-display em {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.pl-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 10px 28px rgba(17, 26, 51, 0.06);
+  color: rgba(17, 26, 51, 0.82);
+}
+
 .pl-soft-button {
   color: var(--navy);
   border: 1px solid rgba(17, 26, 51, 0.14);
@@ -181,6 +203,47 @@ body {
   box-shadow: 0 0 0 8px rgba(15, 127, 145, 0.08), 0 0 36px rgba(15, 127, 145, 0.38);
 }
 
+.pl-ticker {
+  overflow: hidden;
+  background: var(--navy);
+  color: var(--blush);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pl-ticker-track {
+  display: flex;
+  width: max-content;
+  min-width: 200%;
+  animation: plTicker 34s linear infinite;
+}
+
+.pl-ticker-group {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding: 0.85rem 1.5rem;
+  white-space: nowrap;
+}
+
+.pl-ticker-item {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  font-style: italic;
+  font-weight: 700;
+  color: rgba(247, 223, 226, 0.9);
+}
+
+@keyframes plTicker {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 .home-media-slide {
   animation: homeMediaFade 28s infinite;
   opacity: 0;
@@ -198,6 +261,10 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .pl-ticker-track {
+    animation: none;
+  }
+
   .home-media-slide {
     animation: none;
     opacity: 0;
