@@ -5,7 +5,7 @@ import SiteHeader from "@/components/SiteHeader"
 export default function SubscribePage() {
   return (
     <div className="editorial-shell min-h-screen pb-24">
-      <SiteHeader actionLabel="Explore Picks" actionHref="/shop" />
+      <SiteHeader />
 
       <main className="mx-auto w-full max-w-[900px] px-4 pt-8 sm:px-6">
         <section className="media-card">
@@ -25,7 +25,7 @@ export default function SubscribePage() {
                   className="h-14 rounded-full border border-black/10 bg-white/80 px-5 text-sm outline-none placeholder:text-black/35 focus:border-[#0F7F91]"
                 />
                 <button className="shop-now-button h-14 rounded-full px-8 text-sm font-bold tracking-[0.08em]">
-                  Subscribe
+                  Join the glow
                 </button>
               </div>
               <p className="mt-3 text-xs leading-relaxed text-black/45">
@@ -65,16 +65,16 @@ export default function SubscribePage() {
 
         <section className="pl-card mt-8 p-6">
           <div className="pl-kicker mb-3">Next step</div>
-          <h2 className="text-2xl font-semibold tracking-tight">Start with your skin, then choose what belongs.</h2>
+          <h2 className="text-2xl font-semibold tracking-tight">Begin with your skin, then choose what belongs.</h2>
           <p className="mt-3 max-w-[620px] text-sm leading-relaxed text-black/58">
-            The newsletter should feed the Start tool and Aime&apos;s Picks, not become another noisy content wall.
+            The newsletter should feed the Rituals tool and Aime&apos;s shop, not become another noisy content wall.
           </p>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
             <Link href="/routine" className="shop-now-button flex h-12 items-center justify-center rounded-full px-6 text-sm font-bold tracking-[0.08em]">
-              Start
+              Rituals
             </Link>
             <Link href="/shop" className="pl-soft-button flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold">
-              Explore Picks
+              Shop
             </Link>
           </div>
         </section>

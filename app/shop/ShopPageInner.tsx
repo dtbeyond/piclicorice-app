@@ -10,7 +10,7 @@ const pickPaths = [
   {
     title: "By age group",
     eyebrow: "20s / 30s / 40s / 50+",
-    body: "Start with skin stage and timing, then keep the picks realistic.",
+    body: "Begin with skin stage and timing, then keep the shop realistic.",
   },
   {
     title: "By lifestyle",
@@ -44,7 +44,7 @@ export default function ShopPageInner() {
               style={{ objectPosition: content.shopImagePosition }}
             />
             <div className="p-7">
-              <div className="pl-kicker mb-4">Aime&apos;s Picks</div>
+              <div className="pl-kicker mb-4">Shop the edit</div>
               <h1 className="mb-4 max-w-[560px] text-5xl font-semibold leading-none tracking-tighter">
                 Explore picks after the edit.
               </h1>
@@ -64,7 +64,7 @@ export default function ShopPageInner() {
                   href="/routine"
                   className="pl-soft-button inline-flex h-16 items-center justify-center rounded-full px-8 font-semibold text-black"
                 >
-                  Start First
+                  Rituals First
                 </Link>
               </div>
               <div className="mt-5 font-mono text-[10px] tracking-widest text-black/35">OPENS TIKTOK SHOP</div>

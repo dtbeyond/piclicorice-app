@@ -30,7 +30,7 @@ type RhythmStep = {
 const rhythmSteps: RhythmStep[] = [
   {
     key: "skinFeel",
-    eyebrow: "Start Your Rhythm",
+    eyebrow: "Rituals",
     question: "What feels most frustrating about your skin right now?",
     helper: "Start with what your skin is telling you today. Aime can narrow the rhythm from there.",
     options: [
@@ -257,7 +257,7 @@ function RhythmResultScreen({
         <p className="text-xl font-semibold leading-snug tracking-tight">{result.aimeNote}</p>
       </SectionCard>
 
-      <SectionCard eyebrow="Optional Picks" title="Aime's Picks for this rhythm">
+      <SectionCard eyebrow="Optional Shop" title="Shop the edit for this rhythm">
         <p className="mb-4 text-sm leading-relaxed text-black/55">
           These are optional starting points. The rhythm comes first; shopping should support it.
         </p>
@@ -363,7 +363,7 @@ export default function RoutineBuilderInner() {
 
   return (
     <div className="editorial-shell min-h-screen pb-28 text-black">
-      <SiteHeader actionLabel="Home" actionHref="/" />
+      <SiteHeader />
 
       <main className="mx-auto w-full max-w-[940px] px-4 pt-6 sm:px-6 sm:pt-10">
         {savedRhythm && result && completedAnswers ? (

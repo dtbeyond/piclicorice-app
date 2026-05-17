@@ -67,7 +67,7 @@ export default function PicLicoriceHome() {
 
   return (
     <div className="editorial-shell min-h-screen pb-24">
-      <SiteHeader actionLabel="Explore Picks" actionHref="/shop" />
+      <SiteHeader />
 
       <main className="mx-auto w-full max-w-[1120px] px-4 sm:px-6">
         <section className="grid gap-8 pt-8 pb-12 sm:pt-12 xl:grid-cols-[1fr_1fr] xl:items-center">
@@ -155,7 +155,7 @@ export default function PicLicoriceHome() {
       <main className="mx-auto w-full max-w-[1040px] px-4 sm:px-6">
         <section className="mt-10 grid gap-4 lg:grid-cols-3">
           <Link href="/subscribe" className="pl-card pl-card-pink p-6">
-            <div className="pl-kicker pl-kicker-pink mb-3">Weekly drop</div>
+            <div className="pl-kicker pl-kicker-pink mb-3">Join the glow</div>
             <h2 className="text-2xl font-semibold tracking-tight">Newsletter + simple PDF.</h2>
             <p className="mt-3 text-sm leading-relaxed text-black/58">One calm note, one useful download, then you move on.</p>
           </Link>
@@ -165,8 +165,8 @@ export default function PicLicoriceHome() {
             <p className="mt-3 text-sm leading-relaxed text-black/58">Hydrators, retinoids, barrier support, antioxidants, and more.</p>
           </Link>
           <Link href="/shop" className="pl-card pl-card-teal p-6">
-            <div className="pl-kicker mb-3">Picks</div>
-            <h2 className="text-2xl font-semibold tracking-tight">Choose by need.</h2>
+            <div className="pl-kicker mb-3">Shop</div>
+            <h2 className="text-2xl font-semibold tracking-tight">Shop by need.</h2>
             <p className="mt-3 text-sm leading-relaxed text-black/58">Browse by lifestyle, skin concern, or age group before opening the shop.</p>
           </Link>
         </section>

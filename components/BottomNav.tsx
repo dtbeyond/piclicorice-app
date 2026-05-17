@@ -9,10 +9,10 @@ import { RHYTHM_STORAGE_KEY } from "@/lib/rhythm"
 
 const baseNavItems: { label: string; href: string; Icon: IconType }[] = [
   { label: "Home", href: "/", Icon: FaHome },
-  { label: "Start", href: "/routine", Icon: FaHeartbeat },
   { label: "Finest", href: "/formula", Icon: FaBookOpen },
-  { label: "Picks", href: "/shop", Icon: FaShoppingBag },
-  { label: "Contact", href: "/contact", Icon: FaRegCommentDots },
+  { label: "Rituals", href: "/routine", Icon: FaHeartbeat },
+  { label: "Shop", href: "/shop", Icon: FaShoppingBag },
+  { label: "Reviews", href: "/reviews", Icon: FaRegCommentDots },
 ]
 
 export default function BottomNav() {
@@ -37,7 +37,7 @@ export default function BottomNav() {
   }, [])
 
   const navItems = baseNavItems.map((item) =>
-    item.href === "/routine" ? { ...item, label: hasRhythm ? "Rhythm" : "Start" } : item
+    item.href === "/routine" && hasRhythm ? { ...item, label: "Rhythm" } : item
   )
 
   return (
