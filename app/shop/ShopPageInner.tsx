@@ -14,7 +14,7 @@ const pickPaths = [
   },
   {
     title: "By lifestyle",
-    eyebrow: "Daily rhythm",
+    eyebrow: "Daily ritual",
     body: "Diet, hydration, sleep, stress, sun exposure, environment, habits, and current routine.",
   },
   {
@@ -38,7 +38,7 @@ export default function ShopPageInner() {
         <section className="media-card">
           <div className="bg-white">
             <img
-              src="/assets/piclicorice/piclicorice_shop_products_warm_square.png"
+              src="/assets/piclicorice/piclicorice_shop_products_warm_square.webp"
               alt="Aime's skincare product picks"
               className="h-80 w-full object-cover sm:h-96"
               style={{ objectPosition: content.shopImagePosition }}

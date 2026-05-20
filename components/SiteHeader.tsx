@@ -51,7 +51,7 @@ export default function SiteHeader({
           <Link href="/" className="flex min-w-0 items-center gap-3">
             <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#111A33] shadow-[0_10px_22px_rgba(17,17,17,0.12)] ring-1 ring-black/10">
               <img
-                src="/assets/piclicorice/piclicorice-pl-logo.jpeg"
+                src="/assets/piclicorice/piclicorice-pl-logo.webp"
                 alt="PicLicorice logo"
                 className="h-full w-full object-cover"
               />

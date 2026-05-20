@@ -7,7 +7,7 @@ import { ingredients, type Ingredient } from "@/data/ingredients"
 import { useSiteContent } from "@/lib/useSiteContent"
 
 const finestThemes = [
-  ["Hydration", "Keep the rhythm soft, steady, and water-supportive before chasing stronger actives.", "from-[#9FC8CA]/20 via-white to-[#fbf7f2]"],
+  ["Hydration", "Keep the ritual soft, steady, and water-supportive before chasing stronger actives.", "from-[#9FC8CA]/20 via-white to-[#fbf7f2]"],
   ["Maturity", "Work with the skin you have now instead of forcing a routine built for someone else.", "from-[#f5eee8] via-white to-[#0F7F91]/8"],
   ["Internal Balance", "Rest, stress, nutrition, and consistency all show up on the surface.", "from-white via-[#fbf7f2] to-[#9FC8CA]/16"],
   ["Consistency", "Small steps repeated calmly beat a shelf full of products used chaotically.", "from-[#f9e4e6] via-white to-[#9FC8CA]/12"],
@@ -157,7 +157,7 @@ export default function FinestAt50Page() {
             Your skin reflects how you live, not just what you apply.
           </h1>
           <p className="max-w-[620px] text-[15px] leading-relaxed text-black/62">
-            This is skincare with less panic and more rhythm: hydration, maturity, internal balance, and consistency over chaos.
+            This is skincare with less panic and more ritual: hydration, maturity, internal balance, and consistency over chaos.
           </p>
         </section>
 

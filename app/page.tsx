@@ -5,7 +5,7 @@ import Link from "next/link"
 import { FaTiktok } from "react-icons/fa"
 import BottomNav from "@/components/BottomNav"
 import SiteHeader from "@/components/SiteHeader"
-import { buildRhythmResult, isCompleteRhythm, RHYTHM_STORAGE_KEY, type SavedRhythm } from "@/lib/rhythm"
+import { buildRhythmResult, isCompleteRhythm, normalizeRhythmAnswers, RHYTHM_STORAGE_KEY, type SavedRhythm } from "@/lib/rhythm"
 import { useSiteContent } from "@/lib/useSiteContent"
 
 const tickerItems = [
@@ -16,7 +16,7 @@ const tickerItems = [
   "Finest at 50 - a lifestyle movement",
 ]
 
-const founderPortraitUrl = "/assets/piclicorice/founder-portrait-CT9BX5H9.jpg"
+const founderPortraitUrl = "/assets/piclicorice/founder-portrait-CT9BX5H9.webp"
 
 function getGlowDay(savedAt: string) {
   const savedTime = new Date(savedAt).getTime()
@@ -58,12 +58,13 @@ export default function PicLicoriceHome() {
   const [savedRhythm, setSavedRhythm] = useState<SavedRhythm | null>(null)
 
   useEffect(() => {
-    const saved = localStorage.getItem(RHYTHM_STORAGE_KEY)
+    const saved = localStorage.getItem(RHYTHM_STORAGE_KEY) || localStorage.getItem("pl_rhythm")
     if (!saved) return
 
     try {
       const parsed = JSON.parse(saved) as SavedRhythm
-      if (parsed.answers && isCompleteRhythm(parsed.answers)) setSavedRhythm(parsed)
+      const normalizedAnswers = normalizeRhythmAnswers(parsed.answers)
+      if (isCompleteRhythm(normalizedAnswers)) setSavedRhythm({ answers: normalizedAnswers, savedAt: parsed.savedAt })
     } catch {}
   }, [])
 
@@ -120,8 +121,8 @@ export default function PicLicoriceHome() {
                 className="pl-card pl-card-teal mt-5 block p-5"
               >
                 <div className="pl-kicker pl-kicker-pink mb-2 text-[10px]">Welcome back</div>
-                <div className="text-sm font-semibold">Your current rhythm is {savedResult.summaryTags}.</div>
-                <p className="mt-2 text-xs leading-relaxed text-black/52">Open your rhythm and keep the routine calm.</p>
+                <div className="text-sm font-semibold">Your current ritual is {savedResult.summaryTags}.</div>
+                <p className="mt-2 text-xs leading-relaxed text-black/52">Open your ritual and keep the routine calm.</p>
               </Link>
             )}
           </div>

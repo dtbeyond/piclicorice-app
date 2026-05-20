@@ -40,10 +40,10 @@ export const SITE_CONTENT_STORAGE_KEY = "piclicorice_site_content"
 export const defaultSiteContent: SiteContent = {
   shopUrl: "https://vt.tiktok.com/ZTkWcTM1M/?page=TikTokShop",
   homepageVideoUrl: "",
-  homepageImageUrl: "/assets/piclicorice/founder-portrait-CT9BX5H9.jpg",
+  homepageImageUrl: "/assets/piclicorice/founder-portrait-CT9BX5H9.webp",
   homepageImagePosition: "center center",
   finestVideoUrl: "",
-  finestImageUrl: "/assets/piclicorice/piclicorice_home_finest_at_50_v2_16x9.png",
+  finestImageUrl: "/assets/piclicorice/piclicorice_home_finest_at_50_v2_16x9.webp",
   finestImagePosition: "center center",
   shopImagePosition: "center center",
   routineImagePosition: "center center",
@@ -91,12 +91,31 @@ export const defaultSiteContent: SiteContent = {
   ],
 }
 
+function useOptimizedAssetUrl(url: string | undefined, fallback: string) {
+  const assetUrl = url || fallback
+
+  return assetUrl
+    .replace("/assets/piclicorice/founder-portrait-CT9BX5H9.jpg", "/assets/piclicorice/founder-portrait-CT9BX5H9.webp")
+    .replace(
+      "/assets/piclicorice/piclicorice_home_finest_at_50_v2_16x9.png",
+      "/assets/piclicorice/piclicorice_home_finest_at_50_v2_16x9.webp"
+    )
+    .replace(
+      "/assets/piclicorice/piclicorice_rituals_journal_16x9.png",
+      "/assets/piclicorice/piclicorice_rituals_journal_16x9.webp"
+    )
+    .replace(
+      "/assets/piclicorice/piclicorice_shop_products_warm_square.png",
+      "/assets/piclicorice/piclicorice_shop_products_warm_square.webp"
+    )
+}
+
 export function normalizeSiteContent(content: Partial<SiteContent> | null | undefined): SiteContent {
   const mergedContent = {
     ...defaultSiteContent,
     ...(content || {}),
-    homepageImageUrl: content?.homepageImageUrl || defaultSiteContent.homepageImageUrl,
-    finestImageUrl: content?.finestImageUrl || defaultSiteContent.finestImageUrl,
+    homepageImageUrl: useOptimizedAssetUrl(content?.homepageImageUrl, defaultSiteContent.homepageImageUrl),
+    finestImageUrl: useOptimizedAssetUrl(content?.finestImageUrl, defaultSiteContent.finestImageUrl),
     homepageImagePosition: content?.homepageImagePosition || defaultSiteContent.homepageImagePosition,
     finestImagePosition: content?.finestImagePosition || defaultSiteContent.finestImagePosition,
     shopImagePosition: content?.shopImagePosition || defaultSiteContent.shopImagePosition,

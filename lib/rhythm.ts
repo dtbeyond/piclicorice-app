@@ -1,15 +1,29 @@
-export const RHYTHM_STORAGE_KEY = "pl_rhythm"
+export const RHYTHM_STORAGE_KEY = "pl_ritual"
+
+export type SkinFeel = "dry-tight" | "dull-tired" | "red-irritated" | "uneven-texture" | "inconsistent"
+export type RoutineState = "random" | "too-many" | "too-simple" | "skip-often" | "not-sure"
+export type Sensitivity = "rarely" | "sometimes" | "easily" | "not-sure"
+export type AgeRange = "25-34" | "35-44" | "45-54" | "55plus" | "prefer-not"
+export type Goal = "hydration" | "calmer" | "aging" | "simpler" | "consistency"
 
 export type RhythmAnswers = {
-  skinFeel?: "dry-tight" | "dull-tired" | "red-irritated" | "uneven-texture" | "inconsistent"
-  routineState?: "random" | "too-many" | "too-simple" | "skip-often" | "not-sure"
-  sensitivity?: "rarely" | "sometimes" | "easily" | "not-sure"
-  ageRange?: "25-34" | "35-44" | "45-54" | "55plus" | "prefer-not"
-  goal?: "hydration" | "calmer" | "aging" | "simpler" | "consistency"
+  skinFeel?: SkinFeel[]
+  routineState?: RoutineState[]
+  sensitivity?: Sensitivity
+  ageRange?: AgeRange
+  goal?: Goal
+}
+
+export type CompleteRhythmAnswers = {
+  skinFeel: SkinFeel[]
+  routineState: RoutineState[]
+  sensitivity: Sensitivity
+  ageRange: AgeRange
+  goal: Goal
 }
 
 export type SavedRhythm = {
-  answers: Required<RhythmAnswers>
+  answers: CompleteRhythmAnswers
   savedAt: string
 }
 
@@ -56,21 +70,72 @@ export const rhythmLabels = {
     hydration: "More hydration",
     calmer: "Calmer skin",
     aging: "Aging support",
-    simpler: "Simpler routine",
+    simpler: "Simpler ritual",
     consistency: "Better consistency",
   },
 } as const
 
-export function isCompleteRhythm(answers: RhythmAnswers): answers is Required<RhythmAnswers> {
-  return Boolean(answers.skinFeel && answers.routineState && answers.sensitivity && answers.ageRange && answers.goal)
+const skinFeelValues: SkinFeel[] = ["dry-tight", "dull-tired", "red-irritated", "uneven-texture", "inconsistent"]
+const routineStateValues: RoutineState[] = ["random", "too-many", "too-simple", "skip-often", "not-sure"]
+const sensitivityValues: Sensitivity[] = ["rarely", "sometimes", "easily", "not-sure"]
+const ageRangeValues: AgeRange[] = ["25-34", "35-44", "45-54", "55plus", "prefer-not"]
+const goalValues: Goal[] = ["hydration", "calmer", "aging", "simpler", "consistency"]
+
+function normalizeArray<T extends string>(value: unknown, allowed: readonly T[]): T[] {
+  const raw = Array.isArray(value) ? value : value ? [value] : []
+  return raw.filter((item): item is T => typeof item === "string" && allowed.includes(item as T))
 }
 
-export function buildRhythmResult(answers: Required<RhythmAnswers>): RhythmResult {
-  const sensitive = answers.sensitivity === "easily" || answers.skinFeel === "red-irritated"
-  const dry = answers.skinFeel === "dry-tight" || answers.goal === "hydration"
-  const texture = answers.skinFeel === "uneven-texture" || answers.goal === "aging"
-  const consistency = answers.skinFeel === "inconsistent" || answers.routineState === "random" || answers.routineState === "skip-often"
+export function normalizeRhythmAnswers(value: unknown): RhythmAnswers {
+  if (!value || typeof value !== "object") return {}
+  const answers = value as Partial<Record<keyof RhythmAnswers, unknown>>
+  const sensitivity = typeof answers.sensitivity === "string" && sensitivityValues.includes(answers.sensitivity as Sensitivity)
+    ? (answers.sensitivity as Sensitivity)
+    : undefined
+  const ageRange = typeof answers.ageRange === "string" && ageRangeValues.includes(answers.ageRange as AgeRange)
+    ? (answers.ageRange as AgeRange)
+    : undefined
+  const goal = typeof answers.goal === "string" && goalValues.includes(answers.goal as Goal)
+    ? (answers.goal as Goal)
+    : undefined
+
+  return {
+    skinFeel: normalizeArray(answers.skinFeel, skinFeelValues),
+    routineState: normalizeArray(answers.routineState, routineStateValues),
+    sensitivity,
+    ageRange,
+    goal,
+  }
+}
+
+export function isCompleteRhythm(answers: RhythmAnswers): answers is CompleteRhythmAnswers {
+  return Boolean(
+    answers.skinFeel?.length &&
+      answers.routineState?.length &&
+      answers.sensitivity &&
+      answers.ageRange &&
+      answers.goal
+  )
+}
+
+export function formatRhythmLabelGroup<T extends keyof Pick<typeof rhythmLabels, "skinFeel" | "routineState">>(
+  group: T,
+  values: RhythmAnswers[T]
+) {
+  const selected = Array.isArray(values) ? values : values ? [values] : []
+  return selected.map((value) => rhythmLabels[group][value as keyof (typeof rhythmLabels)[T]]).join(", ")
+}
+
+export function buildRhythmResult(answers: CompleteRhythmAnswers): RhythmResult {
+  const hasSkinFeel = (value: SkinFeel) => answers.skinFeel.includes(value)
+  const hasRoutineState = (value: RoutineState) => answers.routineState.includes(value)
+
+  const sensitive = answers.sensitivity === "easily" || hasSkinFeel("red-irritated")
+  const dry = hasSkinFeel("dry-tight") || answers.goal === "hydration"
+  const texture = hasSkinFeel("uneven-texture") || answers.goal === "aging"
+  const consistency = hasSkinFeel("inconsistent") || hasRoutineState("random") || hasRoutineState("skip-often")
   const calmer = sensitive || answers.goal === "calmer"
+  const tooMany = hasRoutineState("too-many")
 
   const primary = dry ? "hydration" : calmer ? "calm barrier support" : texture ? "steady texture support" : "consistency"
   const secondary = consistency ? "consistency" : answers.goal === "simpler" ? "simplicity" : "barrier support"
@@ -88,27 +153,27 @@ export function buildRhythmResult(answers: Required<RhythmAnswers>): RhythmResul
   const avoidOverdoing = [
     sensitive ? "Fragrance and strong exfoliants when your skin feels reactive" : "Too many acids in the same week",
     texture && !sensitive ? "Retinol too often before your barrier is steady" : "Adding strong actives before the basics feel consistent",
-    answers.routineState === "too-many" ? "Layering products just because they are on the shelf" : "Changing everything at once",
-    "Mixing strong actives on nights your skin already feels stressed",
+    tooMany ? "Layering products just because they are on the shelf" : "Changing everything at once",
+    "Using treatment steps more often than your skin concern actually needs",
   ]
 
-  const eveningTreatment = sensitive
-    ? "Treatment or repair step only on calm nights"
+  const treatmentStep = sensitive
+    ? "Peptide or barrier-support serum as needed"
     : texture
-      ? "Gentle treatment step two or three nights a week"
-      : "Repair step focused on comfort and consistency"
+      ? "Peptide or treatment serum as needed"
+      : "Hydrating or peptide serum as needed"
 
   return {
-    profileLine: `Your skin rhythm looks ${primary}-focused with ${secondary} support.`,
+    profileLine: `Your skin ritual looks ${primary}-focused with ${secondary} support.`,
     summaryTags: `${primary} + ${secondary}`,
-    morning: ["Gentle cleanse or rinse", "Hydration layer", "Moisturizer", "Daily SPF"],
-    evening: ["Cleanse", eveningTreatment, "Moisturizer", "Optional recovery night"],
+    morning: ["Cleanser", "Serum", "Moisturizer", "SPF"],
+    evening: ["Cleanser", treatmentStep, "Moisturizer"],
     focusIngredients,
     avoidOverdoing,
     aimeNote:
-      answers.routineState === "too-many"
-        ? "You probably do not need a bigger shelf right now. You need a rhythm your skin can recognize."
-        : "Start by making your skin feel safe and predictable. Once that rhythm holds, the stronger steps become easier to choose.",
+      tooMany
+        ? "You probably do not need a bigger shelf right now. You need a ritual your skin can recognize."
+        : "Start by making your skin feel safe and predictable. Once that ritual holds, the stronger steps become easier to choose.",
     pickCategories: dry
       ? ["hydration", "skin-barrier", "dry-skin"]
       : calmer

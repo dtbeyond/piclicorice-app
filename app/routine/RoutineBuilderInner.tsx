@@ -5,15 +5,20 @@ import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import BottomNav from "@/components/BottomNav"
 import SiteHeader from "@/components/SiteHeader"
-import { products } from "@/data/products"
+import { products, type Product } from "@/data/products"
 import {
   buildRhythmResult,
+  formatRhythmLabelGroup,
   isCompleteRhythm,
+  normalizeRhythmAnswers,
   RHYTHM_STORAGE_KEY,
   rhythmLabels,
+  type CompleteRhythmAnswers,
   type RhythmAnswers,
   type RhythmResult,
   type SavedRhythm,
+  type RoutineState,
+  type SkinFeel,
 } from "@/lib/rhythm"
 import { useSiteContent } from "@/lib/useSiteContent"
 
@@ -24,6 +29,7 @@ type RhythmStep = {
   eyebrow: string
   question: string
   helper: string
+  isMultiSelect?: boolean
   options: { value: string; label: string; description?: string }[]
 }
 
@@ -32,25 +38,27 @@ const rhythmSteps: RhythmStep[] = [
     key: "skinFeel",
     eyebrow: "Rituals",
     question: "What feels most frustrating about your skin right now?",
-    helper: "Start with what your skin is telling you today. Aime can narrow the rhythm from there.",
+    helper: "Choose all that apply. Aime can narrow the ritual from there.",
+    isMultiSelect: true,
     options: [
       { value: "dry-tight", label: "Dry or tight", description: "Skin feels thirsty, tight, or uncomfortable." },
       { value: "dull-tired", label: "Dull or tired", description: "You want more life, softness, and glow." },
       { value: "red-irritated", label: "Red or irritated", description: "Your skin needs a calmer, less provoking path." },
       { value: "uneven-texture", label: "Uneven texture", description: "Bumps, roughness, spots, or visible texture stand out." },
-      { value: "inconsistent", label: "I just feel inconsistent", description: "The routine never quite settles into a rhythm." },
+      { value: "inconsistent", label: "I just feel inconsistent", description: "The ritual never quite settles in." },
     ],
   },
   {
     key: "routineState",
-    eyebrow: "Current Rhythm",
-    question: "How does your routine feel lately?",
+    eyebrow: "Current Ritual",
+    question: "How does your ritual feel lately?",
     helper: "No perfect answer needed. This helps decide whether to simplify, repair, or build.",
+    isMultiSelect: true,
     options: [
       { value: "random", label: "Random", description: "You use what is nearby or what sounds good that day." },
       { value: "too-many", label: "Too many products", description: "There may be too much happening at once." },
       { value: "too-simple", label: "Too simple", description: "The basics are there, but something still feels missing." },
-      { value: "skip-often", label: "I skip often", description: "The rhythm has to become easier to repeat." },
+      { value: "skip-often", label: "I skip often", description: "The ritual has to become easier to repeat." },
       { value: "not-sure", label: "I'm not sure what works", description: "You need a clearer way to judge what is helping." },
     ],
   },
@@ -61,9 +69,9 @@ const rhythmSteps: RhythmStep[] = [
     helper: "This changes how fast Aime would introduce stronger ingredients.",
     options: [
       { value: "rarely", label: "Rarely reactive", description: "Your skin usually handles new products well." },
-      { value: "sometimes", label: "Sometimes sensitive", description: "Your skin reacts when the routine gets too busy." },
+      { value: "sometimes", label: "Sometimes sensitive", description: "Your skin reacts when the ritual gets too busy." },
       { value: "easily", label: "Easily irritated", description: "Go slower, calmer, and more barrier-first." },
-      { value: "not-sure", label: "I'm not sure", description: "We will keep the rhythm conservative." },
+      { value: "not-sure", label: "I'm not sure", description: "We will keep the ritual conservative." },
     ],
   },
   {
@@ -82,14 +90,14 @@ const rhythmSteps: RhythmStep[] = [
   {
     key: "goal",
     eyebrow: "First Goal",
-    question: "What do you want your rhythm to help with first?",
+    question: "What do you want your ritual to help with first?",
     helper: "Choose the first priority. The result can still support more than one thing.",
     options: [
       { value: "hydration", label: "More hydration", description: "Softness, comfort, and less tightness." },
       { value: "calmer", label: "Calmer skin", description: "Less reactivity and more barrier support." },
       { value: "aging", label: "Aging support", description: "Steady support for mature skin without chaos." },
-      { value: "simpler", label: "Simpler routine", description: "Less decision fatigue, more repeatability." },
-      { value: "consistency", label: "Better consistency", description: "A rhythm you can actually keep." },
+      { value: "simpler", label: "Simpler ritual", description: "Less decision fatigue, more repeatability." },
+      { value: "consistency", label: "Better consistency", description: "A ritual you can actually keep." },
     ],
   },
 ]
@@ -98,17 +106,17 @@ function getPrefilledAnswers(concern: string | null, feel: string | null, goal: 
   const answers: RhythmAnswers = {}
 
   if (feel && rhythmSteps[0].options.some((option) => option.value === feel)) {
-    answers.skinFeel = feel as RhythmAnswers["skinFeel"]
+    answers.skinFeel = [feel as NonNullable<RhythmAnswers["skinFeel"]>[number]]
   }
 
   if (goal && rhythmSteps[4].options.some((option) => option.value === goal)) {
     answers.goal = goal as RhythmAnswers["goal"]
   }
 
-  if (concern === "dryness") answers.skinFeel = "dry-tight"
-  if (concern === "redness") answers.skinFeel = "red-irritated"
-  if (concern === "wrinkles" || concern === "texture") answers.skinFeel = "uneven-texture"
-  if (concern === "product-not-working") answers.routineState = "random"
+  if (concern === "dryness") answers.skinFeel = ["dry-tight"]
+  if (concern === "redness") answers.skinFeel = ["red-irritated"]
+  if (concern === "wrinkles" || concern === "texture") answers.skinFeel = ["uneven-texture"]
+  if (concern === "product-not-working") answers.routineState = ["random"]
 
   return answers
 }
@@ -187,31 +195,63 @@ function RhythmResultScreen({
   result,
   onStartFresh,
 }: {
-  answers: Required<RhythmAnswers>
+  answers: CompleteRhythmAnswers
   result: RhythmResult
   onStartFresh: () => void
 }) {
-  const picks = products
-    .filter((product) => product.approvedByAime && product.categories.some((category) => result.pickCategories.includes(category)))
-    .slice(0, 4)
+  const preferredProductsBySlot: Record<string, string[]> = {
+    cleanser: ["cosrx-low-ph-good-morning-gel-cleanser"],
+    serum: [
+      "cosrx-advanced-snail-96-mucin-essence",
+      "haua-hyaluronic-pdrn-orb-serum",
+      "peach-and-lily-glass-skin-refining-serum",
+      "the-ordinary-gf-15-solution",
+      "remedy-healthy-aging-advanced-serum",
+    ],
+    moisturizer: [
+      "illiyoon-sensitive-skincare-trio",
+      "haruharu-black-rice-ceramide-barrier-cream",
+      "aquaphor-healing-ointment-advanced-therapy",
+      "neutrogena-collagen-bank-spf-moisturizer",
+    ],
+    spf: [
+      "beauty-of-joseon-relief-sun-spf50",
+      "round-lab-birch-juice-moisturizing-sunscreen",
+      "round-lab-birch-juice-sun-stick",
+      "elf-suntouchable-spf-45-setting-spray",
+    ],
+  }
+  const picks = Object.entries(preferredProductsBySlot)
+    .map(([slot, preferredIds]) => {
+      const slotProducts = products.filter((product) => product.approvedByAime && product.categories.includes(slot))
+      const concernMatchedProduct = preferredIds
+        .map((id) => slotProducts.find((product) => product.id === id))
+        .find((product) => product?.categories.some((category) => result.pickCategories.includes(category)))
+      const preferredProduct = preferredIds
+        .map((id) => slotProducts.find((product) => product.id === id))
+        .find(Boolean)
+
+      return concernMatchedProduct || preferredProduct || slotProducts[0]
+    })
+    .filter((product): product is Product => Boolean(product))
 
   return (
     <div className="space-y-5">
       <section className="rounded-[28px] border border-[#9FC8CA]/34 bg-linear-to-br from-white via-[#fbf7f2] to-[#9FC8CA]/14 p-6 sm:p-8">
-        <div className="mb-3 font-mono text-xs uppercase tracking-[0.22em] text-[#9FC8CA]">Your Current Rhythm</div>
+        <div className="mb-3 font-mono text-xs uppercase tracking-[0.22em] text-[#9FC8CA]">Your Current Ritual</div>
         <h1 className="max-w-[680px] text-[38px] font-semibold leading-[0.98] tracking-tighter sm:text-6xl">
           Here&apos;s what your skin may be asking for
         </h1>
         <p className="mt-5 max-w-[620px] text-base leading-relaxed text-black/60">
-          Based on your answers, Aime would start by calming the routine before adding more products.
+          Based on your answers, Aime would start by calming the ritual before adding more products.
         </p>
       </section>
 
       <SectionCard eyebrow="Profile Summary" title={result.profileLine}>
         <div className="grid gap-3 sm:grid-cols-2">
           {[
-            ["Main skin feel", rhythmLabels.skinFeel[answers.skinFeel]],
-            ["Routine state", rhythmLabels.routineState[answers.routineState]],
+            ["Main skin feel", formatRhythmLabelGroup("skinFeel", answers.skinFeel)],
+            ["Ritual state", formatRhythmLabelGroup("routineState", answers.routineState)],
             ["Sensitivity level", rhythmLabels.sensitivity[answers.sensitivity]],
             ["Current goal", rhythmLabels.goal[answers.goal]],
           ].map(([label, value]) => (
@@ -224,10 +264,10 @@ function RhythmResultScreen({
       </SectionCard>
 
       <div className="grid gap-4 lg:grid-cols-2">
-        <SectionCard eyebrow="AM" title="Morning Rhythm">
+        <SectionCard eyebrow="AM" title="Morning Ritual">
           <StepList items={result.morning} />
         </SectionCard>
-        <SectionCard eyebrow="PM" title="Evening Rhythm">
+        <SectionCard eyebrow="PM" title="Evening Ritual">
           <StepList items={result.evening} />
         </SectionCard>
       </div>
@@ -257,9 +297,9 @@ function RhythmResultScreen({
         <p className="text-xl font-semibold leading-snug tracking-tight">{result.aimeNote}</p>
       </SectionCard>
 
-      <SectionCard eyebrow="Optional Shop" title="Shop the edit for this rhythm">
+      <SectionCard eyebrow="Optional Shop" title="Shop the edit for this ritual">
         <p className="mb-4 text-sm leading-relaxed text-black/55">
-          These are optional starting points. The rhythm comes first; shopping should support it.
+          These are optional starting points. The ritual comes first; shopping should support it.
         </p>
         <div className="grid gap-3 sm:grid-cols-2">
           {picks.map((product) => (
@@ -285,7 +325,7 @@ function RhythmResultScreen({
         <div className="grid gap-4 bg-white/72 p-6 sm:grid-cols-[1fr_auto] sm:items-center">
           <div>
             <div className="mb-2 font-mono text-[11px] uppercase tracking-[0.18em] text-[#9FC8CA]">Saved Locally</div>
-            <h2 className="text-2xl font-semibold tracking-tight">Your rhythm will be here when you come back.</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">Your ritual will be here when you come back.</h2>
             <p className="mt-2 text-sm leading-relaxed text-black/55">
               This proof version remembers on this device. Accounts can make it portable later.
             </p>
@@ -310,13 +350,14 @@ export default function RoutineBuilderInner() {
   const [savedRhythm, setSavedRhythm] = useState<SavedRhythm | null>(null)
 
   useEffect(() => {
-    const saved = localStorage.getItem(RHYTHM_STORAGE_KEY)
+    const saved = localStorage.getItem(RHYTHM_STORAGE_KEY) || localStorage.getItem("pl_rhythm")
     if (saved) {
       try {
         const parsed = JSON.parse(saved) as SavedRhythm
-        if (parsed.answers && isCompleteRhythm(parsed.answers)) {
-          setAnswers(parsed.answers)
-          setSavedRhythm(parsed)
+        const normalizedAnswers = normalizeRhythmAnswers(parsed.answers)
+        if (isCompleteRhythm(normalizedAnswers)) {
+          setAnswers(normalizedAnswers)
+          setSavedRhythm({ answers: normalizedAnswers, savedAt: parsed.savedAt })
           return
         }
       } catch {}
@@ -327,15 +368,42 @@ export default function RoutineBuilderInner() {
 
   const currentStep = rhythmSteps[stepIndex]
   const currentValue = answers[currentStep.key]
+  const selectedValues = Array.isArray(currentValue) ? currentValue : currentValue ? [currentValue] : []
   const completedAnswers = isCompleteRhythm(answers) ? answers : null
   const result = useMemo(() => (completedAnswers ? buildRhythmResult(completedAnswers) : null), [completedAnswers])
 
   const updateAnswer = (key: StepKey, value: string) => {
+    if (key === "skinFeel") {
+      const selected = value as SkinFeel
+      setAnswers((previous) => {
+        const current = previous.skinFeel || []
+        const next = current.includes(selected)
+          ? current.filter((item) => item !== selected)
+          : [...current, selected]
+
+        return { ...previous, skinFeel: next }
+      })
+      return
+    }
+
+    if (key === "routineState") {
+      const selected = value as RoutineState
+      setAnswers((previous) => {
+        const current = previous.routineState || []
+        const next = current.includes(selected)
+          ? current.filter((item) => item !== selected)
+          : [...current, selected]
+
+        return { ...previous, routineState: next }
+      })
+      return
+    }
+
     setAnswers((previous) => ({ ...previous, [key]: value }))
   }
 
   const continueFlow = () => {
-    if (!currentValue) return
+    if (selectedValues.length === 0) return
 
     if (stepIndex < rhythmSteps.length - 1) {
       setStepIndex(stepIndex + 1)
@@ -356,6 +424,7 @@ export default function RoutineBuilderInner() {
 
   const startFresh = () => {
     localStorage.removeItem(RHYTHM_STORAGE_KEY)
+    localStorage.removeItem("pl_rhythm")
     localStorage.removeItem("pl_routine")
     localStorage.removeItem("pl_routine_wizard")
     window.dispatchEvent(new Event("piclicorice-rhythm-updated"))
@@ -376,7 +445,7 @@ export default function RoutineBuilderInner() {
             <section className="mb-6 grid gap-5 lg:grid-cols-[0.86fr_1.14fr] lg:items-end">
               <div className="media-card">
                 <img
-                  src="/assets/piclicorice/piclicorice_rituals_journal_16x9.png"
+                  src="/assets/piclicorice/piclicorice_rituals_journal_16x9.webp"
                   alt="Warm skincare ritual journal"
                   className="h-56 w-full object-cover object-center sm:h-72 lg:h-[420px]"
                   style={{ objectPosition: content.routineImagePosition }}
@@ -406,7 +475,7 @@ export default function RoutineBuilderInner() {
                 {currentStep.options.map((option) => (
                   <ChoiceRow
                     key={option.value}
-                    selected={currentValue === option.value}
+                    selected={selectedValues.includes(option.value as never)}
                     label={option.label}
                     description={option.description}
                     onClick={() => updateAnswer(currentStep.key, option.value)}
@@ -427,7 +496,7 @@ export default function RoutineBuilderInner() {
                 <button
                   type="button"
                   onClick={continueFlow}
-                  disabled={!currentValue}
+                  disabled={selectedValues.length === 0}
                   className="shop-now-button flex h-14 flex-[1.5] items-center justify-center rounded-full text-sm font-bold tracking-[0.08em] disabled:cursor-not-allowed disabled:opacity-45"
                 >
                   {stepIndex === rhythmSteps.length - 1 ? "SHOW MY RITUAL" : "CONTINUE"}

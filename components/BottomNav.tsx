@@ -37,7 +37,7 @@ export default function BottomNav() {
   }, [])
 
   const navItems = baseNavItems.map((item) =>
-    item.href === "/routine" && hasRhythm ? { ...item, label: "Rhythm" } : item
+    item.href === "/routine" && hasRhythm ? { ...item, label: "Ritual" } : item
   )
 
   return (

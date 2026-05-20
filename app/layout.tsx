@@ -4,7 +4,7 @@ import "./globals.css"
 
 export const metadata: Metadata = {
   title: "PicLicorice | Your Finest Era",
-  description: "Calm, clear skincare guidance from Aime. Build a simple rhythm and choose what belongs.",
+  description: "Calm, clear skincare guidance from Aime. Build a simple ritual and choose what belongs.",
   icons: {
     icon: "/favicon.ico",
   },
