@@ -302,6 +302,9 @@ function RhythmResultScreen({
 export default function RoutineBuilderInner() {
   const { content } = useSiteContent()
   const searchParams = useSearchParams()
+  const concernParam = searchParams.get("concern")
+  const feelParam = searchParams.get("feel")
+  const goalParam = searchParams.get("goal")
   const [stepIndex, setStepIndex] = useState(0)
   const [answers, setAnswers] = useState<RhythmAnswers>({})
   const [savedRhythm, setSavedRhythm] = useState<SavedRhythm | null>(null)
@@ -319,8 +322,8 @@ export default function RoutineBuilderInner() {
       } catch {}
     }
 
-    setAnswers(getPrefilledAnswers(searchParams.get("concern"), searchParams.get("feel"), searchParams.get("goal")))
-  }, [searchParams])
+    setAnswers(getPrefilledAnswers(concernParam, feelParam, goalParam))
+  }, [concernParam, feelParam, goalParam])
 
   const currentStep = rhythmSteps[stepIndex]
   const currentValue = answers[currentStep.key]
@@ -373,8 +376,8 @@ export default function RoutineBuilderInner() {
             <section className="mb-6 grid gap-5 lg:grid-cols-[0.86fr_1.14fr] lg:items-end">
               <div className="media-card">
                 <img
-                  src="/assets/piclicorice/piclicorice_home_hero_mobile_backup_v2_4x5.png"
-                  alt="Warm skincare coaching"
+                  src="/assets/piclicorice/piclicorice_rituals_journal_16x9.png"
+                  alt="Warm skincare ritual journal"
                   className="h-56 w-full object-cover object-center sm:h-72 lg:h-[420px]"
                   style={{ objectPosition: content.routineImagePosition }}
                 />
@@ -427,7 +430,7 @@ export default function RoutineBuilderInner() {
                   disabled={!currentValue}
                   className="shop-now-button flex h-14 flex-[1.5] items-center justify-center rounded-full text-sm font-bold tracking-[0.08em] disabled:cursor-not-allowed disabled:opacity-45"
                 >
-                  {stepIndex === rhythmSteps.length - 1 ? "SHOW MY RHYTHM" : "CONTINUE"}
+                  {stepIndex === rhythmSteps.length - 1 ? "SHOW MY RITUAL" : "CONTINUE"}
                 </button>
               </div>
             </section>
