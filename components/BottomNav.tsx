@@ -11,7 +11,7 @@ const baseNavItems: { label: string; href: string; Icon: IconType }[] = [
   { label: "Home", href: "/", Icon: FaHome },
   { label: "Finest", href: "/formula", Icon: FaBookOpen },
   { label: "Rituals", href: "/routine", Icon: FaHeartbeat },
-  { label: "Shop", href: "/shop", Icon: FaShoppingBag },
+  { label: "Favorites", href: "/shop", Icon: FaShoppingBag },
   { label: "Reviews", href: "/reviews", Icon: FaRegCommentDots },
 ]
 

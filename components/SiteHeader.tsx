@@ -15,7 +15,7 @@ type SiteHeaderProps = {
 const menuLinks = [
   ["Finest at 50", "/formula"],
   ["Rituals", "/routine"],
-  ["Shop", "/shop"],
+  ["Skin Favorites", "/shop"],
   ["Reviews", "/reviews"],
   ["Join the glow", "/subscribe"],
   ["Contact", "/contact"],

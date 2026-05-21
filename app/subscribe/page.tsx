@@ -16,7 +16,7 @@ export default function SubscribePage() {
                 Join your finest era.
               </h1>
               <p className="mt-5 max-w-[560px] text-[15px] leading-relaxed text-black/62 sm:text-base">
-                A simple weekly skincare edit from Aime: one calm idea, one practical download, and product thinking that keeps your routine from getting loud.
+                A simple weekly skincare edit from Aime: one calm idea, one practical download, and product thinking that keeps your ritual from getting loud.
               </p>
               <div className="mt-7 grid gap-3 sm:grid-cols-[1fr_auto]">
                 <input
@@ -67,14 +67,14 @@ export default function SubscribePage() {
           <div className="pl-kicker mb-3">Next step</div>
           <h2 className="text-2xl font-semibold tracking-tight">Begin with your skin, then choose what belongs.</h2>
           <p className="mt-3 max-w-[620px] text-sm leading-relaxed text-black/58">
-            The newsletter should feed the Rituals tool and Aime&apos;s shop, not become another noisy content wall.
+            The newsletter should feed the Rituals tool and Aime&apos;s skin favorites, not become another noisy content wall.
           </p>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
             <Link href="/routine" className="shop-now-button flex h-12 items-center justify-center rounded-full px-6 text-sm font-bold tracking-[0.08em]">
               Rituals
             </Link>
             <Link href="/shop" className="pl-soft-button flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold">
-              Shop
+              Skin Favorites
             </Link>
           </div>
         </section>

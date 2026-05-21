@@ -100,7 +100,7 @@ export default function PicLicoriceHome() {
                 href="/shop"
                 className="pl-soft-button flex h-14 items-center justify-center rounded-full px-7 text-sm font-semibold text-black"
               >
-                ✨ Shop the rituals
+                Skin Favorites
               </Link>
             </div>
             <div className="mt-10 grid max-w-[520px] grid-cols-3 divide-x divide-[#111A33]/12 text-[#111A33]">
@@ -171,9 +171,9 @@ export default function PicLicoriceHome() {
             <p className="mt-3 text-sm leading-relaxed text-black/58">Hydrators, retinoids, barrier support, antioxidants, and more.</p>
           </Link>
           <Link href="/shop" className="pl-card pl-card-teal p-6">
-            <div className="pl-kicker mb-3">Shop</div>
-            <h2 className="text-2xl font-semibold tracking-tight">Shop by need.</h2>
-            <p className="mt-3 text-sm leading-relaxed text-black/58">Browse by lifestyle, skin concern, or age group before opening the shop.</p>
+            <div className="pl-kicker mb-3">Skin Favorites</div>
+            <h2 className="text-2xl font-semibold tracking-tight">Curated skincare collection.</h2>
+            <p className="mt-3 text-sm leading-relaxed text-black/58">Browse Aime&apos;s approved options by category and concern.</p>
           </Link>
         </section>
 

@@ -90,8 +90,8 @@ const cropControls: Array<{
   },
   {
     field: "shopImagePosition",
-    label: "Shop page crop",
-    helper: "Controls the top image on the internal shop page.",
+    label: "Skin favorites page crop",
+    helper: "Controls the top image on the skin favorites page.",
   },
   {
     field: "routineImagePosition",
@@ -287,7 +287,7 @@ export default function AdminPage() {
               ["Home", "/"],
               ["Routine", "/routine"],
               ["Finest", "/formula"],
-              ["Shop", "/shop"],
+              ["Skin Favorites", "/shop"],
               ["Contact", "/contact"],
             ].map(([label, href]) => (
               <Link key={href} href={href} className="text-xs px-3 py-2 rounded-full border border-white/15 hover:bg-white/5">
@@ -307,7 +307,7 @@ export default function AdminPage() {
                 ["Home", "/"],
                 ["Routine", "/routine"],
                 ["Finest", "/formula"],
-                ["Shop", "/shop"],
+                ["Skin Favorites", "/shop"],
                 ["Contact", "/contact"],
                 ["Live Factory", "/admin/live-factory"],
               ].map(([label, href]) => (

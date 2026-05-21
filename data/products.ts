@@ -1,12 +1,72 @@
+export type ProductCollection =
+  | "barrier-health"
+  | "skin-longevity"
+  | "glow-maintenance"
+  | "low-stress-skincare"
+  | "recovery-focused-natural-beauty"
+  | "rituals"
+  | "extras"
+
+export type ProductConcern =
+  | "hydration"
+  | "aging"
+  | "sensitive-skin"
+  | "redness"
+  | "acne"
+  | "texture"
+  | "dark-spots"
+  | "barrier-repair"
+  | "makeup-friendly"
+  | "oily-skin"
+  | "dry-skin"
+
+export type BuilderRole = "cleanser" | "serum" | "moisturizer" | "spf" | "treatment" | "event" | "extra"
+export type UseTiming = "am" | "pm" | "both" | "event" | "picks-only"
+
 export type Product = {
   id: string
   name: string
   image: string
   price: string
   categories: string[]
+  collection: ProductCollection
+  concerns: ProductConcern[]
+  builderRoles: BuilderRole[]
+  useTiming: UseTiming
   externalUrl: string
   approvedByAime: boolean
+  builderEligible: boolean
+  isKorean?: boolean
+  isVegan?: boolean
+  isTreatment?: boolean
+  isEventOnly?: boolean
+  avoidIfSensitive?: boolean
+  displayNote: string
 }
+
+export const productCollections: { id: ProductCollection; label: string; description: string }[] = [
+  { id: "barrier-health", label: "Barrier Health", description: "Comfort, repair, and skin that feels less reactive." },
+  { id: "skin-longevity", label: "Skin Longevity", description: "Daily protection and support for aging well." },
+  { id: "glow-maintenance", label: "Glow Maintenance", description: "Hydration, brightness, and steady radiance." },
+  { id: "low-stress-skincare", label: "Low-Stress Skincare", description: "Gentle basics that keep the ritual calm." },
+  { id: "recovery-focused-natural-beauty", label: "Recovery-Focused Natural Beauty", description: "Supportive, softer options for reset days." },
+  { id: "rituals", label: "Rituals", description: "Core steps that can belong in a daily AM or PM ritual." },
+  { id: "extras", label: "Extras", description: "Eye creams, makeup prep, event tightening, masks, beauty tools, hair, and wellness." },
+]
+
+export const concernFilters: { id: ProductConcern; label: string }[] = [
+  { id: "hydration", label: "Hydration" },
+  { id: "aging", label: "Aging" },
+  { id: "sensitive-skin", label: "Sensitive Skin" },
+  { id: "redness", label: "Redness" },
+  { id: "acne", label: "Acne" },
+  { id: "texture", label: "Texture" },
+  { id: "dark-spots", label: "Dark Spots" },
+  { id: "barrier-repair", label: "Barrier Repair" },
+  { id: "makeup-friendly", label: "Makeup Friendly" },
+  { id: "oily-skin", label: "Oily Skin" },
+  { id: "dry-skin", label: "Dry Skin" },
+]
 
 const PRODUCT_IMAGE = "/assets/piclicorice/piclicorice_shop_products_warm_square.webp"
 const TIKTOK_PRICE_LABEL = "TikTok Shop"
@@ -18,8 +78,15 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["toner", "hydration", "redness", "sensitive", "skin-barrier", "most-common"],
+    collection: "low-stress-skincare",
+    concerns: ["hydration", "redness", "sensitive-skin", "barrier-repair", "acne"],
+    builderRoles: ["serum"],
+    useTiming: "both",
     externalUrl: "https://www.tiktok.com/t/ZP9YDTGVpXnCG-MdrsK/",
     approvedByAime: true,
+    builderEligible: true,
+    isKorean: true,
+    displayNote: "A calming toner-style support step for low-stress hydration.",
   },
   {
     id: "cosrx-advanced-snail-96-mucin-essence",
@@ -27,8 +94,15 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["serum", "hydration", "skin-barrier", "texture", "dry-skin", "most-common"],
+    collection: "glow-maintenance",
+    concerns: ["hydration", "barrier-repair", "texture", "dry-skin", "sensitive-skin"],
+    builderRoles: ["serum"],
+    useTiming: "both",
     externalUrl: "https://www.tiktok.com/t/ZP9YDTTm7KqqP-j5YpS/",
     approvedByAime: true,
+    builderEligible: true,
+    isKorean: true,
+    displayNote: "Hydrating essence support for bounce, comfort, and barrier feel.",
   },
   {
     id: "illiyoon-sensitive-skincare-trio",
@@ -36,8 +110,15 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["moisturizer", "sensitive", "skin-barrier", "hydration", "dry-skin", "most-common"],
+    collection: "barrier-health",
+    concerns: ["sensitive-skin", "barrier-repair", "hydration", "dry-skin", "redness"],
+    builderRoles: ["moisturizer"],
+    useTiming: "both",
     externalUrl: "https://www.tiktok.com/t/ZP9YDw662H9H6-vgZ5U/",
     approvedByAime: true,
+    builderEligible: true,
+    isKorean: true,
+    displayNote: "Barrier-friendly moisture support for dry or easily bothered skin.",
   },
   {
     id: "beauty-of-joseon-relief-sun-spf50",
@@ -45,8 +126,15 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["spf", "sun-spots", "glow", "anti-aging", "most-common"],
+    collection: "skin-longevity",
+    concerns: ["aging", "dark-spots", "sensitive-skin"],
+    builderRoles: ["spf"],
+    useTiming: "am",
     externalUrl: "https://www.tiktok.com/t/ZP9YDwBKuN3AS-z1Ywf/",
     approvedByAime: true,
+    builderEligible: true,
+    isKorean: true,
+    displayNote: "Daily SPF belongs in the morning ritual.",
   },
   {
     id: "cosrx-low-ph-good-morning-gel-cleanser",
@@ -54,8 +142,15 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["cleanser", "sensitive", "oily-skin", "skin-barrier", "most-common"],
+    collection: "rituals",
+    concerns: ["sensitive-skin", "oily-skin", "barrier-repair", "acne"],
+    builderRoles: ["cleanser"],
+    useTiming: "both",
     externalUrl: "https://www.tiktok.com/t/ZP9YDwQEeXrod-n6CoC/",
     approvedByAime: true,
+    builderEligible: true,
+    isKorean: true,
+    displayNote: "Gentle cleansing support for the start of AM or PM.",
   },
   {
     id: "naturium-glow-getter-body-wash",
@@ -63,8 +158,14 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["body-care"],
+    collection: "extras",
+    concerns: ["hydration", "dry-skin"],
+    builderRoles: ["extra"],
+    useTiming: "picks-only",
     externalUrl: "https://www.tiktok.com/t/ZP9YDKe3PXjhF-uzgFC/",
     approvedByAime: true,
+    builderEligible: false,
+    displayNote: "Body care lives in the collection, not the face ritual.",
   },
   {
     id: "aquaphor-healing-ointment-advanced-therapy",
@@ -72,8 +173,14 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["moisturizer", "occlusive", "skin-barrier", "dry-skin", "sensitive"],
+    collection: "recovery-focused-natural-beauty",
+    concerns: ["barrier-repair", "dry-skin", "sensitive-skin", "redness"],
+    builderRoles: ["moisturizer"],
+    useTiming: "pm",
     externalUrl: "https://www.tiktok.com/t/ZP9YDKXcMDVFD-Y5J1p/",
     approvedByAime: true,
+    builderEligible: true,
+    displayNote: "Best as recovery support when skin feels dry or compromised.",
   },
   {
     id: "the-ordinary-gf-15-solution",
@@ -81,8 +188,16 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["serum", "treatment", "anti-aging", "texture", "wrinkles", "skin-barrier"],
+    collection: "skin-longevity",
+    concerns: ["aging", "texture", "barrier-repair"],
+    builderRoles: ["treatment"],
+    useTiming: "pm",
     externalUrl: "https://www.tiktok.com/t/ZP9YU1hb1Jsbw-q4mBl/",
     approvedByAime: true,
+    builderEligible: true,
+    isTreatment: true,
+    isVegan: true,
+    displayNote: "Treatment support belongs in an as-needed section, not the daily core.",
   },
   {
     id: "peach-and-lily-glass-skin-refining-serum",
@@ -90,8 +205,16 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["serum", "treatment", "glow", "texture", "uneven-tone", "hydration"],
+    collection: "glow-maintenance",
+    concerns: ["hydration", "texture", "dark-spots"],
+    builderRoles: ["treatment"],
+    useTiming: "pm",
     externalUrl: "https://www.tiktok.com/t/ZP9YU1fGfQu6G-schXO/",
     approvedByAime: true,
+    builderEligible: true,
+    isTreatment: true,
+    isKorean: true,
+    displayNote: "A glow-focused treatment option for texture or tone support.",
   },
   {
     id: "bare-anatomy-haircare",
@@ -99,8 +222,14 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["haircare"],
+    collection: "extras",
+    concerns: [],
+    builderRoles: ["extra"],
+    useTiming: "picks-only",
     externalUrl: "https://www.tiktok.com/t/ZP9YU19yaMxq4-BkTJW/",
     approvedByAime: true,
+    builderEligible: false,
+    displayNote: "Hair care can be browsed here but stays out of skin rituals.",
   },
   {
     id: "haruharu-black-rice-ceramide-barrier-cream",
@@ -108,8 +237,15 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["moisturizer", "skin-barrier", "dry-skin", "sensitive", "redness", "mature-skin"],
+    collection: "barrier-health",
+    concerns: ["barrier-repair", "dry-skin", "sensitive-skin", "redness", "aging"],
+    builderRoles: ["moisturizer"],
+    useTiming: "both",
     externalUrl: "https://www.tiktok.com/t/ZP9YU1X7PAUoy-157B5/",
     approvedByAime: true,
+    builderEligible: true,
+    isKorean: true,
+    displayNote: "Barrier cream support, often strongest as a PM comfort step.",
   },
   {
     id: "round-lab-birch-juice-sun-stick",
@@ -117,8 +253,15 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["spf", "sun-spots", "glow"],
+    collection: "skin-longevity",
+    concerns: ["dark-spots", "hydration", "makeup-friendly"],
+    builderRoles: ["spf"],
+    useTiming: "am",
     externalUrl: "https://www.tiktok.com/t/ZP9YU1boxSpjD-lQnmy/",
     approvedByAime: true,
+    builderEligible: true,
+    isKorean: true,
+    displayNote: "Portable SPF support for reapplication.",
   },
   {
     id: "remedy-healthy-aging-advanced-serum",
@@ -126,8 +269,15 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["serum", "treatment", "anti-aging", "texture", "wrinkles", "uneven-tone"],
+    collection: "skin-longevity",
+    concerns: ["aging", "texture", "dark-spots"],
+    builderRoles: ["treatment"],
+    useTiming: "pm",
     externalUrl: "https://www.tiktok.com/t/ZP9YU1cCPKJgC-jacIJ/",
     approvedByAime: true,
+    builderEligible: true,
+    isTreatment: true,
+    displayNote: "As-needed aging support. Patch test first and start slowly.",
   },
   {
     id: "neutrogena-collagen-bank-spf-moisturizer",
@@ -135,8 +285,14 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["moisturizer", "spf", "anti-aging", "skin-barrier", "most-common"],
+    collection: "skin-longevity",
+    concerns: ["aging", "barrier-repair", "makeup-friendly"],
+    builderRoles: ["moisturizer", "spf"],
+    useTiming: "am",
     externalUrl: "https://www.tiktok.com/t/ZP9YU1KU4H2eU-TBaSX/",
     approvedByAime: true,
+    builderEligible: true,
+    displayNote: "AM moisturizer with SPF; keep SPF as the morning finish.",
   },
   {
     id: "solovegan-lip-treatment",
@@ -144,8 +300,15 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["lip-care"],
+    collection: "extras",
+    concerns: ["dry-skin"],
+    builderRoles: ["extra"],
+    useTiming: "picks-only",
     externalUrl: "https://www.tiktok.com/t/ZP9YUJNLUWhQh-CDAeO/",
     approvedByAime: true,
+    builderEligible: false,
+    isVegan: true,
+    displayNote: "Lip care stays in extras.",
   },
   {
     id: "elf-suntouchable-spf-45-setting-spray",
@@ -153,8 +316,16 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["spf", "sun-spots", "glow"],
+    collection: "extras",
+    concerns: ["makeup-friendly", "dark-spots"],
+    builderRoles: ["event"],
+    useTiming: "event",
     externalUrl: "https://www.tiktok.com/t/ZP9YUJ6tQH3SV-XzpmF/",
     approvedByAime: true,
+    builderEligible: true,
+    isEventOnly: true,
+    isVegan: true,
+    displayNote: "Makeup-friendly SPF support for events or reapplication.",
   },
   {
     id: "peter-thomas-roth-even-smoother-peel",
@@ -162,8 +333,17 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["treatment", "texture", "glow", "uneven-tone"],
+    collection: "extras",
+    concerns: ["texture", "dark-spots", "makeup-friendly"],
+    builderRoles: ["treatment"],
+    useTiming: "event",
     externalUrl: "https://www.tiktok.com/t/ZP9YUJAmJo1qM-QEszt/",
     approvedByAime: true,
+    builderEligible: true,
+    isTreatment: true,
+    isEventOnly: true,
+    avoidIfSensitive: true,
+    displayNote: "Occasional treatment only. Avoid for reactive skin unless Aime says otherwise.",
   },
   {
     id: "peter-thomas-roth-instant-firmx-eye-tightener",
@@ -171,8 +351,16 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["eye-care", "treatment", "anti-aging", "wrinkles"],
+    collection: "extras",
+    concerns: ["aging", "makeup-friendly"],
+    builderRoles: ["event"],
+    useTiming: "event",
     externalUrl: "https://www.tiktok.com/t/ZP9YUeJ5VCTLY-JpgDo/",
     approvedByAime: true,
+    builderEligible: true,
+    isTreatment: true,
+    isEventOnly: true,
+    displayNote: "Event tightening support, not a daily ritual product.",
   },
   {
     id: "neuro-energy-focus-gum-mints",
@@ -180,8 +368,14 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["wellness", "lifestyle"],
+    collection: "extras",
+    concerns: [],
+    builderRoles: ["extra"],
+    useTiming: "picks-only",
     externalUrl: "https://www.tiktok.com/t/ZP9YUe8qCR2Yy-JLpaw/",
     approvedByAime: true,
+    builderEligible: false,
+    displayNote: "Wellness extras can be browsed, not recommended as skin ritual steps.",
   },
   {
     id: "haua-hyaluronic-pdrn-orb-serum",
@@ -189,8 +383,15 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["serum", "hydration", "skin-barrier", "dry-skin", "glow", "anti-aging"],
+    collection: "glow-maintenance",
+    concerns: ["hydration", "barrier-repair", "dry-skin", "aging"],
+    builderRoles: ["serum"],
+    useTiming: "both",
     externalUrl: "https://www.tiktok.com/t/ZP9YUeBqkDSjs-e09NY/",
     approvedByAime: true,
+    builderEligible: true,
+    isKorean: true,
+    displayNote: "Hydrating serum support for glow and comfort.",
   },
   {
     id: "brainmd-peak-energy",
@@ -198,8 +399,14 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["wellness", "lifestyle"],
+    collection: "extras",
+    concerns: [],
+    builderRoles: ["extra"],
+    useTiming: "picks-only",
     externalUrl: "https://www.tiktok.com/t/ZP9YUeuS65qau-vxcKp/",
     approvedByAime: true,
+    builderEligible: false,
+    displayNote: "Wellness extras can live in the collection without entering the ritual builder.",
   },
   {
     id: "round-lab-birch-juice-moisturizing-sunscreen",
@@ -207,8 +414,15 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["spf", "hydration", "sun-spots", "glow", "most-common"],
+    collection: "skin-longevity",
+    concerns: ["hydration", "dark-spots", "sensitive-skin", "makeup-friendly"],
+    builderRoles: ["spf"],
+    useTiming: "am",
     externalUrl: "https://www.tiktok.com/t/ZP9YUdad8quCd-sQMsm/",
     approvedByAime: true,
+    builderEligible: true,
+    isKorean: true,
+    displayNote: "Hydrating SPF for AM protection.",
   },
   {
     id: "rw-co-mop-soap",
@@ -216,8 +430,14 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["home"],
+    collection: "extras",
+    concerns: [],
+    builderRoles: ["extra"],
+    useTiming: "picks-only",
     externalUrl: "https://www.tiktok.com/t/ZP9YUJTorbGXx-ulCjj/",
     approvedByAime: false,
+    builderEligible: false,
+    displayNote: "Hidden from the approved collection.",
   },
   {
     id: "elf-suntouchable-spf-45-setting-spray-duplicate",
@@ -225,8 +445,15 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["spf", "duplicate"],
+    collection: "extras",
+    concerns: ["makeup-friendly"],
+    builderRoles: ["event"],
+    useTiming: "event",
     externalUrl: "https://www.tiktok.com/t/ZP9YUebdQPgLV-og8zs/",
     approvedByAime: false,
+    builderEligible: false,
+    isEventOnly: true,
+    displayNote: "Duplicate hidden from the approved collection.",
   },
   {
     id: "remedy-healthy-aging-advanced-serum-duplicate",
@@ -234,7 +461,14 @@ export const products: Product[] = [
     image: PRODUCT_IMAGE,
     price: TIKTOK_PRICE_LABEL,
     categories: ["anti-aging", "duplicate"],
+    collection: "skin-longevity",
+    concerns: ["aging", "texture"],
+    builderRoles: ["treatment"],
+    useTiming: "pm",
     externalUrl: "https://www.tiktok.com/t/ZP9YUeGFRWL6U-O7K9H/",
     approvedByAime: false,
+    builderEligible: false,
+    isTreatment: true,
+    displayNote: "Duplicate hidden from the approved collection.",
   },
 ]

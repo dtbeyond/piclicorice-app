@@ -5,7 +5,8 @@ import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import BottomNav from "@/components/BottomNav"
 import SiteHeader from "@/components/SiteHeader"
-import { products, type Product } from "@/data/products"
+import type { Product } from "@/data/products"
+import { recommendProductsForRitual } from "@/lib/productRecommendations"
 import {
   buildRhythmResult,
   formatRhythmLabelGroup,
@@ -199,41 +200,36 @@ function RhythmResultScreen({
   result: RhythmResult
   onStartFresh: () => void
 }) {
-  const preferredProductsBySlot: Record<string, string[]> = {
-    cleanser: ["cosrx-low-ph-good-morning-gel-cleanser"],
-    serum: [
-      "cosrx-advanced-snail-96-mucin-essence",
-      "haua-hyaluronic-pdrn-orb-serum",
-      "peach-and-lily-glass-skin-refining-serum",
-      "the-ordinary-gf-15-solution",
-      "remedy-healthy-aging-advanced-serum",
-    ],
-    moisturizer: [
-      "illiyoon-sensitive-skincare-trio",
-      "haruharu-black-rice-ceramide-barrier-cream",
-      "aquaphor-healing-ointment-advanced-therapy",
-      "neutrogena-collagen-bank-spf-moisturizer",
-    ],
-    spf: [
-      "beauty-of-joseon-relief-sun-spf50",
-      "round-lab-birch-juice-moisturizing-sunscreen",
-      "round-lab-birch-juice-sun-stick",
-      "elf-suntouchable-spf-45-setting-spray",
-    ],
-  }
-  const picks = Object.entries(preferredProductsBySlot)
-    .map(([slot, preferredIds]) => {
-      const slotProducts = products.filter((product) => product.approvedByAime && product.categories.includes(slot))
-      const concernMatchedProduct = preferredIds
-        .map((id) => slotProducts.find((product) => product.id === id))
-        .find((product) => product?.categories.some((category) => result.pickCategories.includes(category)))
-      const preferredProduct = preferredIds
-        .map((id) => slotProducts.find((product) => product.id === id))
-        .find(Boolean)
+  const recommendations = recommendProductsForRitual(answers, result)
+  const corePicks = recommendations.core.reduce<{ product: Product; slots: string[] }[]>((items, recommendation) => {
+    const existing = items.find((item) => item.product.id === recommendation.product.id)
+    const slotLabel = `${recommendation.timing} ${recommendation.label}`
 
-      return concernMatchedProduct || preferredProduct || slotProducts[0]
-    })
-    .filter((product): product is Product => Boolean(product))
+    if (existing) {
+      existing.slots.push(slotLabel)
+      return items
+    }
+
+    return [...items, { product: recommendation.product, slots: [slotLabel] }]
+  }, [])
+
+  const ProductCard = ({ product, slots }: { product: Product; slots?: string[] }) => (
+    <a
+      href={product.externalUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group rounded-[22px] border border-black/10 bg-[#fbf7f2]/72 p-4 transition-all hover:border-[#0F7F91]/36 hover:bg-white"
+    >
+      <div className="mb-3 aspect-[5/3] overflow-hidden rounded-[18px] bg-white">
+        <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
+      </div>
+      {slots && <div className="mb-2 font-mono text-[10px] uppercase tracking-widest text-[#0F7F91]">{slots.join(" / ")}</div>}
+      <div className="text-sm font-semibold leading-tight">{product.name}</div>
+      <div className="mt-1 text-xs text-black/45">{product.price}</div>
+      <p className="mt-3 text-xs leading-relaxed text-black/55">{product.displayNote}</p>
+      <div className="mt-4 font-mono text-[10px] uppercase tracking-widest text-[#0F7F91]">View Favorite - Opens in TikTok Shop</div>
+    </a>
+  )
 
   return (
     <div className="space-y-5">
@@ -297,29 +293,25 @@ function RhythmResultScreen({
         <p className="text-xl font-semibold leading-snug tracking-tight">{result.aimeNote}</p>
       </SectionCard>
 
-      <SectionCard eyebrow="Optional Shop" title="Shop the edit for this ritual">
+      <SectionCard eyebrow="Curated Skincare Collection" title="Skin favorites for this ritual">
         <p className="mb-4 text-sm leading-relaxed text-black/55">
-          These are optional starting points. The ritual comes first; shopping should support it.
+          These are builder-recommended options from Aime&apos;s approved collection. The ritual comes first; shopping should support it.
         </p>
         <div className="grid gap-3 sm:grid-cols-2">
-          {picks.map((product) => (
-            <a
-              key={product.id}
-              href={product.externalUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group rounded-[22px] border border-black/10 bg-[#fbf7f2]/72 p-4 transition-all hover:border-[#0F7F91]/36 hover:bg-white"
-            >
-              <div className="mb-3 aspect-[5/3] overflow-hidden rounded-[18px] bg-white">
-                <img src={product.image} alt={product.name} className="h-full w-full object-cover" />
-              </div>
-              <div className="text-sm font-semibold leading-tight">{product.name}</div>
-              <div className="mt-1 text-xs text-black/45">{product.price}</div>
-              <div className="mt-4 font-mono text-[10px] uppercase tracking-widest text-[#0F7F91]">View Pick - Opens in TikTok Shop</div>
-            </a>
-          ))}
+          {corePicks.map(({ product, slots }) => <ProductCard key={product.id} product={product} slots={slots} />)}
         </div>
       </SectionCard>
+
+      {recommendations.asNeeded.length > 0 && (
+        <SectionCard eyebrow="As Needed" title="Treatment and event support">
+          <p className="mb-4 text-sm leading-relaxed text-black/55">
+            These are not daily core ritual steps. Use only as your skin concern calls for it. Patch test first and start slowly.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {recommendations.asNeeded.map((product) => <ProductCard key={product.id} product={product} />)}
+          </div>
+        </SectionCard>
+      )}
 
       <section className="media-card">
         <div className="grid gap-4 bg-white/72 p-6 sm:grid-cols-[1fr_auto] sm:items-center">

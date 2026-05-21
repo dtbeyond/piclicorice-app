@@ -151,17 +151,20 @@ export function buildRhythmResult(answers: CompleteRhythmAnswers): RhythmResult 
         : ["Glycerin", "Ceramides", "Niacinamide"]
 
   const avoidOverdoing = [
-    sensitive ? "Fragrance and strong exfoliants when your skin feels reactive" : "Too many acids in the same week",
+    sensitive
+      ? "Scrubs, fragrance-heavy products, alcohol-heavy toners, harsh acne products, and overpowered acids"
+      : "Too many acids in the same week",
     texture && !sensitive ? "Retinol too often before your barrier is steady" : "Adding strong actives before the basics feel consistent",
     tooMany ? "Layering products just because they are on the shelf" : "Changing everything at once",
     "Using treatment steps more often than your skin concern actually needs",
+    "Patch test first and start slowly with any treatment product",
   ]
 
   const treatmentStep = sensitive
-    ? "Peptide or barrier-support serum as needed"
+    ? "Peptide or barrier-support serum"
     : texture
-      ? "Peptide or treatment serum as needed"
-      : "Hydrating or peptide serum as needed"
+      ? "Peptide/support serum (treatment only as needed)"
+      : "Hydrating or peptide serum"
 
   return {
     profileLine: `Your skin ritual looks ${primary}-focused with ${secondary} support.`,
