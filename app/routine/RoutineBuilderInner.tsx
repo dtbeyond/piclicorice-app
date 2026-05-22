@@ -37,7 +37,7 @@ type RhythmStep = {
 const rhythmSteps: RhythmStep[] = [
   {
     key: "skinFeel",
-    eyebrow: "Rituals",
+    eyebrow: "Skin Edit",
     question: "What feels most frustrating about your skin right now?",
     helper: "Choose all that apply. Aime can narrow the ritual from there.",
     isMultiSelect: true,

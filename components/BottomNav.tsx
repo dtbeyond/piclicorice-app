@@ -10,7 +10,7 @@ import { RHYTHM_STORAGE_KEY } from "@/lib/rhythm"
 const baseNavItems: { label: string; href: string; Icon: IconType }[] = [
   { label: "Home", href: "/", Icon: FaHome },
   { label: "Finest", href: "/formula", Icon: FaBookOpen },
-  { label: "Rituals", href: "/routine", Icon: FaHeartbeat },
+  { label: "Edit", href: "/routine", Icon: FaHeartbeat },
   { label: "Favorites", href: "/shop", Icon: FaShoppingBag },
   { label: "Reviews", href: "/reviews", Icon: FaRegCommentDots },
 ]
@@ -36,9 +36,7 @@ export default function BottomNav() {
     }
   }, [])
 
-  const navItems = baseNavItems.map((item) =>
-    item.href === "/routine" && hasRhythm ? { ...item, label: "Ritual" } : item
-  )
+  const navItems = baseNavItems.map((item) => (item.href === "/routine" && hasRhythm ? { ...item, label: "My Edit" } : item))
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 border-t border-black/10 bg-[#fbf7f2]/92 px-2 pb-2 pt-2 shadow-[0_-18px_48px_rgba(41,35,31,0.08)] backdrop-blur-xl md:hidden">

@@ -14,17 +14,17 @@ type SiteHeaderProps = {
 
 const menuLinks = [
   ["Finest at 50", "/formula"],
-  ["Rituals", "/routine"],
+  ["Skin Edit", "/routine"],
   ["Skin Favorites", "/shop"],
   ["Reviews", "/reviews"],
-  ["Join the glow", "/subscribe"],
+  ["Weekly Drop", "/subscribe"],
   ["Contact", "/contact"],
 ]
 
 const desktopLinks = menuLinks.slice(0, 4)
 
 export default function SiteHeader({
-  actionLabel = "Join the glow",
+  actionLabel = "Weekly Drop",
   actionHref = "/subscribe",
   onAction,
   actionVariant = "shop",
@@ -111,7 +111,7 @@ export default function SiteHeader({
             <div className="mb-6 flex items-center justify-between gap-4">
               <div>
                 <div className="pl-kicker">Menu</div>
-                <div className="mt-1 text-2xl font-semibold tracking-tight">Join the finest era.</div>
+                <div className="mt-1 text-2xl font-semibold tracking-tight">Choose your next calm step.</div>
               </div>
               <button
                 type="button"
@@ -137,16 +137,16 @@ export default function SiteHeader({
             </div>
 
             <div className="pl-card pl-card-teal mt-auto p-5">
-              <div className="pl-kicker pl-kicker-pink mb-2 text-[10px]">Join the glow</div>
+              <div className="pl-kicker pl-kicker-pink mb-2 text-[10px]">The Weekly Drop</div>
               <p className="text-sm leading-relaxed text-black/58">
-                Sunday rituals, mindset notes, and skincare honesty - straight to your inbox.
+                Founder reflections, skincare honesty, and simple self-care notes without the noise.
               </p>
               <Link
                 href="/subscribe"
                 onClick={() => setIsMenuOpen(false)}
                 className="shop-now-button mt-4 inline-flex h-11 items-center justify-center rounded-full px-5 text-xs font-bold tracking-[0.08em]"
               >
-                Join the glow
+                Weekly Drop
               </Link>
             </div>
           </div>

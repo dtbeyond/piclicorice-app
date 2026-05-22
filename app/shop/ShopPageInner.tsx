@@ -40,7 +40,7 @@ export default function ShopPageInner() {
 
   return (
     <div className="editorial-shell min-h-screen pb-24">
-      <SiteHeader actionLabel="Start Ritual" actionHref="/routine" />
+      <SiteHeader actionLabel="Start Skin Edit" actionHref="/routine" />
 
       <main className="mx-auto w-full max-w-[980px] px-4 pt-10 sm:px-6">
         <section className="media-card overflow-hidden">
@@ -64,7 +64,7 @@ export default function ShopPageInner() {
                   href="/routine"
                   className="shop-now-button inline-flex h-14 items-center justify-center rounded-full px-8 font-bold tracking-[0.08em]"
                 >
-                  START RITUAL
+                  START SKIN EDIT
                 </Link>
                 <a
                   href={content.shopUrl}

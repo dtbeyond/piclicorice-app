@@ -50,7 +50,7 @@ export const productCollections: { id: ProductCollection; label: string; descrip
   { id: "glow-maintenance", label: "Glow Maintenance", description: "Hydration, brightness, and steady radiance." },
   { id: "low-stress-skincare", label: "Low-Stress Skincare", description: "Gentle basics that keep the ritual calm." },
   { id: "recovery-focused-natural-beauty", label: "Recovery-Focused Natural Beauty", description: "Supportive, softer options for reset days." },
-  { id: "rituals", label: "Rituals", description: "Core steps that can belong in a daily AM or PM ritual." },
+  { id: "rituals", label: "Skin Edit Core", description: "Daily steps that can belong in a steady AM or PM plan." },
   { id: "extras", label: "Extras", description: "Eye creams, makeup prep, event tightening, masks, beauty tools, hair, and wellness." },
 ]
 
